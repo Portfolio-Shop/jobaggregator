@@ -1,0 +1,517 @@
+openapi: 3.0.0
+info:
+  version: '1.0.0'
+  title: 'JobAggregator'
+  license:
+    name: MIT
+servers:
+  - url: 'localhost:8080/api/v1'
+paths:
+  /user/signup:
+    post:
+      summary: "Users can signup"
+      tags:
+        - user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserSignupRequest"
+      responses:
+        201:
+          description: "Successful Signup"
+          headers:
+            Authorization:
+              description: "A bearer token containing JWT"
+              schema: 
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserResponse"
+        400:
+          description: "Bad Request"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: "Internal Server error"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        503:
+          description: "Service(Possibly Database) Unavailable"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        default:
+          description: "Created"
+          headers:
+            Authorization:
+              description: "A bearer token containing JWT"
+              schema: 
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserResponse"
+  /user/signin:
+    post:
+      summary: "Users can signin"
+      tags:
+        - user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserSigninRequest"
+      responses:
+        200:
+          description: "Successful Signin"
+          headers:
+            Authorization:
+              description: "A bearer token containing JWT"
+              schema: 
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserResponse"
+        400:
+          description: "Bad Request"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: "Invalid Password"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        404:
+          description: "User resource not found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: "Internal Server error"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        503:
+          description: "Service(Possibly Database) Unavailable"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        default:
+          description: "Ok"
+          headers:
+            Authorization:
+              description: "A bearer token containing JWT"
+              schema: 
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserResponse"
+  /user:
+    get:
+      description: "Get user details"
+      security:
+        - BearerAuth: [Authorization]
+      responses:
+        200:
+          description: "Successfully fetched user"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserResponse"
+        401:
+          description: "Invalid or tampered bearer token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: "Internal Server error"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        503:
+          description: "Service(Possibly Database) Unavailable"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        default:
+          description: "Ok"
+          headers:
+            Authorization:
+              description: "A bearer token containing JWT"
+              schema: 
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserResponse"
+    put:
+      description: "Update user details"
+      security:
+        - BearerAuth: [Authorization]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserUpdateRequest"
+      responses:
+        200:
+          description: "Successfully updated user"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserResponse"
+        401:
+          description: "Invalid or tampered bearer token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: "Internal Server error"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        503:
+          description: "Service(Possibly Database) Unavailable"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        default:
+          description: "Ok"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserResponse"
+    delete:
+      description: "Delete user details"
+      security:
+        - BearerAuth: [Authorization]
+      responses:
+        204:
+          description: "Successfully deleted user"
+        401:
+          description: "Invalid or tampered bearer token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: "Internal Server error"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        503:
+          description: "Service(Possibly Database) Unavailable"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        default:
+          description: "No content"
+  /user/resume:
+    post:
+      security:
+        - BearerAuth: [Authorization]
+      requestBody:
+        content:
+          multipart/formdata:
+            schema:
+              $ref: "#/components/schemas/ResumeUploadRequest"
+      responses:
+        201:
+          description: "Successfully Uploaded Resume"
+        401:
+          description: "Invalid or tampered bearer token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        400:
+          description: "Request validation error, file type not supported"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: "Internal Server error"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        503:
+          description: "Service(Possibly Database) Unavailable"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        default:
+          description: "Created"
+    get:
+      security:
+        - BearerAuth: [Authorization]
+      responses:
+        200:
+          description: "Successfully fetched Resume"
+          content:
+            application/pdf:
+              schema:
+                $ref: "#/components/schemas/ResumeResponse"
+        401:
+          description: "Invalid or tampered bearer token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        404:
+          description: "Resume not found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: "Internal Server error"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        503:
+          description: "Service(Possibly Database) Unavailable"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        default:
+          description: "Ok"
+          content:
+            application/pdf:
+              schema:
+                $ref: "#/components/schemas/ResumeResponse"
+  /jobs:
+    get:
+      security:
+        - BearerAuth: [Authorization]
+      responses:
+        200:
+          description: "Successfully fetched Jobs"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/JobResponse"
+        401:
+          description: "Invalid or tampered bearer token"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        404:
+          description: "Jobs/Details not found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: "Internal Server error"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        503:
+          description: "Service(Possibly Database) Unavailable"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        default:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/JobResponse"
+    post:
+      security:
+        - {}
+        - BearerAuth: [Authorization]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/JobRequest"
+      responses:
+        200:
+          description: "Successfully fetched Jobs"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/JobResponse"
+        500:
+          description: "Internal Server error"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        503:
+          description: "Service(Possibly Database) Unavailable"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        default:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/JobResponse"  
+components:
+  schemas:
+    # Users
+    UserSignupRequest:
+      type: object
+      required:
+        - name
+        - email
+        - password
+      properties:
+        name: 
+          type: string
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          format: password
+        image:
+          type: string
+          format: byte
+        phone:
+          type: string
+    UserSigninRequest:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          format: password
+    UserUpdateRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        phone:
+          type: string
+        imageUrl:
+          type: string
+          format: uri
+    UserResponse:
+      type: object
+      required:
+        - userId
+        - name
+        - email
+      properties:
+        userid:
+          type: string
+          format: uuid
+        email:
+          type: string
+          format: email
+        name:
+          type: string
+        phone:
+          type: string
+        imageUrl:
+          type: string
+          format: uri
+        
+    ResumeUploadRequest:
+      type: object
+      required:
+        - resume
+      properties:
+        resume:
+          type: string
+          format: binary      
+    ResumeResponse:
+      type: string
+      format: binary
+    # Jobs
+    JobRequest:
+      type: object
+      required:
+        - location
+        - query
+      properties:
+        location: 
+          type: string
+        query: 
+          type: string
+    JobResponse:
+      type: array
+      items:
+        type: object
+        required:
+          - jobId
+          - title
+          - location
+          - employer
+        properties:
+          jobId:
+            type: string
+            format: uuid
+          title:
+            type: string
+          summary:
+            type: string
+          location:
+            type: string
+          employer:
+            type: string
+          salary:
+            type: string
+          descriptionHtml: 
+            type: string
+          skills:
+            type: array
+            items:
+              type: string
+    Error:
+      type: array
+      items:
+        type: object
+        required:
+          - message
+        properties:
+          message:
+            type: string
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+security:
+  - {}
