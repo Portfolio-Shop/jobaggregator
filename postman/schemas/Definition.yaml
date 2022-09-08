@@ -428,7 +428,7 @@ components:
                     type: string
                 phone:
                     type: string
-                imageUrl:
+                image:
                     type: string
                     format: byte
         UserResponse:
@@ -448,9 +448,6 @@ components:
                     type: string
                 phone:
                     type: string
-                imageUrl:
-                    type: string
-                    format: uri
 
         ResumeUploadRequest:
             type: object
