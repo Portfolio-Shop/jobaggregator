@@ -1,17 +1,19 @@
 package tech.portfolioshop.users.models;
 
-public class ResumeUploadRequest {
-    private Byte[] resume;
+import org.springframework.web.multipart.MultipartFile;
 
-    public ResumeUploadRequest(Byte[] resume) {
+public class ResumeUploadRequest {
+    private MultipartFile resume;
+
+    public ResumeUploadRequest(MultipartFile resume) {
         this.resume = resume;
     }
 
-    public Byte[] getResume() {
+    public MultipartFile getResume() {
         return resume;
     }
 
-    public void setResume(Byte[] resume) {
+    public void setResume(MultipartFile resume) {
         this.resume = resume;
     }
 }

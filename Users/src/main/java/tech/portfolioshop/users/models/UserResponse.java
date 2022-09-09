@@ -6,6 +6,9 @@ public class UserResponse {
     private String email;
     private String phone;
 
+    public UserResponse() {
+    }
+
     public UserResponse(String userId, String name, String email, String phone, Byte[] image) {
         this.userId = userId;
         this.name = name;

@@ -1,5 +1,6 @@
 package tech.portfolioshop.users.data.database;
 
+import org.hibernate.annotations.Type;
 import javax.persistence.*;
 
 @Entity
@@ -26,16 +27,24 @@ public class UserEntity {
 
     @Column(nullable = true)
     @Lob
-    private Byte[] image;
+    @Type(type = "org.hibernate.type.ImageType")
+    private byte[] image;
 
     @Column(nullable = true)
     @Lob
-    private Byte[] resume;
+    @Type(type = "org.hibernate.type.BinaryType")
+    private byte[] resume;
+
+    @Column(nullable = false)
+    private boolean verified;
+
+    @Column(nullable = false)
+    private boolean status;
 
     public UserEntity() {
     }
 
-    public UserEntity(String userId, String name, String email, String encryptedPassword, String phone, Byte[] image, Byte[] resume) {
+    public UserEntity(String userId, String name, String email, String encryptedPassword, String phone, byte[] image, byte[] resume) {
         this.userId = userId;
         this.name = name;
         this.email = email;
@@ -45,7 +54,7 @@ public class UserEntity {
         this.resume = resume;
     }
 
-    public UserEntity(Integer id, String userId, String name, String email, String encryptedPassword, String phone, Byte[] image, Byte[] resume) {
+    public UserEntity(Integer id, String userId, String name, String email, String encryptedPassword, String phone, byte[] image, byte[] resume, boolean verified, boolean status) {
         this.id = id;
         this.userId = userId;
         this.name = name;
@@ -54,6 +63,8 @@ public class UserEntity {
         this.phone = phone;
         this.image = image;
         this.resume = resume;
+        this.verified = verified;
+        this.status = status;
     }
 
     public Integer getId() {
@@ -104,19 +115,35 @@ public class UserEntity {
         this.phone = phone;
     }
 
-    public Byte[] getImage() {
+    public byte[] getImage() {
         return image;
     }
 
-    public void setImage(Byte[] image) {
+    public void setImage(byte[] image) {
         this.image = image;
     }
 
-    public Byte[] getResume() {
+    public byte[] getResume() {
         return resume;
     }
 
-    public void setResume(Byte[] resume) {
+    public void setResume(byte[] resume) {
         this.resume = resume;
+    }
+
+    public boolean isVerified() {
+        return verified;
+    }
+
+    public void setVerified(boolean verified) {
+        this.verified = verified;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 }
