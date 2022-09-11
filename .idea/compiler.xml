@@ -16,7 +16,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="APIConfig" target="11" />
+      <module name="APIConfig" target="18" />
       <module name="APIGateway" target="11" />
       <module name="Jobs" target="11" />
       <module name="Mailer" target="11" />
