@@ -1,6 +1,11 @@
 package tech.portfolioshop.users.models;
 
+import java.util.Arrays;
+
 public class UserUpdateRequest {
+    /**
+     * All User Data Update Requests are wrapped as an instance of this model.
+     */
     private String name;
     private String phone;
     private Byte[] image;
@@ -33,5 +38,10 @@ public class UserUpdateRequest {
 
     public void setImage(Byte[] image) {
         this.image = image;
+    }
+
+    @Override
+    public String toString() {
+        return "UserUpdateRequest{" + "name='" + name + '\'' + ", phone='" + phone + '\'' + ", image=" + Arrays.toString(image) + '}';
     }
 }

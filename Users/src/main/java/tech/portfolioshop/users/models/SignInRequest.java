@@ -4,7 +4,9 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 
 public class SignInRequest {
-
+    /**
+     * All SignIn Requests are wrapped as an instance of this model.
+     */
     @NotNull(message = "Email is required")
     @Email(message = "Email is not valid")
     private String email;
@@ -31,5 +33,13 @@ public class SignInRequest {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public String toString() {
+        return "SignInRequest{" +
+                "email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                '}';
     }
 }
