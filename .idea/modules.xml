@@ -9,7 +9,6 @@
       <module fileurl="file://$PROJECT_DIR$/Scraper/Scraper.iml" filepath="$PROJECT_DIR$/Scraper/Scraper.iml" />
       <module fileurl="file://$PROJECT_DIR$/ServiceDiscovery/ServiceDiscovery.iml" filepath="$PROJECT_DIR$/ServiceDiscovery/ServiceDiscovery.iml" />
       <module fileurl="file://$PROJECT_DIR$/Users/Users.iml" filepath="$PROJECT_DIR$/Users/Users.iml" />
-      <module fileurl="file://$PROJECT_DIR$/WebClient.iml" filepath="$PROJECT_DIR$/WebClient.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/jobaggregator.iml" filepath="$PROJECT_DIR$/.idea/jobaggregator.iml" />
     </modules>
   </component>
