@@ -1,8 +1,6 @@
 package tech.portfolioshop.users.controllers;
 
 import io.jsonwebtoken.Jwts;
-import org.apache.commons.lang.ArrayUtils;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -10,7 +8,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import tech.portfolioshop.users.models.ResumeUploadRequest;
 import tech.portfolioshop.users.services.implemetation.ResumeService;
 import tech.portfolioshop.users.shared.ResumeDto;
 
@@ -57,7 +54,7 @@ public class ResumeController {
         if(!Objects.equals(file.getContentType(), MediaType.APPLICATION_PDF_VALUE)) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("File must be a PDF");
         }
-        byte[] resume = new byte[0];
+        byte[] resume;
         try {
             resume = file.getBytes();
         } catch (IOException e) {

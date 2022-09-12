@@ -62,4 +62,5 @@ public class ProfileService implements tech.portfolioshop.users.services.interfa
         user.setStatus(false);
         userRepository.save(user);
     }
+
 }
