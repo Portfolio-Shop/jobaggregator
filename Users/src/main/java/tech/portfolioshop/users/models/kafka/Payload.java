@@ -1,17 +1,23 @@
 package tech.portfolioshop.users.models.kafka;
 
-import tech.portfolioshop.users.configs.kafka.KafkaTopics;
+import org.apache.kafka.clients.admin.NewTopic;
+import org.springframework.context.annotation.Bean;
 
 public abstract class Payload {
-    private final KafkaTopics Topic;
+    private final String Topic;
 
-    protected Payload(KafkaTopics topic) {
+    protected Payload(String topic) {
         Topic = topic;
     }
 
     public abstract String serialize();
     public abstract void deserialize(String json);
-    public final KafkaTopics getTopic() {
+    public final String getTopic() {
         return Topic;
+    }
+
+    @Bean
+    public NewTopic topic(){
+        return new NewTopic(Topic, 1, (short)1);
     }
 }

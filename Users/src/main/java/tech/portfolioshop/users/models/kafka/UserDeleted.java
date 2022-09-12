@@ -1,13 +1,12 @@
 package tech.portfolioshop.users.models.kafka;
 
 import org.json.JSONObject;
-import tech.portfolioshop.users.configs.kafka.KafkaTopics;
 
 public class UserDeleted extends Payload{
     private String userId;
 
     public UserDeleted(String userId) {
-        super(KafkaTopics.USER_DELETED);
+        super("USER_DELETED");
 
         this.userId = userId;
     }

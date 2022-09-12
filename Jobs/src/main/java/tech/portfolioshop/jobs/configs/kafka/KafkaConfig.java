@@ -5,6 +5,7 @@ import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.apache.kafka.common.serialization.StringSerializer;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -18,7 +19,12 @@ import java.util.Map;
 
 @Configuration
 public class KafkaConfig {
-    private String bootstrapAddress = "localhost:9092";
+
+    @Value(value = "${spring.kafka.bootstrap-address}")
+    private String bootstrapAddress;
+
+    @Value(value = "${spring.application.name}")
+    private String groupID;
     @Bean
     public ProducerFactory<String, String> producerFactory() {
         Map<String, Object> configProps = new HashMap<>();
@@ -37,14 +43,6 @@ public class KafkaConfig {
     public KafkaTemplate<String, String> kafkaTemplate() {
         return new KafkaTemplate<>(producerFactory());
     }
-    @Bean
-    public List<NewTopic> getTopics(){
-        List<NewTopic> topics = new ArrayList<>();
-        for(KafkaTopics k: KafkaTopics.values()){
-            topics.add(new NewTopic(String.valueOf(k), 1,(short)1));
-        }
-        return topics;
-    }
 
     @Bean
     public ConsumerFactory<String, String> consumerFactory() {
@@ -54,7 +52,7 @@ public class KafkaConfig {
                 bootstrapAddress);
         props.put(
                 ConsumerConfig.GROUP_ID_CONFIG,
-                "jobs-ws");
+                groupID);
         props.put(
                 ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG,
                 StringDeserializer.class);
@@ -65,7 +63,6 @@ public class KafkaConfig {
     }
 
     @Bean
-
     public ConcurrentKafkaListenerContainerFactory<String, String>
     kafkaListenerContainerFactory() {
 
@@ -74,9 +71,4 @@ public class KafkaConfig {
         factory.setConsumerFactory(consumerFactory());
         return factory;
     }
-    @KafkaListener(topics = "USER_CREATED" , groupId = "foo")
-    public void listenGroupFoo(String message) {
-        System.out.println("Received Message in group foo: " + message);
-    }
-
 }

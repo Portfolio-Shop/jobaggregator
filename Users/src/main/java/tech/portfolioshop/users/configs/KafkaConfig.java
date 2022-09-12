@@ -1,4 +1,4 @@
-package tech.portfolioshop.users.configs.kafka;
+package tech.portfolioshop.users.configs;
 
 import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.producer.ProducerConfig;
@@ -34,13 +34,5 @@ public class KafkaConfig {
     @Bean
     public KafkaTemplate<String, String> kafkaTemplate() {
         return new KafkaTemplate<>(producerFactory());
-    }
-    @Bean
-    public List<NewTopic> getTopics(){
-        List<NewTopic> topics = new ArrayList<>();
-        for(KafkaTopics k: KafkaTopics.values()){
-            topics.add(new NewTopic(String.valueOf(k), 1,(short)1));
-        }
-        return topics;
     }
 }

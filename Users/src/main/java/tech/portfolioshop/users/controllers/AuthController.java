@@ -37,10 +37,10 @@ public class AuthController {
         UserDto userDto = modelMapper.map(userDetails, UserDto.class);
         UserDto createdUser = authService.signup(userDto);
         UserCreated user = new UserCreated(
-                userDto.getName(),
-                userDto.getEmail(),
-                userDto.getUserId(),
-                userDto.getPhone()
+                createdUser.getName(),
+                createdUser.getEmail(),
+                createdUser.getUserId(),
+                createdUser.getPhone()
         );
         kafkaUserCreated.send(user);
         UserResponse userResponse = modelMapper.map(createdUser, UserResponse.class);

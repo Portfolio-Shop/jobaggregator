@@ -1,7 +1,6 @@
 package tech.portfolioshop.users.models.kafka;
 
 import org.json.JSONObject;
-import tech.portfolioshop.users.configs.kafka.KafkaTopics;
 
 public class UserUpdated extends Payload{
     private String name;
@@ -9,7 +8,7 @@ public class UserUpdated extends Payload{
     private String phone;
 
     public UserUpdated(String name, String userId, String phone) {
-        super(KafkaTopics.USER_UPDATED);
+        super("USER_UPDATED");
 
         this.name = name;
         this.userId = userId;
