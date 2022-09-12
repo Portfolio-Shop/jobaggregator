@@ -7,7 +7,7 @@ info:
 servers:
     - url: "localhost:8080/api/v1"
 paths:
-    /user/signup:
+    /user/auth/signup:
         post:
             summary: "Users can signup"
             tags:
@@ -29,36 +29,36 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/UserResponse"
-                400:
-                    description: "Bad Request"
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                500:
-                    description: "Internal Server error"
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                503:
-                    description: "Service(Possibly Database) Unavailable"
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                default:
-                    description: "Created"
-                    headers:
-                        Authorization:
-                            description: "A bearer token containing JWT"
-                            schema:
-                                type: string
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/UserResponse"
-    /user/signin:
+                # 400:
+                #     description: "Bad Request"
+                #     content:
+                #         application/json:
+                #             schema:
+                #                 $ref: "#/components/schemas/Error"
+                # 500:
+                #     description: "Internal Server error"
+                #     content:
+                #         application/json:
+                #             schema:
+                #                 $ref: "#/components/schemas/Error"
+                # 503:
+                #     description: "Service(Possibly Database) Unavailable"
+                #     content:
+                #         application/json:
+                #             schema:
+                #                 $ref: "#/components/schemas/Error"
+                # default:
+                #     description: "Created"
+                #     headers:
+                #         Authorization:
+                #             description: "A bearer token containing JWT"
+                #             schema:
+                #                 type: string
+                #     content:
+                #         application/json:
+                #             schema:
+                #                 $ref: "#/components/schemas/UserResponse"
+    /user/auth/signin:
         post:
             summary: "Users can signin"
             tags:
@@ -80,48 +80,48 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/UserResponse"
-                400:
-                    description: "Bad Request"
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                401:
-                    description: "Invalid Password"
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                404:
-                    description: "User resource not found"
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                500:
-                    description: "Internal Server error"
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                503:
-                    description: "Service(Possibly Database) Unavailable"
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                default:
-                    description: "Ok"
-                    headers:
-                        Authorization:
-                            description: "A bearer token containing JWT"
-                            schema:
-                                type: string
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/UserResponse"
-    /user:
+                # 400:
+                #     description: "Bad Request"
+                #     content:
+                #         application/json:
+                #             schema:
+                #                 $ref: "#/components/schemas/Error"
+                # 401:
+                #     description: "Invalid Password"
+                #     content:
+                #         application/json:
+                #             schema:
+                #                 $ref: "#/components/schemas/Error"
+                # 404:
+                #     description: "User resource not found"
+                #     content:
+                #         application/json:
+                #             schema:
+                #                 $ref: "#/components/schemas/Error"
+                # 500:
+                #     description: "Internal Server error"
+                #     content:
+                #         application/json:
+                #             schema:
+                #                 $ref: "#/components/schemas/Error"
+                # 503:
+                #     description: "Service(Possibly Database) Unavailable"
+                #     content:
+                #         application/json:
+                #             schema:
+                #                 $ref: "#/components/schemas/Error"
+                # default:
+                #     description: "Ok"
+                #     headers:
+                #         Authorization:
+                #             description: "A bearer token containing JWT"
+                #             schema:
+                #                 type: string
+                #     content:
+                #         application/json:
+                #             schema:
+                #                 $ref: "#/components/schemas/UserResponse"
+    /user/profile:
         get:
             summary: "Get user details"
             security:
@@ -133,35 +133,35 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/UserResponse"
-                401:
-                    description: "Invalid or tampered bearer token"
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                500:
-                    description: "Internal Server error"
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                503:
-                    description: "Service(Possibly Database) Unavailable"
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                default:
-                    description: "Ok"
-                    headers:
-                        Authorization:
-                            description: "A bearer token containing JWT"
-                            schema:
-                                type: string
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/UserResponse"
+                # 401:
+                #     description: "Invalid or tampered bearer token"
+                #     content:
+                #         application/json:
+                #             schema:
+                #                 $ref: "#/components/schemas/Error"
+                # 500:
+                #     description: "Internal Server error"
+                #     content:
+                #         application/json:
+                #             schema:
+                #                 $ref: "#/components/schemas/Error"
+                # 503:
+                #     description: "Service(Possibly Database) Unavailable"
+                #     content:
+                #         application/json:
+                #             schema:
+                #                 $ref: "#/components/schemas/Error"
+                # default:
+                #     description: "Ok"
+                #     headers:
+                #         Authorization:
+                #             description: "A bearer token containing JWT"
+                #             schema:
+                #                 type: string
+                #     content:
+                #         application/json:
+                #             schema:
+                #                 $ref: "#/components/schemas/UserResponse"
         put:
             summary: "Update user details"
             security:
@@ -178,30 +178,30 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/UserResponse"
-                401:
-                    description: "Invalid or tampered bearer token"
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                500:
-                    description: "Internal Server error"
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                503:
-                    description: "Service(Possibly Database) Unavailable"
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                default:
-                    description: "Ok"
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/UserResponse"
+                # 401:
+                #     description: "Invalid or tampered bearer token"
+                #     content:
+                #         application/json:
+                #             schema:
+                #                 $ref: "#/components/schemas/Error"
+                # 500:
+                #     description: "Internal Server error"
+                #     content:
+                #         application/json:
+                #             schema:
+                #                 $ref: "#/components/schemas/Error"
+                # 503:
+                #     description: "Service(Possibly Database) Unavailable"
+                #     content:
+                #         application/json:
+                #             schema:
+                #                 $ref: "#/components/schemas/Error"
+                # default:
+                #     description: "Ok"
+                #     content:
+                #         application/json:
+                #             schema:
+                #                 $ref: "#/components/schemas/UserResponse"
         delete:
             summary: "Delete user details"
             security:
@@ -209,26 +209,26 @@ paths:
             responses:
                 204:
                     description: "Successfully deleted user"
-                401:
-                    description: "Invalid or tampered bearer token"
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                500:
-                    description: "Internal Server error"
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                503:
-                    description: "Service(Possibly Database) Unavailable"
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                default:
-                    description: "No content"
+                # 401:
+                #     description: "Invalid or tampered bearer token"
+                #     content:
+                #         application/json:
+                #             schema:
+                #                 $ref: "#/components/schemas/Error"
+                # 500:
+                #     description: "Internal Server error"
+                #     content:
+                #         application/json:
+                #             schema:
+                #                 $ref: "#/components/schemas/Error"
+                # 503:
+                #     description: "Service(Possibly Database) Unavailable"
+                #     content:
+                #         application/json:
+                #             schema:
+                #                 $ref: "#/components/schemas/Error"
+                # default:
+                #     description: "No content"
     /user/resume:
         post:
             summary: "User can upload resume"
@@ -242,32 +242,32 @@ paths:
             responses:
                 201:
                     description: "Successfully Uploaded Resume"
-                401:
-                    description: "Invalid or tampered bearer token"
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                400:
-                    description: "Request validation error, file type not supported"
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                500:
-                    description: "Internal Server error"
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                503:
-                    description: "Service(Possibly Database) Unavailable"
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                default:
-                    description: "Created"
+                # 401:
+                #     description: "Invalid or tampered bearer token"
+                #     content:
+                #         application/json:
+                #             schema:
+                #                 $ref: "#/components/schemas/Error"
+                # 400:
+                #     description: "Request validation error, file type not supported"
+                #     content:
+                #         application/json:
+                #             schema:
+                #                 $ref: "#/components/schemas/Error"
+                # 500:
+                #     description: "Internal Server error"
+                #     content:
+                #         application/json:
+                #             schema:
+                #                 $ref: "#/components/schemas/Error"
+                # 503:
+                #     description: "Service(Possibly Database) Unavailable"
+                #     content:
+                #         application/json:
+                #             schema:
+                #                 $ref: "#/components/schemas/Error"
+                # default:
+                #     description: "Created"
         get:
             summary: "User can get uploaded resume"
             security:
@@ -279,36 +279,36 @@ paths:
                         application/pdf:
                             schema:
                                 $ref: "#/components/schemas/ResumeResponse"
-                401:
-                    description: "Invalid or tampered bearer token"
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                404:
-                    description: "Resume not found"
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                500:
-                    description: "Internal Server error"
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                503:
-                    description: "Service(Possibly Database) Unavailable"
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                default:
-                    description: "Ok"
-                    content:
-                        application/pdf:
-                            schema:
-                                $ref: "#/components/schemas/ResumeResponse"
+                # 401:
+                #     description: "Invalid or tampered bearer token"
+                #     content:
+                #         application/json:
+                #             schema:
+                #                 $ref: "#/components/schemas/Error"
+                # 404:
+                #     description: "Resume not found"
+                #     content:
+                #         application/json:
+                #             schema:
+                #                 $ref: "#/components/schemas/Error"
+                # 500:
+                #     description: "Internal Server error"
+                #     content:
+                #         application/json:
+                #             schema:
+                #                 $ref: "#/components/schemas/Error"
+                # 503:
+                #     description: "Service(Possibly Database) Unavailable"
+                #     content:
+                #         application/json:
+                #             schema:
+                #                 $ref: "#/components/schemas/Error"
+                # default:
+                #     description: "Ok"
+                #     content:
+                #         application/pdf:
+                #             schema:
+                #                 $ref: "#/components/schemas/ResumeResponse"
     /jobs:
         get:
             summary: "User can get job recommendation according to resume"
@@ -321,36 +321,36 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/JobResponse"
-                401:
-                    description: "Invalid or tampered bearer token"
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                404:
-                    description: "Jobs/Details not found"
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                500:
-                    description: "Internal Server error"
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                503:
-                    description: "Service(Possibly Database) Unavailable"
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                default:
-                    description: "OK"
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/JobResponse"
+                # 401:
+                #     description: "Invalid or tampered bearer token"
+                #     content:
+                #         application/json:
+                #             schema:
+                #                 $ref: "#/components/schemas/Error"
+                # 404:
+                #     description: "Jobs/Details not found"
+                #     content:
+                #         application/json:
+                #             schema:
+                #                 $ref: "#/components/schemas/Error"
+                # 500:
+                #     description: "Internal Server error"
+                #     content:
+                #         application/json:
+                #             schema:
+                #                 $ref: "#/components/schemas/Error"
+                # 503:
+                #     description: "Service(Possibly Database) Unavailable"
+                #     content:
+                #         application/json:
+                #             schema:
+                #                 $ref: "#/components/schemas/Error"
+                # default:
+                #     description: "OK"
+                #     content:
+                #         application/json:
+                #             schema:
+                #                 $ref: "#/components/schemas/JobResponse"
         post:
             summary: "User can search for jobs"
             security:
@@ -368,24 +368,24 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/JobResponse"
-                500:
-                    description: "Internal Server error"
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                503:
-                    description: "Service(Possibly Database) Unavailable"
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                default:
-                    description: "OK"
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/JobResponse"
+                # 500:
+                #     description: "Internal Server error"
+                #     content:
+                #         application/json:
+                #             schema:
+                #                 $ref: "#/components/schemas/Error"
+                # 503:
+                #     description: "Service(Possibly Database) Unavailable"
+                #     content:
+                #         application/json:
+                #             schema:
+                #                 $ref: "#/components/schemas/Error"
+                # default:
+                #     description: "OK"
+                #     content:
+                #         application/json:
+                #             schema:
+                #                 $ref: "#/components/schemas/JobResponse"
 components:
     schemas:
         # Users
@@ -494,7 +494,7 @@ components:
                         type: string
                     salary:
                         type: string
-                    descriptionHtml:
+                    description_html:
                         type: string
                     skills:
                         type: array
