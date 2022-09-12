@@ -1,6 +1,6 @@
-package tech.portfolioshop.users.data.services.payloads;
+package tech.portfolioshop.users.models.kafka;
 
-import tech.portfolioshop.users.data.services.KafkaTopics;
+import tech.portfolioshop.users.configs.kafka.KafkaTopics;
 
 public abstract class Payload {
     private final KafkaTopics Topic;

@@ -1,4 +1,4 @@
-package tech.portfolioshop.users.models;
+package tech.portfolioshop.users.models.http.request;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;

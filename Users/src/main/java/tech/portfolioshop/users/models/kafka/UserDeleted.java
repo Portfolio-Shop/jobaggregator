@@ -1,7 +1,7 @@
-package tech.portfolioshop.users.data.services.payloads;
+package tech.portfolioshop.users.models.kafka;
 
 import org.json.JSONObject;
-import tech.portfolioshop.users.data.services.KafkaTopics;
+import tech.portfolioshop.users.configs.kafka.KafkaTopics;
 
 public class UserDeleted extends Payload{
     private String userId;

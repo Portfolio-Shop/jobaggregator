@@ -1,4 +1,4 @@
-package tech.portfolioshop.users.models;
+package tech.portfolioshop.users.models.http.request;
 
 public class UserUpdateRequest {
     private String name;

@@ -1,4 +1,4 @@
-package tech.portfolioshop.users.data.database;
+package tech.portfolioshop.users.data;
 
 import org.hibernate.annotations.Type;
 import javax.persistence.*;

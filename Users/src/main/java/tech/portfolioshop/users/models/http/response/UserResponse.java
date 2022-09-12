@@ -1,4 +1,4 @@
-package tech.portfolioshop.users.models;
+package tech.portfolioshop.users.models.http.response;
 
 public class UserResponse {
     private String userId;

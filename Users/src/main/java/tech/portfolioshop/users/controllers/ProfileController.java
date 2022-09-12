@@ -7,9 +7,9 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import tech.portfolioshop.users.models.UserResponse;
-import tech.portfolioshop.users.models.UserUpdateRequest;
-import tech.portfolioshop.users.services.implemetation.ProfileService;
+import tech.portfolioshop.users.models.http.response.UserResponse;
+import tech.portfolioshop.users.models.http.request.UserUpdateRequest;
+import tech.portfolioshop.users.services.ProfileService;
 import tech.portfolioshop.users.shared.UserDto;
 
 @RestController

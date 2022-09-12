@@ -1,4 +1,4 @@
-package tech.portfolioshop.users.models;
+package tech.portfolioshop.users.models.http.request;
 
 import org.springframework.web.multipart.MultipartFile;
 

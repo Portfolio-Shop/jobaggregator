@@ -1,19 +1,18 @@
-package tech.portfolioshop.users.data.services;
+package tech.portfolioshop.users.services;
 
-import org.apache.kafka.clients.admin.NewTopic;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
-import tech.portfolioshop.users.data.services.payloads.Payload;
+import tech.portfolioshop.users.configs.kafka.KafkaTopics;
+import tech.portfolioshop.users.models.kafka.Payload;
 
 @Service
-public class KafkaProducer<T extends Payload> {
+public class KafkaProducerService<T extends Payload> {
 
     KafkaTemplate kafkaTemplate;
 
     @Autowired
-    KafkaProducer(KafkaTemplate kafkaTemplate){
+    KafkaProducerService(KafkaTemplate kafkaTemplate){
         this.kafkaTemplate = kafkaTemplate;
     }
 

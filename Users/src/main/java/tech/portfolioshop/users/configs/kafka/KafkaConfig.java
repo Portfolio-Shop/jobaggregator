@@ -1,4 +1,4 @@
-package tech.portfolioshop.users.data.services;
+package tech.portfolioshop.users.configs.kafka;
 
 import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.producer.ProducerConfig;

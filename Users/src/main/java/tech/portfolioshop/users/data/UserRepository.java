@@ -1,4 +1,4 @@
-package tech.portfolioshop.users.data.database;
+package tech.portfolioshop.users.data;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;

@@ -1,16 +1,16 @@
-package tech.portfolioshop.users.services.implemetation;
+package tech.portfolioshop.users.services;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import tech.portfolioshop.users.data.database.UserEntity;
-import tech.portfolioshop.users.data.database.UserRepository;
+import tech.portfolioshop.users.data.UserEntity;
+import tech.portfolioshop.users.data.UserRepository;
 import tech.portfolioshop.users.shared.UserDto;
 
 @Service
-public class AuthService implements tech.portfolioshop.users.services.interfaces.AuthService {
+public class AuthService {
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -30,7 +30,6 @@ public class AuthService implements tech.portfolioshop.users.services.interfaces
         this.kafkaTemplate = kafkaTemplate;
     }
 
-    @Override
     public UserDto signup(UserDto userDetails) {
         String encryptedPassword = bCryptPasswordEncoder.encode(userDetails.getPassword());
         userDetails.setEncryptedPassword(encryptedPassword);
@@ -43,7 +42,6 @@ public class AuthService implements tech.portfolioshop.users.services.interfaces
         return modelMapper.map(userEntity, UserDto.class);
     }
 
-    @Override
     public UserDto signin(UserDto userDetails) {
         UserEntity userEntity = userRepository.findByEmail(userDetails.getEmail());
         if (userEntity == null) {

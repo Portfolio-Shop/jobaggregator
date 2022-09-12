@@ -1,4 +1,4 @@
-package tech.portfolioshop.users.data.services;
+package tech.portfolioshop.users.configs.kafka;
 
 
 public enum KafkaTopics {

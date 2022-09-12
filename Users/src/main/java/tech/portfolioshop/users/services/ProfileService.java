@@ -1,14 +1,14 @@
-package tech.portfolioshop.users.services.implemetation;
+package tech.portfolioshop.users.services;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import tech.portfolioshop.users.data.database.UserEntity;
-import tech.portfolioshop.users.data.database.UserRepository;
+import tech.portfolioshop.users.data.UserEntity;
+import tech.portfolioshop.users.data.UserRepository;
 import tech.portfolioshop.users.shared.UserDto;
 
 @Service
-public class ProfileService implements tech.portfolioshop.users.services.interfaces.ProfileService {
+public class ProfileService{
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
 
@@ -17,7 +17,6 @@ public class ProfileService implements tech.portfolioshop.users.services.interfa
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
     }
-    @Override
     public UserDto getUserDetailsByEmail(String email) {
         UserEntity user = userRepository.findByEmail(email);
         if (user == null) {
@@ -26,7 +25,6 @@ public class ProfileService implements tech.portfolioshop.users.services.interfa
         return modelMapper.map(user, UserDto.class);
     }
 
-    @Override
     public UserDto getUserByUserId(String userId) {
         UserEntity user = userRepository.findByUserId(userId);
         if (user == null) {
@@ -35,7 +33,6 @@ public class ProfileService implements tech.portfolioshop.users.services.interfa
         return modelMapper.map(user, UserDto.class);
     }
 
-    @Override
     public void updateUser(UserDto userDetails) {
         UserEntity user = userRepository.findByUserId(userDetails.getUserId());
         if (user == null) {
@@ -53,7 +50,6 @@ public class ProfileService implements tech.portfolioshop.users.services.interfa
         userRepository.save(user);
     }
 
-    @Override
     public void deleteUser(String userId) {
         UserEntity user = userRepository.findByUserId(userId);
         if (user == null) {
