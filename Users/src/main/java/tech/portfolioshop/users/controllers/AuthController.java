@@ -9,10 +9,12 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import tech.portfolioshop.users.models.SignInRequest;
-import tech.portfolioshop.users.models.SignUpRequest;
-import tech.portfolioshop.users.models.UserResponse;
-import tech.portfolioshop.users.services.implemetation.AuthService;
+import tech.portfolioshop.users.models.http.request.SignInRequest;
+import tech.portfolioshop.users.models.http.request.SignUpRequest;
+import tech.portfolioshop.users.models.http.response.UserResponse;
+import tech.portfolioshop.users.models.kafka.UserCreated;
+import tech.portfolioshop.users.services.AuthService;
+import tech.portfolioshop.users.services.KafkaProducerService;
 import tech.portfolioshop.users.shared.UserDto;
 
 @RestController
@@ -20,11 +22,13 @@ import tech.portfolioshop.users.shared.UserDto;
 public class AuthController {
     private final Environment environment;
     private final AuthService authService;
+    private final KafkaProducerService<UserCreated> kafkaUserCreated;
     private final ModelMapper modelMapper;
 
     @Autowired
-    public AuthController(AuthService authService, ModelMapper modelMapper, Environment environment) {
+    public AuthController(AuthService authService, KafkaProducerService<UserCreated> kafkaUserCreated, ModelMapper modelMapper, Environment environment) {
         this.authService = authService;
+        this.kafkaUserCreated = kafkaUserCreated;
         this.modelMapper = modelMapper;
         this.environment = environment;
     }
@@ -32,6 +36,13 @@ public class AuthController {
     public ResponseEntity<UserResponse> signup(@RequestBody SignUpRequest userDetails) {
         UserDto userDto = modelMapper.map(userDetails, UserDto.class);
         UserDto createdUser = authService.signup(userDto);
+        UserCreated user = new UserCreated(
+                userDto.getName(),
+                userDto.getEmail(),
+                userDto.getUserId(),
+                userDto.getPhone()
+        );
+        kafkaUserCreated.send(user);
         UserResponse userResponse = modelMapper.map(createdUser, UserResponse.class);
         String token = "Bearer " + Jwts.builder()
                 .setSubject(createdUser.getUserId())

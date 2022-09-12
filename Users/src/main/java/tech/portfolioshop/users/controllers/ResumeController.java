@@ -8,7 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import tech.portfolioshop.users.services.implemetation.ResumeService;
+import tech.portfolioshop.users.services.ResumeService;
 import tech.portfolioshop.users.shared.ResumeDto;
 
 import java.io.IOException;
