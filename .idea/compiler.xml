@@ -17,12 +17,12 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="APIConfig" target="18" />
-      <module name="APIGateway" target="11" />
-      <module name="Jobs" target="11" />
-      <module name="Mailer" target="11" />
-      <module name="Scraper" target="11" />
-      <module name="ServiceDiscovery" target="11" />
-      <module name="Users" target="11" />
+      <module name="APIGateway" target="17" />
+      <module name="Jobs" target="17" />
+      <module name="Mailer" target="17" />
+      <module name="Scraper" target="17" />
+      <module name="ServiceDiscovery" target="17" />
+      <module name="Users" target="17" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">

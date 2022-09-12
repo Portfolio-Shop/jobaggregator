@@ -1,6 +1,11 @@
 package tech.portfolioshop.users.shared;
 
+import java.util.Arrays;
+
 public class UserDto {
+    /**
+     * Data Transfer Object for the service. Used internally to parse and communicate with user data wrapped as an instance of this class.
+     */
     private String name;
     private String email;
     private String password;
@@ -81,5 +86,20 @@ public class UserDto {
 
     public void setStatus(boolean status) {
         this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return "UserDto{" +
+                "name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", userId='" + userId + '\'' +
+                ", phone='" + phone + '\'' +
+                ", image=" + Arrays.toString(image) +
+                ", encryptedPassword='" + encryptedPassword + '\'' +
+                ", verified=" + verified +
+                ", status=" + status +
+                '}';
     }
 }

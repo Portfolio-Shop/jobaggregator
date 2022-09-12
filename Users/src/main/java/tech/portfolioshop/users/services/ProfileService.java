@@ -58,4 +58,5 @@ public class ProfileService{
         user.setStatus(false);
         userRepository.save(user);
     }
+
 }

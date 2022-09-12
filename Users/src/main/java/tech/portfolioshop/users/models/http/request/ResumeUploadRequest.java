@@ -3,6 +3,9 @@ package tech.portfolioshop.users.models.http.request;
 import org.springframework.web.multipart.MultipartFile;
 
 public class ResumeUploadRequest {
+    /**
+     * All Resume Upload Requests are wrapped as an instance of this model.
+     */
     private MultipartFile resume;
 
     public ResumeUploadRequest(MultipartFile resume) {
@@ -15,5 +18,12 @@ public class ResumeUploadRequest {
 
     public void setResume(MultipartFile resume) {
         this.resume = resume;
+    }
+
+    @Override
+    public String toString() {
+        return "ResumeUploadRequest{" +
+                "resume=" + resume +
+                '}';
     }
 }

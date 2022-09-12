@@ -3,14 +3,18 @@ package tech.portfolioshop.users.models.http.request;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.Arrays;
 
 public class SignUpRequest {
+    /**
+     * All SignUp Requests are wrapped as an instance of this model.
+     */
     @NotNull(message = "Email is required")
     @Email(message = "Email is not valid")
     private String email;
 
     @NotNull(message = "Password is required")
-    @Size(min=8, max=16, message = "Password must be between 8 and 16 characters long")
+    @Size(min = 8, max = 16, message = "Password must be between 8 and 16 characters long")
     private String password;
 
     @NotNull(message = "Name is required")
@@ -65,5 +69,10 @@ public class SignUpRequest {
 
     public void setImage(Byte[] image) {
         this.image = image;
+    }
+
+    @Override
+    public String toString() {
+        return "SignUpRequest{" + "email='" + email + '\'' + ", password='" + password + '\'' + ", name='" + name + '\'' + ", phone='" + phone + '\'' + ", image=" + Arrays.toString(image) + '}';
     }
 }
