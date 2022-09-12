@@ -54,7 +54,7 @@ public class ResumeController {
         if(!Objects.equals(file.getContentType(), MediaType.APPLICATION_PDF_VALUE)) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("File must be a PDF");
         }
-        byte[] resume = new byte[0];
+        byte[] resume;
         try {
             resume = file.getBytes();
         } catch (IOException e) {
