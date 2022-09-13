@@ -22,7 +22,7 @@
       <module name="Mailer" target="17" />
       <module name="Scraper" target="17" />
       <module name="ServiceDiscovery" target="17" />
-      <module name="Users" target="17" />
+      <module name="Users" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
