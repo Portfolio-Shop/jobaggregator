@@ -17,8 +17,8 @@ spec:
         imagePullPolicy: Never
         resources:
           limits:
-            memory: "8Gi"
-            cpu: "4"
+            memory: "1024Mi"
+            cpu: "2"
         env:
           - name: spring.datasource.url
             value: jdbc:postgresql://users-pg-srv:5432/postgres
@@ -38,5 +38,5 @@ spec:
     app: users-depl
   ports:
   - protocol: TCP
-    port: 80
+    port: 8080
     targetPort: 8080
