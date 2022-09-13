@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/APIConfig/APIConfig.iml" filepath="$PROJECT_DIR$/APIConfig/APIConfig.iml" />
-      <module fileurl="file://$PROJECT_DIR$/APIGateway/APIGateway.iml" filepath="$PROJECT_DIR$/APIGateway/APIGateway.iml" />
       <module fileurl="file://$PROJECT_DIR$/Jobs/Jobs.iml" filepath="$PROJECT_DIR$/Jobs/Jobs.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Mailer/Mailer.iml" filepath="$PROJECT_DIR$/Mailer/Mailer.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Scraper/Scraper.iml" filepath="$PROJECT_DIR$/Scraper/Scraper.iml" />
       <module fileurl="file://$PROJECT_DIR$/ServiceDiscovery/ServiceDiscovery.iml" filepath="$PROJECT_DIR$/ServiceDiscovery/ServiceDiscovery.iml" />
       <module fileurl="file://$PROJECT_DIR$/Users/Users.iml" filepath="$PROJECT_DIR$/Users/Users.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/jobaggregator.iml" filepath="$PROJECT_DIR$/.idea/jobaggregator.iml" />

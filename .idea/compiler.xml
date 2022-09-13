@@ -6,11 +6,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="APIConfig" />
         <module name="Jobs" />
-        <module name="Scraper" />
-        <module name="Mailer" />
-        <module name="APIGateway" />
         <module name="Users" />
         <module name="ServiceDiscovery" />
       </profile>
