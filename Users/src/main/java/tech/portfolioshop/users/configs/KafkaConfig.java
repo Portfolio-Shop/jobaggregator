@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,7 +17,8 @@ import java.util.Map;
 
 @Configuration
 public class KafkaConfig {
-    private String bootstrapAddress = "localhost:9092";
+    @Value(value="${kafka.bootstrap-address}")
+    private String bootstrapAddress;
     @Bean
     public ProducerFactory<String, String> producerFactory() {
         Map<String, Object> configProps = new HashMap<>();
