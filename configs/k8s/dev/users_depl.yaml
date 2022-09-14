@@ -29,7 +29,7 @@ spec:
           - name: jwt.secret
             value: 123-456
           - name: kafka.bootstrap-address
-            value: kafka-srv:9092
+            value: kafka-service:9092
 ---
 apiVersion: v1
 kind: Service
