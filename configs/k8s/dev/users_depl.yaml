@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: users-depl
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: users
@@ -14,8 +14,8 @@ spec:
     spec:
       containers:
       - name: users
-        image: sdp/users
-        imagePullPolicy: Never
+        image: serviceregistryjobagggregator.azurecr.io/users
+        imagePullPolicy: IfNotPresent
         resources:
           limits:
             memory: "1024Mi"
@@ -45,3 +45,4 @@ spec:
   - protocol: TCP
     port: 80
     targetPort: 8080
+  type: ClusterIP

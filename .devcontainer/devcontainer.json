@@ -33,9 +33,10 @@
 	"features": {
 		"docker-in-docker": "latest",
 		"kubectl-helm-minikube": "latest",
-		"git": "os-provided",
+		"git": "latest",
 		"git-lfs": "latest",
 		"sshd": "latest",
-		"python": "os-provided"
+		"python": "latest",
+		"azure-cli": "latest"
 	}
 }
