@@ -3,6 +3,7 @@ kind: Deployment
 metadata:
   name: users-depl
 spec:
+  replicas: 2
   selector:
     matchLabels:
       app: users
@@ -18,7 +19,9 @@ spec:
         resources:
           limits:
             memory: "1024Mi"
-            cpu: "2"
+            cpu: "1"
+        ports:
+        - containerPort: 8080
         env:
           - name: spring.datasource.url
             value: jdbc:postgresql://users-pg-srv:5432/postgres
@@ -42,3 +45,4 @@ spec:
   - protocol: TCP
     port: 8080
     targetPort: 8080
+  type: LoadBalancer

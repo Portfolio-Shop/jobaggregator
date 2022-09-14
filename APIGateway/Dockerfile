@@ -6,4 +6,4 @@ COPY . .
 
 RUN ./mvnw clean install package
 
-CMD ["java", "-jar", "target/Users-0.0.1-SNAPSHOT.jar"]
+CMD ["java", "-jar", "target/APIGateway-0.0.1-SNAPSHOT.jar"]
