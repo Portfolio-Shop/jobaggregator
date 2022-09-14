@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: users-depl
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: users
@@ -40,9 +40,8 @@ metadata:
   name: users-srv
 spec:
   selector:
-    app: users-depl
+    app: users
   ports:
   - protocol: TCP
-    port: 8080
+    port: 80
     targetPort: 8080
-  type: LoadBalancer
