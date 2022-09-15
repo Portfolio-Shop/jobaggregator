@@ -39,6 +39,9 @@ public class JobsEntity {
     @CreationTimestamp
     private LocalDateTime createdAt;
 
+    public JobsEntity() {
+    }
+
     public JobsEntity(Long id, String jobId, String query, String location, String title, String employer, String salary, String descriptionHTML, String skills, LocalDateTime createdAt) {
         this.id = id;
         this.jobId = jobId;

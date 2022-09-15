@@ -15,7 +15,7 @@ public class UserEntity {
     private Long id;
 
     @Column(unique = true, nullable = false)
-    private String uniqueId;
+    private String userId;
 
     private String email;
     private String phone;
@@ -30,16 +30,19 @@ public class UserEntity {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-    public UserEntity(String uniqueId, String email, String phone, String parsedResume) {
-        this.uniqueId = uniqueId;
+    public UserEntity() {
+    }
+
+    public UserEntity(String uniqueId, String userId, String email, String phone, String parsedResume) {
+        this.userId = userId;
         this.email = email;
         this.phone = phone;
         this.parsedResume = parsedResume;
     }
 
-    public UserEntity(Long id, String uniqueId, String email, String phone, String parsedResume, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public UserEntity(Long id, String uniqueId, String userId, String email, String phone, String parsedResume, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
-        this.uniqueId = uniqueId;
+        this.userId = userId;
         this.email = email;
         this.phone = phone;
         this.parsedResume = parsedResume;
@@ -53,14 +56,6 @@ public class UserEntity {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getUniqueId() {
-        return uniqueId;
-    }
-
-    public void setUniqueId(String uniqueId) {
-        this.uniqueId = uniqueId;
     }
 
     public String getEmail() {
@@ -101,5 +96,21 @@ public class UserEntity {
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public List<SearchEntity> getSearches() {
+        return searches;
+    }
+
+    public void setSearches(List<SearchEntity> searches) {
+        this.searches = searches;
     }
 }

@@ -1,8 +1,9 @@
 package tech.portfolioshop.users.shared;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
-public class ResumeDto {
+public class ResumeDto implements Serializable {
     /**
      * Data Transfer Object for the service. Used internally to parse and communicate with resume data wrapped as an instance of this class.
      */
