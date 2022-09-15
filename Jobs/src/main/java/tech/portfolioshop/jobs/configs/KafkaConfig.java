@@ -1,4 +1,4 @@
-package tech.portfolioshop.jobs.configs.kafka;
+package tech.portfolioshop.jobs.configs;
 
 import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
