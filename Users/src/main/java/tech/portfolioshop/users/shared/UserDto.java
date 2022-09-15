@@ -1,8 +1,9 @@
 package tech.portfolioshop.users.shared;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
-public class UserDto {
+public class UserDto implements Serializable {
     /**
      * Data Transfer Object for the service. Used internally to parse and communicate with user data wrapped as an instance of this class.
      */
