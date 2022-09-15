@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-gateway-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: api-gateway
+  template:
+    metadata:
+      labels:
+        app: api-gateway
+    spec:
+      containers:
+      - name: api-gateway
+        image: serviceregistryjobagggregator.azurecr.io/api-gateway
+        imagePullPolicy: IfNotPresent
+        resources:
+          limits:
+            memory: "1024Mi"
+            cpu: "1"
+        ports:
+        - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gateway-srv
+spec:
+  selector:
+    app: api-gateway
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8085
+  type: LoadBalancer

@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: users-pg-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: users-pg
+  template:
+    metadata:
+      labels:
+        app: users-pg
+    spec:
+      containers:
+        - name: users-pg
+          image: postgres:latest
+          resources:
+            limits:
+              memory: "512Mi"
+              cpu: "1"
+          env:
+            - name: POSTGRES_USER
+              value: postgres
+            - name: POSTGRES_PASSWORD
+              value: postgres
+            - name: POSTGRES_DB
+              value: postgres
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: users-pg-srv
+spec:
+  selector:
+    app: users-pg
+  ports:
+    - name: db
+      protocol: TCP
+      port: 5432
+      targetPort: 5432

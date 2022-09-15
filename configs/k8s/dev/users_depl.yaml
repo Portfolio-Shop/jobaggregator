@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: users-depl
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: users
+  template:
+    metadata:
+      labels:
+        app: users
+    spec:
+      containers:
+      - name: users
+        image: serviceregistryjobagggregator.azurecr.io/users
+        imagePullPolicy: IfNotPresent
+        resources:
+          limits:
+            memory: "1024Mi"
+            cpu: "1"
+        ports:
+        - containerPort: 8080
+        env:
+          - name: spring.datasource.url
+            value: jdbc:postgresql://users-pg-srv:5432/postgres
+          - name: spring.datasource.username
+            value: postgres
+          - name: spring.datasource.password
+            value: postgres
+          - name: jwt.secret
+            value: 123-456
+          - name: kafka.bootstrap-address
+            value: kafka-service:9092
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: users-srv
+spec:
+  selector:
+    app: users
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8080
+  type: ClusterIP
