@@ -25,6 +25,9 @@ public class SearchEntity {
     @CreationTimestamp
     private LocalDateTime createdAt;
 
+    public SearchEntity() {
+    }
+
     public SearchEntity(UserEntity user, String query, String location) {
         this.user = user;
         this.query = query;
