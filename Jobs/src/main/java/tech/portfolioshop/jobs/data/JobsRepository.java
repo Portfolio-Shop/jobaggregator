@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface JobsRepository extends CrudRepository<JobsEntity, Long> {
 
-    @Query("SELECT j FROM JobsEntity j WHERE j.query=?1 AND j.location=$2")
+    @Query("SELECT j FROM JobsEntity j WHERE j.query=?1 AND j.location=?2")
     List<JobsEntity> findByQueryandLocation(String query, String location);
 }
