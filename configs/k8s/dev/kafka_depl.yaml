@@ -18,7 +18,10 @@ spec:
         resources:
           limits:
             memory: "1024Mi"
-            cpu: "1"
+            cpu: "0.2"
+          requests:
+            memory: "400Mi"
+            cpu: "0.1"
         ports:
         - containerPort: 2181
         env:
@@ -69,8 +72,11 @@ spec:
         image: wurstmeister/kafka
         resources:
           limits:
+            memory: "2048Mi"
+            cpu: "0.2"
+          requests:
             memory: "1024Mi"
-            cpu: "1"
+            cpu: "0.1"
         ports:
         - containerPort: 9092
         env:
