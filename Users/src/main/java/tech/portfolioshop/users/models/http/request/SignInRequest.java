@@ -19,6 +19,9 @@ public class SignInRequest {
         this.password = password;
     }
 
+    public SignInRequest() {
+    }
+
     public String getEmail() {
         return email;
     }

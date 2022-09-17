@@ -31,6 +31,9 @@ public class SignUpRequest {
         this.image = image;
     }
 
+    public SignUpRequest() {
+    }
+
     public String getEmail() {
         return email;
     }
