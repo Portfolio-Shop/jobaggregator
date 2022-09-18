@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: users-pg-depl
+  name: jobs-pg-depl
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: users-pg
+      app: jobs-pg
   template:
     metadata:
       labels:
-        app: users-pg
+        app: jobs-pg
     spec:
       containers:
-        - name: users-pg
+        - name: jobs-pg
           image: postgres:latest
           resources:
             limits:
@@ -33,10 +33,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: users-pg-srv
+  name: jobs-pg-srv
 spec:
   selector:
-    app: users-pg
+    app: jobs-pg
   ports:
     - name: db
       protocol: TCP

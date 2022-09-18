@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: users-depl
+  name: jobs-depl
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: users
+      app: jobs
   template:
     metadata:
       labels:
-        app: users
+        app: jobs
     spec:
       containers:
-      - name: users
-        image: serviceregistryjobagggregator.azurecr.io/users
+      - name: jobs
+        image: serviceregistryjobagggregator.azurecr.io/jobs
         imagePullPolicy: IfNotPresent
         resources:
           limits:
@@ -27,7 +27,7 @@ spec:
         - containerPort: 8080
         env:
           - name: spring.datasource.url
-            value: jdbc:postgresql://users-pg-srv:5432/postgres
+            value: jdbc:postgresql://jobs-pg-srv:5432/postgres
           - name: spring.datasource.username
             value: postgres
           - name: spring.datasource.password
@@ -40,12 +40,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: users-srv
+  name: jobs-srv
 spec:
   selector:
-    app: users
+    app: jobs
   ports:
   - protocol: TCP
     port: 80
-    targetPort: 8080
+    targetPort: 8081
   type: ClusterIP

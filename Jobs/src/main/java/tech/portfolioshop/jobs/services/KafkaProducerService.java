@@ -1,9 +1,9 @@
-package tech.portfolioshop.users.services;
+package tech.portfolioshop.jobs.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
-import tech.portfolioshop.users.models.kafka.Payload;
+import tech.portfolioshop.jobs.models.kafka.Payload;
 
 @Service
 public class KafkaProducerService<T extends Payload> {

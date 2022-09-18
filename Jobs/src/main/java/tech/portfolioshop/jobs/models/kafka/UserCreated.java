@@ -1,4 +1,4 @@
-package tech.portfolioshop.users.models.kafka;
+package tech.portfolioshop.jobs.models.kafka;
 
 import org.json.JSONObject;
 
@@ -33,7 +33,6 @@ public class UserCreated extends Payload{
             phone = obj.getString("phone");
         }
     }
-
 
     public String getName() {
         return name;
