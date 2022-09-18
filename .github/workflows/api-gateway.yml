@@ -4,17 +4,10 @@ on:
   push:
     branches:
       - main
-      - dev
-    paths:
-      - 'APIGateway/**'
-  pull_request:
-    branches:
-      - main
-      - dev
     paths:
       - 'APIGateway/**'
 env:
-  REGISTRY_NAME: serviceregistryjobagggregator.azurecr.io
+  REGISTRY_NAME: serviceregistryjobagggregator
   CLUSTER_NAME:  jobaggregator
   CLUSTER_RESOURCE_GROUP:  jobaggregator
   NAMESPACE: default
