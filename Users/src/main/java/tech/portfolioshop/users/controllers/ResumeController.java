@@ -2,6 +2,7 @@ package tech.portfolioshop.users.controllers;
 
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -11,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 import tech.portfolioshop.users.services.ResumeService;
 import tech.portfolioshop.users.shared.ResumeDto;
 
+import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.util.Objects;
 
@@ -19,35 +21,31 @@ import java.util.Objects;
 public class ResumeController {
 
     private final ResumeService resumeService;
+    private final Environment environment;
     @Autowired
-    public ResumeController(ResumeService resumeService) {
+    public ResumeController(ResumeService resumeService, Environment environment) {
         this.resumeService = resumeService;
+        this.environment = environment;
     }
     @GetMapping
-    public ResponseEntity<byte[]> getResume(@RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
-        if(token == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }
+    public ResponseEntity<byte[]> getResume(@NotNull @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
         String userId;
         try{
-            userId = Jwts.parser().setSigningKey("secret").parseClaimsJws(token.replace("Bearer ", "")).getBody().getSubject();
+            userId = Jwts.parser().setSigningKey(environment.getProperty("jwt.secret")).parseClaimsJws(token.replace("Bearer ", "")).getBody().getSubject();
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
         ResumeDto resumeDto = resumeService.getResume(userId);
         byte[] resume = resumeDto.getResume();
-        return ResponseEntity.status(HttpStatus.OK).body(resume);
+        return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_PDF).body(resume);
     }
     @PostMapping(
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE
     )
-    public ResponseEntity<String> uploadResume(@RequestHeader(HttpHeaders.AUTHORIZATION) String token, @RequestParam("resume") MultipartFile file) {
-        if(token == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }
+    public ResponseEntity<String> uploadResume(@NotNull @RequestHeader(HttpHeaders.AUTHORIZATION) String token, @RequestParam("resume") MultipartFile file) {
         String userId;
         try{
-            userId = Jwts.parser().setSigningKey("secret").parseClaimsJws(token.replace("Bearer ", "")).getBody().getSubject();
+            userId = Jwts.parser().setSigningKey(environment.getProperty("jwt.secret")).parseClaimsJws(token.replace("Bearer ", "")).getBody().getSubject();
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
@@ -64,6 +62,6 @@ public class ResumeController {
         resumeDto.setResume(resume);
         resumeDto.setUserId(userId);
         resumeService.uploadResume(resumeDto);
-        return ResponseEntity.status(HttpStatus.OK).body("Resume uploaded");
+        return ResponseEntity.status(HttpStatus.CREATED).body("Resume uploaded");
     }
 }

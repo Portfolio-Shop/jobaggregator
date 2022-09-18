@@ -7,7 +7,7 @@ on:
     paths:
       - 'Users/**'
 env:
-  REGISTRY_NAME: serviceregistryjobagggregator.azurecr.io
+  REGISTRY_NAME: serviceregistryjobagggregator
   CLUSTER_NAME:  jobaggregator
   CLUSTER_RESOURCE_GROUP:  jobaggregator
   NAMESPACE: default
