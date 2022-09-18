@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
@@ -20,6 +21,7 @@ import tech.portfolioshop.users.services.KafkaProducerService;
 import tech.portfolioshop.users.shared.UserDto;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(controllers = AuthController.class)
@@ -60,7 +62,9 @@ public class AuthControllerTest {
                 post("/api/v1/user/auth/signup")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(new ObjectMapper().writeValueAsString(signUpRequest))
-        ).andExpect(status().isCreated());
+        )
+                .andExpect(status().isCreated())
+                .andExpect(header().exists(HttpHeaders.AUTHORIZATION));
     }
 
     @Test
@@ -75,9 +79,7 @@ public class AuthControllerTest {
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(new ObjectMapper().writeValueAsString(signUpRequest))
                 )
-                .andExpect(
-                        status().isBadRequest()
-                );
+                .andExpect(status().isBadRequest());
     }
 
     @Test
@@ -109,9 +111,7 @@ public class AuthControllerTest {
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(new ObjectMapper().writeValueAsString(signUpRequest))
                 )
-                .andExpect(
-                        status().isBadRequest()
-                );
+                .andExpect(status().isBadRequest());
         signUpRequest.setPassword("test1234567890longPassword"); // password too long
         Mockito.when(authService.signup(Mockito.any(UserDto.class))).thenReturn(userDto);
         mockMvc.perform(
@@ -152,7 +152,9 @@ public class AuthControllerTest {
                 post("/api/v1/user/auth/signin")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(new ObjectMapper().writeValueAsString(signInRequest))
-        ).andExpect(status().isOk());
+        )
+                .andExpect(status().isOk())
+                .andExpect(header().exists(HttpHeaders.AUTHORIZATION));
     }
 
     @Test

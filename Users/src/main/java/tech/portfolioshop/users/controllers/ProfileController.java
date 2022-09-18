@@ -38,10 +38,7 @@ public class ProfileController {
     }
 
     @GetMapping
-    public ResponseEntity<UserResponse> getProfile(@RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
-        if(token == null || token.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }
+    public ResponseEntity<UserResponse> getProfile(@NotNull @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
         String userId;
         try{
             userId = Jwts.parser().setSigningKey(environment.getProperty("jwt.secret")).parseClaimsJws(token.replace("Bearer ", "")).getBody().getSubject();

@@ -48,7 +48,7 @@ public class AuthController {
         UserResponse userResponse = modelMapper.map(createdUser, UserResponse.class);
         String token = "Bearer " + Jwts.builder()
                 .setSubject(createdUser.getUserId())
-                .signWith(SignatureAlgorithm.HS256, "secret")
+                .signWith(SignatureAlgorithm.HS256, environment.getProperty("jwt.secret"))
                 .compact();
         return ResponseEntity.status(HttpStatus.CREATED).header(HttpHeaders.AUTHORIZATION, token).body(userResponse);
     }

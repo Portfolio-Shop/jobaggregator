@@ -16,6 +16,9 @@ public class UserUpdateRequest {
         this.image = image;
     }
 
+    public UserUpdateRequest() {
+    }
+
     public String getName() {
         return name;
     }
