@@ -27,8 +27,10 @@ jobs:
 
       - name: Build with Maven
         run: mvn -B package --file $GITHUB_WORKSPACE/Common/pom.xml
+        working-directory: Common
 
       - name: Publish to GitHub Packages Apache Maven
         run: mvn deploy -s $GITHUB_WORKSPACE/Common/settings.xml
+        working-directory: Common
         env:
           GITHUB_TOKEN: ${{ github.token }}
