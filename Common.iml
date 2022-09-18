@@ -15,14 +15,14 @@
     </facet>
   </component>
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_7">
-    <output url="file://$MODULE_DIR$/common/target/classes" />
-    <output-test url="file://$MODULE_DIR$/common/target/test-classes" />
-    <content url="file://$MODULE_DIR$/common">
-      <sourceFolder url="file://$MODULE_DIR$/common/src/main/java" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/common/src/main/resources" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/common/src/test/java" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/common/src/test/resources" type="java-test-resource" />
-      <excludeFolder url="file://$MODULE_DIR$/common/target" />
+    <output url="file://$MODULE_DIR$/Common/target/classes" />
+    <output-test url="file://$MODULE_DIR$/Common/target/test-classes" />
+    <content url="file://$MODULE_DIR$/Common">
+      <sourceFolder url="file://$MODULE_DIR$/Common/src/main/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Common/src/main/resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/Common/src/test/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/Common/src/test/resources" type="java-test-resource" />
+      <excludeFolder url="file://$MODULE_DIR$/Common/target" />
     </content>
     <orderEntry type="jdk" jdkName="openjdk-18" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
