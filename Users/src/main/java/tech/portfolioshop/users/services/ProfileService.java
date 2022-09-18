@@ -10,12 +10,11 @@ import tech.portfolioshop.users.shared.UserDto;
 @Service
 public class ProfileService{
     private final UserRepository userRepository;
-    private final ModelMapper modelMapper;
+    private final ModelMapper modelMapper = new ModelMapper();
 
     @Autowired
-    public ProfileService(UserRepository userRepository, ModelMapper modelMapper) {
+    public ProfileService(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.modelMapper = modelMapper;
     }
     public UserDto getUserDetailsByEmail(String email) {
         UserEntity user = userRepository.findByEmail(email);
