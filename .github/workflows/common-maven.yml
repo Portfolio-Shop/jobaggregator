@@ -26,8 +26,7 @@ jobs:
           settings-path: ${{ github.workspace }}/Common # location for the settings.xml file
 
       - name: Build with Maven
-        run: mvn -B package --file pom.xml
-        working-directory: Common
+        run: mvn -B package --file $GITHUB_WORKSPACE/Common/pom.xml
 
       - name: Publish to GitHub Packages Apache Maven
         run: mvn deploy -s $GITHUB_WORKSPACE/Common/settings.xml
