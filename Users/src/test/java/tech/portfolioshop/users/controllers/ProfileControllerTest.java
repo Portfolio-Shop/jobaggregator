@@ -70,6 +70,7 @@ public class ProfileControllerTest {
                         .header(HttpHeaders.AUTHORIZATION, token)
                         .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(status().isOk());
+        Mockito.verify(profileService).getUserByUserId(Mockito.any(String.class));
     }
     @Test
     @DisplayName("User can't get profile without token")
@@ -79,6 +80,7 @@ public class ProfileControllerTest {
                 get("/api/v1/user/profile")
                         .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(status().isBadRequest());
+        Mockito.verify(profileService, Mockito.never()).getUserByUserId(Mockito.any(String.class));
     }
 
     @Test
@@ -94,6 +96,7 @@ public class ProfileControllerTest {
                         .header(HttpHeaders.AUTHORIZATION, token)
                         .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(status().isUnauthorized());
+        Mockito.verify(profileService, Mockito.never()).getUserByUserId(Mockito.any(String.class));
     }
 
     @Test
@@ -110,6 +113,9 @@ public class ProfileControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(new ObjectMapper().writeValueAsString(userUpdateRequest))
         ).andExpect(status().isNoContent());
+
+        Mockito.verify(userUpdatedKafkaProducerService).send(Mockito.any(UserUpdated.class));
+        Mockito.verify(profileService).updateUser(Mockito.any(UserDto.class));
     }
 
     @Test
@@ -126,6 +132,8 @@ public class ProfileControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(new ObjectMapper().writeValueAsString(userUpdateRequest))
         ).andExpect(status().isUnauthorized());
+        Mockito.verify(userUpdatedKafkaProducerService, Mockito.never()).send(Mockito.any(UserUpdated.class));
+        Mockito.verify(profileService, Mockito.never()).updateUser(Mockito.any(UserDto.class));
     }
 
     @Test
@@ -137,6 +145,8 @@ public class ProfileControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(new ObjectMapper().writeValueAsString(userUpdateRequest))
         ).andExpect(status().isBadRequest());
+        Mockito.verify(userUpdatedKafkaProducerService, Mockito.never()).send(Mockito.any(UserUpdated.class));
+        Mockito.verify(profileService, Mockito.never()).updateUser(Mockito.any(UserDto.class));
     }
 
     @Test
@@ -151,6 +161,8 @@ public class ProfileControllerTest {
                         .header(HttpHeaders.AUTHORIZATION, token)
                         .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(status().isBadRequest());
+        Mockito.verify(userUpdatedKafkaProducerService, Mockito.never()).send(Mockito.any(UserUpdated.class));
+        Mockito.verify(profileService, Mockito.never()).updateUser(Mockito.any(UserDto.class));
     }
 
     @Test
@@ -164,6 +176,8 @@ public class ProfileControllerTest {
                 delete("/api/v1/user/profile")
                         .header(HttpHeaders.AUTHORIZATION, token)
         ).andExpect(status().isNoContent());
+        Mockito.verify(userDeletedKafkaProducerService).send(Mockito.any(UserDeleted.class));
+        Mockito.verify(profileService).deleteUser(Mockito.any(String.class));
     }
 
     @Test
@@ -172,6 +186,8 @@ public class ProfileControllerTest {
         mockMvc.perform(
                 delete("/api/v1/user/profile")
         ).andExpect(status().isBadRequest());
+        Mockito.verify(userDeletedKafkaProducerService, Mockito.never()).send(Mockito.any(UserDeleted.class));
+        Mockito.verify(profileService, Mockito.never()).deleteUser(Mockito.any(String.class));
     }
 
     @Test
@@ -185,5 +201,7 @@ public class ProfileControllerTest {
                 delete("/api/v1/user/profile")
                         .header(HttpHeaders.AUTHORIZATION, token)
         ).andExpect(status().isUnauthorized());
+        Mockito.verify(userDeletedKafkaProducerService, Mockito.never()).send(Mockito.any(UserDeleted.class));
+        Mockito.verify(profileService, Mockito.never()).deleteUser(Mockito.any(String.class));
     }
 }

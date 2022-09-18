@@ -65,6 +65,8 @@ public class AuthControllerTest {
         )
                 .andExpect(status().isCreated())
                 .andExpect(header().exists(HttpHeaders.AUTHORIZATION));
+        Mockito.verify(kafkaUserCreated).send(Mockito.any(UserCreated.class));
+        Mockito.verify(authService).signup(Mockito.any(UserDto.class));
     }
 
     @Test
@@ -80,6 +82,8 @@ public class AuthControllerTest {
                                 .content(new ObjectMapper().writeValueAsString(signUpRequest))
                 )
                 .andExpect(status().isBadRequest());
+        Mockito.verify(kafkaUserCreated, Mockito.never()).send(Mockito.any(UserCreated.class));
+        Mockito.verify(authService, Mockito.never()).signup(Mockito.any(UserDto.class));
     }
 
     @Test
@@ -97,6 +101,8 @@ public class AuthControllerTest {
                 .andExpect(
                         status().isBadRequest()
                 );
+        Mockito.verify(kafkaUserCreated, Mockito.never()).send(Mockito.any(UserCreated.class));
+        Mockito.verify(authService, Mockito.never()).signup(Mockito.any(UserDto.class));
     }
 
     @Test
@@ -122,6 +128,8 @@ public class AuthControllerTest {
                 .andExpect(
                         status().isBadRequest()
                 );
+        Mockito.verify(kafkaUserCreated, Mockito.never()).send(Mockito.any(UserCreated.class));
+        Mockito.verify(authService, Mockito.never()).signup(Mockito.any(UserDto.class));
     }
 
     @Test
@@ -139,6 +147,8 @@ public class AuthControllerTest {
                 .andExpect(
                         status().isBadRequest()
                 );
+        Mockito.verify(kafkaUserCreated, Mockito.never()).send(Mockito.any(UserCreated.class));
+        Mockito.verify(authService, Mockito.never()).signup(Mockito.any(UserDto.class));
     }
 
 
@@ -155,6 +165,7 @@ public class AuthControllerTest {
         )
                 .andExpect(status().isOk())
                 .andExpect(header().exists(HttpHeaders.AUTHORIZATION));
+        Mockito.verify(authService).signin(Mockito.any(UserDto.class));
     }
 
     @Test
@@ -169,6 +180,8 @@ public class AuthControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(new ObjectMapper().writeValueAsString(signInRequest))
         ).andExpect(status().isBadRequest());
+
+        Mockito.verify(authService, Mockito.never()).signin(Mockito.any(UserDto.class));
     }
 
     @Test
@@ -183,6 +196,8 @@ public class AuthControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(new ObjectMapper().writeValueAsString(signInRequest))
         ).andExpect(status().isBadRequest());
+
+        Mockito.verify(authService, Mockito.never()).signin(Mockito.any(UserDto.class));
     }
 
     @Test
@@ -197,5 +212,7 @@ public class AuthControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(new ObjectMapper().writeValueAsString(signInRequest))
         ).andExpect(status().isBadRequest());
+
+        Mockito.verify(authService, Mockito.never()).signin(Mockito.any(UserDto.class));
     }
 }

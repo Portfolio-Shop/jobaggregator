@@ -76,6 +76,7 @@ class ResumeControllerTest {
                         .header(HttpHeaders.AUTHORIZATION, token)
                 )
                 .andExpect(status().isCreated());
+        Mockito.verify(resumeService).uploadResume(Mockito.any(ResumeDto.class));
     }
 
     @Test
@@ -91,6 +92,7 @@ class ResumeControllerTest {
                         .header(HttpHeaders.AUTHORIZATION, token)
                 )
                 .andExpect(status().isUnauthorized());
+        Mockito.verify(resumeService, Mockito.never()).uploadResume(Mockito.any(ResumeDto.class));
     }
 
     @Test
@@ -100,6 +102,7 @@ class ResumeControllerTest {
                 MediaType.APPLICATION_PDF_VALUE, getMockResume().getResume());
         mvc.perform( multipart("/api/v1/user/resume").file(multipartFile))
                 .andExpect(status().isBadRequest());
+        Mockito.verify(resumeService, Mockito.never()).uploadResume(Mockito.any(ResumeDto.class));
     }
 
     @Test
@@ -115,9 +118,10 @@ class ResumeControllerTest {
                 )
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_PDF_VALUE));
+        Mockito.verify(resumeService).getResume(Mockito.any(String.class));
     }
     @Test
-    @DisplayName("User can get resume")
+    @DisplayName("User can't get resume with invalid token")
     public void getResumeInvalidToken() throws Exception {
         String token = "Bearer " + Jwts.builder()
                 .setSubject(getMockUser().getUserId())
@@ -128,6 +132,7 @@ class ResumeControllerTest {
                         .header(HttpHeaders.AUTHORIZATION, token)
                 )
                 .andExpect(status().isUnauthorized());
+        Mockito.verify(resumeService, Mockito.never()).getResume(Mockito.any(String.class));
     }
     @Test
     @DisplayName("User can't get resume without token")
@@ -135,5 +140,6 @@ class ResumeControllerTest {
         Mockito.when(resumeService.getResume(Mockito.any(String.class))).thenReturn(getMockResume());
         mvc.perform( get("/api/v1/user/resume"))
                 .andExpect(status().isBadRequest());
+        Mockito.verify(resumeService, Mockito.never()).getResume(Mockito.any(String.class));
     }
 }
