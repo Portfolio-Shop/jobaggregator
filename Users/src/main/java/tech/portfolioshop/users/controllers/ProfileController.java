@@ -12,7 +12,6 @@ import tech.portfolioshop.users.models.http.request.UserUpdateRequest;
 import tech.portfolioshop.users.models.http.response.UserResponse;
 import tech.portfolioshop.users.models.kafka.UserDeleted;
 import tech.portfolioshop.users.models.kafka.UserUpdated;
-import tech.portfolioshop.users.services.KafkaProducerService;
 import tech.portfolioshop.users.services.ProfileService;
 import tech.portfolioshop.users.shared.UserDto;
 

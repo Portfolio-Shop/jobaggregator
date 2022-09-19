@@ -12,11 +12,9 @@ import org.springframework.web.bind.annotation.*;
 import tech.portfolioshop.users.models.http.request.SignInRequest;
 import tech.portfolioshop.users.models.http.request.SignUpRequest;
 import tech.portfolioshop.users.models.http.response.UserResponse;
-import tech.portfolioshop.users.models.kafka.UserCreated;
 import tech.portfolioshop.users.services.AuthService;
-import tech.portfolioshop.users.services.KafkaProducerService;
 import tech.portfolioshop.users.shared.UserDto;
-
+import
 import javax.validation.Valid;
 
 @RestController
