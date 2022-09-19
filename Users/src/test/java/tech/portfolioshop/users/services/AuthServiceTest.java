@@ -20,7 +20,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @ExtendWith(MockitoExtension.class)
 @TestPropertySource(
-        locations = "classpath:application.test.properties")
+        locations = "classpath:application.test.properties"
+)
 public class AuthServiceTest {
 
     @Mock
@@ -46,7 +47,7 @@ public class AuthServiceTest {
         return userEntity;
     }
 
-    private String getRandomString(){
+    private String getRandomString() {
         Random random = new Random();
         return String.valueOf(random.nextInt());
     }

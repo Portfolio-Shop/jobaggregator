@@ -16,6 +16,7 @@ public class ProfileService{
     public ProfileService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
+
     public UserDto getUserDetailsByEmail(String email) {
         UserEntity user = userRepository.findByEmail(email);
         if (user == null) {
@@ -57,5 +58,4 @@ public class ProfileService{
         user.setStatus(false);
         userRepository.save(user);
     }
-
 }

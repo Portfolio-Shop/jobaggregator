@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="Jobs" />
         <module name="Users" />
+        <module name="Scraper" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

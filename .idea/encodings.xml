@@ -3,6 +3,8 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/Jobs/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Jobs/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Scraper/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Scraper/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Users/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Users/src/main/resources" charset="UTF-8" />
   </component>
