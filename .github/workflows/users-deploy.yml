@@ -29,9 +29,8 @@ jobs:
 
       - name: Build and push image
         run: |
-          docker build . -t ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}
+          docker build . -t ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }} -f Users/Dockerfile
           docker push ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}
-        working-directory: ./auth
 
       - name: Azure Kubernetes Set Context
         uses: azure/aks-set-context@v1
