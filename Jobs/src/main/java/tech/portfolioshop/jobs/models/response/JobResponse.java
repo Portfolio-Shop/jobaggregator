@@ -1,4 +1,4 @@
-package tech.portfolioshop.jobs.models.http.response;
+package tech.portfolioshop.jobs.models.response;
 
 import java.util.List;
 

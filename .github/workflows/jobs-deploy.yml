@@ -1,0 +1,61 @@
+name: deploy-users
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'Jobs/**'
+env:
+  REGISTRY_NAME: serviceregistryjobagggregator
+  CLUSTER_NAME:  jobaggregator
+  CLUSTER_RESOURCE_GROUP:  jobaggregator
+  NAMESPACE: default
+  APP_NAME: jobs
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+
+      - name: Login to ACR
+        uses: azure/docker-login@v1
+        with:
+          login-server: ${{ env.REGISTRY_NAME }}.azurecr.io
+          username: ${{ secrets.REGISTRY_USERNAME }}
+          password: ${{ secrets.REGISTRY_PASSWORD }}
+
+      - name: Build and push image
+        run: |
+          docker build . -t ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }} -f Jobs/Dockerfile
+          docker push ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}
+
+      - name: Azure Kubernetes Set Context
+        uses: azure/aks-set-context@v1
+        with:
+          creds: '${{ secrets.AZURE_CREDENTIALS }}'
+          cluster-name: ${{ env.CLUSTER_NAME }}
+          resource-group: ${{ env.CLUSTER_RESOURCE_GROUP }}
+
+      - name: AKS create secret
+        uses: azure/k8s-create-secret@v1
+        with:
+          container-registry-url: ${{ env.REGISTRY_NAME }}.azurecr.io
+          container-registry-username: ${{ secrets.REGISTRY_USERNAME }}
+          container-registry-password: ${{ secrets.REGISTRY_PASSWORD }}
+          secret-name: ${{ env.SECRET }}
+          namespace: ${{ env.NAMESPACE }}
+          arguments: --force true
+
+      - name: deploy to AKS
+        uses: azure/k8s-deploy@v1
+        with:
+          manifests: |
+            ${{ github.workspace }}/config/k8s/users_depl.yaml
+          images: |
+            ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}
+          imagepullsecrets: |
+            ${{ env.SECRET }}
+          namespace: ${{ env.NAMESPACE }}
