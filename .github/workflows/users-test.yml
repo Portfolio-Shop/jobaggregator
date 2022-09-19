@@ -35,6 +35,5 @@ jobs:
         working-directory: ./Users
 
       - name: Check Production tests
-        run: |
-          docker build . -f Users/Dockerfile
+        run: docker build . -f Users/Dockerfile
 

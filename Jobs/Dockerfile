@@ -2,7 +2,7 @@ FROM openjdk:18-oracle
 
 WORKDIR /app
 
-COPY .. .
+COPY . .
 
 RUN cd Common && ./mvnw clean install package
 RUN cd Users && ./mvnw clean install package
