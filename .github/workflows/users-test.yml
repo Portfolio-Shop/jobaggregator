@@ -33,3 +33,8 @@ jobs:
       - name: Run tests
         run: mvn clean install compile test
         working-directory: ./Users
+
+      - name: Check Production tests
+        run: |
+          docker build . -f Users/Dockerfile
+

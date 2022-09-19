@@ -1,4 +1,4 @@
-name: test-users
+name: test-jobs
 
 on:
   pull_request:
@@ -33,3 +33,7 @@ jobs:
       - name: Run tests
         run: mvn clean install compile test
         working-directory: ./Jobs
+
+      - name: Check Production tests
+        run: |
+          docker build . -f Jobs/Dockerfile

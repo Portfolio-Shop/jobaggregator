@@ -1,4 +1,4 @@
-name: deploy-users
+name: deploy-jobs
 
 on:
   push:
