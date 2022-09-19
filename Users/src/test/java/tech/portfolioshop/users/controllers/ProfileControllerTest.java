@@ -14,12 +14,10 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import tech.portfolioshop.users.models.http.request.UserUpdateRequest;
-import tech.portfolioshop.users.models.kafka.UserDeleted;
-import tech.portfolioshop.users.models.kafka.UserUpdated;
-import tech.portfolioshop.users.services.KafkaProducerService;
 import tech.portfolioshop.users.services.ProfileService;
 import tech.portfolioshop.users.shared.UserDto;
 
@@ -34,9 +32,7 @@ public class ProfileControllerTest {
     @MockBean
     private ProfileService profileService;
     @MockBean
-    private KafkaProducerService<UserUpdated> userUpdatedKafkaProducerService;
-    @MockBean
-    private KafkaProducerService<UserDeleted> userDeletedKafkaProducerService;
+    private KafkaTemplate<String,String> kafkaTemplate;
 
     private final MockMvc mockMvc;
     private final Environment environment;
@@ -114,7 +110,7 @@ public class ProfileControllerTest {
                         .content(new ObjectMapper().writeValueAsString(userUpdateRequest))
         ).andExpect(status().isNoContent());
 
-        Mockito.verify(userUpdatedKafkaProducerService).send(Mockito.any(UserUpdated.class));
+        Mockito.verify(kafkaTemplate).send(Mockito.any(String.class), Mockito.any(String.class));
         Mockito.verify(profileService).updateUser(Mockito.any(UserDto.class));
     }
 
@@ -132,7 +128,7 @@ public class ProfileControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(new ObjectMapper().writeValueAsString(userUpdateRequest))
         ).andExpect(status().isUnauthorized());
-        Mockito.verify(userUpdatedKafkaProducerService, Mockito.never()).send(Mockito.any(UserUpdated.class));
+        Mockito.verify(kafkaTemplate, Mockito.never()).send(Mockito.any(String.class), Mockito.any(String.class));
         Mockito.verify(profileService, Mockito.never()).updateUser(Mockito.any(UserDto.class));
     }
 
@@ -145,7 +141,7 @@ public class ProfileControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(new ObjectMapper().writeValueAsString(userUpdateRequest))
         ).andExpect(status().isBadRequest());
-        Mockito.verify(userUpdatedKafkaProducerService, Mockito.never()).send(Mockito.any(UserUpdated.class));
+        Mockito.verify(kafkaTemplate, Mockito.never()).send(Mockito.any(String.class), Mockito.any(String.class));
         Mockito.verify(profileService, Mockito.never()).updateUser(Mockito.any(UserDto.class));
     }
 
@@ -161,7 +157,7 @@ public class ProfileControllerTest {
                         .header(HttpHeaders.AUTHORIZATION, token)
                         .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(status().isBadRequest());
-        Mockito.verify(userUpdatedKafkaProducerService, Mockito.never()).send(Mockito.any(UserUpdated.class));
+        Mockito.verify(kafkaTemplate, Mockito.never()).send(Mockito.any(String.class), Mockito.any(String.class));
         Mockito.verify(profileService, Mockito.never()).updateUser(Mockito.any(UserDto.class));
     }
 
@@ -176,7 +172,7 @@ public class ProfileControllerTest {
                 delete("/api/v1/user/profile")
                         .header(HttpHeaders.AUTHORIZATION, token)
         ).andExpect(status().isNoContent());
-        Mockito.verify(userDeletedKafkaProducerService).send(Mockito.any(UserDeleted.class));
+        Mockito.verify(kafkaTemplate).send(Mockito.any(String.class), Mockito.any(String.class));
         Mockito.verify(profileService).deleteUser(Mockito.any(String.class));
     }
 
@@ -186,7 +182,7 @@ public class ProfileControllerTest {
         mockMvc.perform(
                 delete("/api/v1/user/profile")
         ).andExpect(status().isBadRequest());
-        Mockito.verify(userDeletedKafkaProducerService, Mockito.never()).send(Mockito.any(UserDeleted.class));
+        Mockito.verify(kafkaTemplate, Mockito.never()).send(Mockito.any(String.class), Mockito.any(String.class));
         Mockito.verify(profileService, Mockito.never()).deleteUser(Mockito.any(String.class));
     }
 
@@ -201,7 +197,7 @@ public class ProfileControllerTest {
                 delete("/api/v1/user/profile")
                         .header(HttpHeaders.AUTHORIZATION, token)
         ).andExpect(status().isUnauthorized());
-        Mockito.verify(userDeletedKafkaProducerService, Mockito.never()).send(Mockito.any(UserDeleted.class));
+        Mockito.verify(kafkaTemplate, Mockito.never()).send(Mockito.any(String.class), Mockito.any(String.class));
         Mockito.verify(profileService, Mockito.never()).deleteUser(Mockito.any(String.class));
     }
 }

@@ -11,13 +11,12 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import tech.portfolioshop.users.models.http.request.SignInRequest;
 import tech.portfolioshop.users.models.http.request.SignUpRequest;
-import tech.portfolioshop.users.models.kafka.UserCreated;
 import tech.portfolioshop.users.services.AuthService;
-import tech.portfolioshop.users.services.KafkaProducerService;
 import tech.portfolioshop.users.shared.UserDto;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -33,7 +32,7 @@ public class AuthControllerTest {
     @MockBean
     private AuthService authService;
     @MockBean
-    private KafkaProducerService<UserCreated> kafkaUserCreated;
+    private KafkaTemplate<String, String> kafkaTemplate;
 
     private final MockMvc mockMvc;
 
@@ -65,7 +64,7 @@ public class AuthControllerTest {
         )
                 .andExpect(status().isCreated())
                 .andExpect(header().exists(HttpHeaders.AUTHORIZATION));
-        Mockito.verify(kafkaUserCreated).send(Mockito.any(UserCreated.class));
+        Mockito.verify(kafkaTemplate).send(Mockito.any(String.class), Mockito.any(String.class));
         Mockito.verify(authService).signup(Mockito.any(UserDto.class));
     }
 
@@ -82,7 +81,7 @@ public class AuthControllerTest {
                                 .content(new ObjectMapper().writeValueAsString(signUpRequest))
                 )
                 .andExpect(status().isBadRequest());
-        Mockito.verify(kafkaUserCreated, Mockito.never()).send(Mockito.any(UserCreated.class));
+        Mockito.verify(kafkaTemplate, Mockito.never()).send(Mockito.any(String.class), Mockito.any(String.class));
         Mockito.verify(authService, Mockito.never()).signup(Mockito.any(UserDto.class));
     }
 
@@ -101,7 +100,7 @@ public class AuthControllerTest {
                 .andExpect(
                         status().isBadRequest()
                 );
-        Mockito.verify(kafkaUserCreated, Mockito.never()).send(Mockito.any(UserCreated.class));
+        Mockito.verify(kafkaTemplate, Mockito.never()).send(Mockito.any(String.class), Mockito.any(String.class));
         Mockito.verify(authService, Mockito.never()).signup(Mockito.any(UserDto.class));
     }
 
@@ -128,7 +127,7 @@ public class AuthControllerTest {
                 .andExpect(
                         status().isBadRequest()
                 );
-        Mockito.verify(kafkaUserCreated, Mockito.never()).send(Mockito.any(UserCreated.class));
+        Mockito.verify(kafkaTemplate, Mockito.never()).send(Mockito.any(String.class),Mockito.any(String.class));
         Mockito.verify(authService, Mockito.never()).signup(Mockito.any(UserDto.class));
     }
 
@@ -147,7 +146,7 @@ public class AuthControllerTest {
                 .andExpect(
                         status().isBadRequest()
                 );
-        Mockito.verify(kafkaUserCreated, Mockito.never()).send(Mockito.any(UserCreated.class));
+        Mockito.verify(kafkaTemplate, Mockito.never()).send(Mockito.any(String.class), Mockito.any(String.class));
         Mockito.verify(authService, Mockito.never()).signup(Mockito.any(UserDto.class));
     }
 

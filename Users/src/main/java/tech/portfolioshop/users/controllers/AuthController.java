@@ -2,12 +2,14 @@ package tech.portfolioshop.users.controllers;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.jobaggregator.kafka.payload.UserCreated;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.*;
 import tech.portfolioshop.users.models.http.request.SignInRequest;
 import tech.portfolioshop.users.models.http.request.SignUpRequest;
@@ -21,15 +23,14 @@ import javax.validation.Valid;
 public class AuthController {
     private final Environment environment;
     private final AuthService authService;
-    private final KafkaProducerService<UserCreated> kafkaUserCreated;
-    private final ModelMapper modelMapper;
+    private final KafkaTemplate<String,String> kafkaTemplate;
+    private final ModelMapper modelMapper = new ModelMapper();
 
     @Autowired
-    public AuthController(AuthService authService, KafkaProducerService<UserCreated> kafkaUserCreated, ModelMapper modelMapper, Environment environment) {
+    public AuthController(AuthService authService, Environment environment, KafkaTemplate<String,String> kafkaTemplate) {
         this.authService = authService;
-        this.kafkaUserCreated = kafkaUserCreated;
-        this.modelMapper = modelMapper;
         this.environment = environment;
+        this.kafkaTemplate = kafkaTemplate;
     }
     @PostMapping("/signup")
     public ResponseEntity<UserResponse> signup(@Valid @RequestBody SignUpRequest userDetails) {
@@ -41,7 +42,7 @@ public class AuthController {
                 createdUser.getUserId(),
                 createdUser.getPhone()
         );
-        kafkaUserCreated.send(user);
+        kafkaTemplate.send(user.getTopic(), user.serialize());
         UserResponse userResponse = modelMapper.map(createdUser, UserResponse.class);
         String token = "Bearer " + Jwts.builder()
                 .setSubject(createdUser.getUserId())
