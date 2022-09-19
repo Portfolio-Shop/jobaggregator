@@ -14,7 +14,6 @@ import tech.portfolioshop.users.models.http.request.SignUpRequest;
 import tech.portfolioshop.users.models.http.response.UserResponse;
 import tech.portfolioshop.users.services.AuthService;
 import tech.portfolioshop.users.shared.UserDto;
-import
 import javax.validation.Valid;
 
 @RestController
