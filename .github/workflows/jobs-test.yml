@@ -7,6 +7,17 @@ on:
       - dev
     paths:
       - 'Jobs/**'
+      - 'config/**'
+  push:
+    branches:
+      - dev
+    paths:
+      - 'Jobs/**'
+      - 'config/**'
+env:
+  REGISTRY_NAME: serviceregistryjobagggregator
+  APP_NAME: users
+
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -34,5 +45,13 @@ jobs:
         run: mvn clean install compile test
         working-directory: ./Jobs
 
-      - name: Check Production tests
-        run: docker build . -f Users/Dockerfile
+      - name: Build docker image
+        run: docker build . -t ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }} -f Jobs/Dockerfile
+
+      - name: Start minikube
+        uses: medyagh/setup-minikube@master
+
+      - name: Deploy to minikube
+        run: |
+          kubectl apply -f configs/k8s/dev/jobs_pg_depl.yaml
+          kubectl apply -f configs/k8s/dev/jobs_depl.yaml
