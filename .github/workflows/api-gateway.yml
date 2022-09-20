@@ -12,6 +12,7 @@ env:
   CLUSTER_RESOURCE_GROUP:  jobaggregator
   NAMESPACE: default
   APP_NAME: api-gateway
+  SECRET: secret
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -30,7 +31,7 @@ jobs:
         run: |
           docker build . -t ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}
           docker push ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}
-        working-directory: ./auth
+        working-directory: ./APIGateway
       - name: Azure Kubernetes Set Context
         uses: azure/aks-set-context@v1
         with:
@@ -50,7 +51,7 @@ jobs:
         uses: azure/k8s-deploy@v1
         with:
           manifests: |
-            ${{ github.workspace }}/config/k8s/api-gateway.yaml
+            ${{ github.workspace }}/config/k8s/dev/api-gateway.yaml
           images: |
             ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}
           imagepullsecrets: |
