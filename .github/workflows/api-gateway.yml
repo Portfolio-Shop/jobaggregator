@@ -51,7 +51,7 @@ jobs:
         uses: azure/k8s-deploy@v1
         with:
           manifests: |
-            ${{ github.workspace }}/config/k8s/api-gateway.yaml
+            ${{ github.workspace }}/config/k8s/dev/api-gateway.yaml
           images: |
             ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}
           imagepullsecrets: |
