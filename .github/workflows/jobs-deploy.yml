@@ -53,7 +53,7 @@ jobs:
       - name: deploy to AKS
         uses: azure/k8s-deploy@v1
         with:
-          manifests: config/k8s/dev/jobs_depl.yaml
+          manifests: configs/k8s/dev/jobs_depl.yaml
           images: |
             ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}
           imagepullsecrets: |
