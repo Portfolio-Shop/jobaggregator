@@ -11,8 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.*;
-import tech.portfolioshop.users.models.http.request.UserUpdateRequest;
-import tech.portfolioshop.users.models.http.response.UserResponse;
+import tech.portfolioshop.users.models.request.UserUpdateRequest;
+import tech.portfolioshop.users.models.response.UserResponse;
 import tech.portfolioshop.users.services.ProfileService;
 import tech.portfolioshop.users.shared.UserDto;
 

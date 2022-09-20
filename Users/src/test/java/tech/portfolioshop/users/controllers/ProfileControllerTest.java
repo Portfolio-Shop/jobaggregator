@@ -17,7 +17,7 @@ import org.springframework.http.MediaType;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
-import tech.portfolioshop.users.models.http.request.UserUpdateRequest;
+import tech.portfolioshop.users.models.request.UserUpdateRequest;
 import tech.portfolioshop.users.services.ProfileService;
 import tech.portfolioshop.users.shared.UserDto;
 

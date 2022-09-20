@@ -1,4 +1,4 @@
-package tech.portfolioshop.users.models.http.request;
+package tech.portfolioshop.users.models.request;
 
 import java.util.Arrays;
 
