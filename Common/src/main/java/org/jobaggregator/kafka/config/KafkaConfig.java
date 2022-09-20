@@ -12,8 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import java.util.HashMap;
 import java.util.Map;
 
-@Configuration
-public class KafkaConfig {
+public abstract class KafkaConfig {
     @Value(value="${kafka.bootstrap-address}")
     private String bootstrapAddress;
     @Bean
@@ -29,9 +28,5 @@ public class KafkaConfig {
                 ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG,
                 StringSerializer.class);
         return new DefaultKafkaProducerFactory<>(configProps);
-    }
-    @Bean
-    public KafkaTemplate<String, String> kafkaTemplate() {
-        return new KafkaTemplate<>(producerFactory());
     }
 }

@@ -1,5 +1,6 @@
 package tech.portfolioshop.jobs.listeners;
 
+import org.jobaggregator.kafka.payload.UserCreated;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.EnableKafka;
@@ -7,7 +8,6 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 import tech.portfolioshop.jobs.data.UserEntity;
 import tech.portfolioshop.jobs.data.UserRepository;
-import tech.portfolioshop.jobs.models.kafka.UserCreated;
 
 @EnableKafka
 @Component

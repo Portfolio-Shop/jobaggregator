@@ -4,6 +4,7 @@ WORKDIR /app
 
 COPY . .
 
-RUN ./mvnw clean install package
+RUN cd Common && ./mvnw clean install package
+RUN cd Users && ./mvnw clean install package
 
-CMD ["java", "-jar", "target/Jobs-0.0.1-SNAPSHOT.jar"]
+CMD ["java", "-jar", "Jobs/target/Jobs-0.0.1-SNAPSHOT.jar"]
