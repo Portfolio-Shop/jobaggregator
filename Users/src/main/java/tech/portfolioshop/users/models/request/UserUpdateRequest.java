@@ -1,4 +1,4 @@
-package tech.portfolioshop.users.models.http.request;
+package tech.portfolioshop.users.models.request;
 
 import java.util.Arrays;
 
@@ -14,6 +14,9 @@ public class UserUpdateRequest {
         this.name = name;
         this.phone = phone;
         this.image = image;
+    }
+
+    public UserUpdateRequest() {
     }
 
     public String getName() {

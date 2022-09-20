@@ -1,4 +1,4 @@
-package tech.portfolioshop.users.models.http.request;
+package tech.portfolioshop.users.models.request;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
@@ -29,6 +29,9 @@ public class SignUpRequest {
         this.name = name;
         this.phone = phone;
         this.image = image;
+    }
+
+    public SignUpRequest() {
     }
 
     public String getEmail() {

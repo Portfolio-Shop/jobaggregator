@@ -73,6 +73,13 @@
             <artifactId>json</artifactId>
             <version>20220320</version>
         </dependency>
+        <dependency>
+            <groupId>org.jobaggregator</groupId>
+            <artifactId>common</artifactId>
+            <version>1.0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/../Common/target/common-1.0.1.jar</systemPath>
+        </dependency>
     </dependencies>
 
     <dependencyManagement>

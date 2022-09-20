@@ -1,4 +1,4 @@
-package tech.portfolioshop.jobs.models.http.request;
+package tech.portfolioshop.jobs.models.request;
 
 import javax.validation.constraints.NotNull;
 

@@ -2,7 +2,6 @@ package tech.portfolioshop.users.services;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import tech.portfolioshop.users.data.UserEntity;
@@ -12,22 +11,15 @@ import tech.portfolioshop.users.shared.UserDto;
 @Service
 public class AuthService {
     private final UserRepository userRepository;
-    private final ModelMapper modelMapper;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final ModelMapper modelMapper = new ModelMapper();
+    private final BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
-    private final KafkaTemplate<String,String> kafkaTemplate;
 
     @Autowired
     public AuthService(
-            UserRepository userRepository,
-            ModelMapper modelMapper,
-            BCryptPasswordEncoder bCryptPasswordEncoder,
-            KafkaTemplate<String,String> kafkaTemplate
+            UserRepository userRepository
     ) {
         this.userRepository = userRepository;
-        this.modelMapper = modelMapper;
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-        this.kafkaTemplate = kafkaTemplate;
     }
 
     public UserDto signup(UserDto userDetails) {
@@ -38,7 +30,6 @@ public class AuthService {
         userEntity.setStatus(true);
         userEntity.setVerified(false);
         userRepository.save(userEntity);
-        kafkaTemplate.send("Hello", "Hello");
         return modelMapper.map(userEntity, UserDto.class);
     }
 

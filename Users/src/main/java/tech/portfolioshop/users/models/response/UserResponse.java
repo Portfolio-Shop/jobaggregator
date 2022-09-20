@@ -1,4 +1,4 @@
-package tech.portfolioshop.users.models.http.response;
+package tech.portfolioshop.users.models.response;
 
 public class UserResponse {
     /**
