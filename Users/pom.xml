@@ -93,9 +93,9 @@
         <dependency>
             <groupId>org.jobaggregator</groupId>
             <artifactId>common</artifactId>
-            <version>1.0.1</version>
+            <version>1.0.2</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/../Common/target/common-1.0.1.jar</systemPath>
+            <systemPath>${project.basedir}/../Common/target/common-*.jar</systemPath>
         </dependency>
     </dependencies>
 

@@ -12,6 +12,7 @@ env:
   CLUSTER_RESOURCE_GROUP:  jobaggregator
   NAMESPACE: default
   APP_NAME: users
+  SECRET: secret
 jobs:
   deploy:
     runs-on: ubuntu-latest
