@@ -11,11 +11,10 @@ import tech.portfolioshop.users.shared.ResumeDto;
 public class ResumeService{
 
     private final UserRepository userRepository;
-    private final ModelMapper modelMapper;
+    private final ModelMapper modelMapper = new ModelMapper();
     @Autowired
-    public ResumeService(UserRepository userRepository, ModelMapper modelMapper) {
+    public ResumeService(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.modelMapper = modelMapper;
     }
 
     public void uploadResume(ResumeDto resumeDto) {
