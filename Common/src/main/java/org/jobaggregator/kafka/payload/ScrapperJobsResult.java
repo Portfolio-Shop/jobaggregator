@@ -31,19 +31,25 @@ public class ScrapperJobsResult extends Payload{
     @Override
     public String serialize() throws IllegalAccessException {
         JSONObject jsonObject = new JSONObject();
-        Field[] scrapperJobsResultFields = this.getClass().getFields();
-        for(Field field:scrapperJobsResultFields){
-            jsonObject.put(field.getName(), field.get(this));
-        }
+        jsonObject.put("query", query);
+        jsonObject.put("location", location);
+        jsonObject.put("title", title);
+        jsonObject.put("employer", employer);
+        jsonObject.put("salary", salary);
+        jsonObject.put("descriptionHTML", descriptionHTML);
+        jsonObject.put("skills", skills);
         return jsonObject.toString();
     }
 
     @Override
     public void deserialize(String json) throws IllegalAccessException {
         JSONObject jsonObject = new JSONObject(json);
-        Field[] scrapperJobsResultFields = this.getClass().getFields();
-        for(Field field:scrapperJobsResultFields){
-            field.set(this, jsonObject.get(field.getName()));
-        }
+        this.query = jsonObject.getString("query");
+        this.location = jsonObject.getString("location");
+        this.title = jsonObject.getString("title");
+        this.employer = jsonObject.getString("employer");
+        this.salary = jsonObject.getString("salary");
+        this.descriptionHTML = jsonObject.getString("descriptionHTML");
+        this.skills = jsonObject.getString("skills");
     }
 }

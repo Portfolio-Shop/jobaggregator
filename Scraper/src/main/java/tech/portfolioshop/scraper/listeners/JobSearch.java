@@ -8,6 +8,7 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -40,6 +41,6 @@ public class JobSearch {
     }
 
     public String getRandomString() {
-        return (new Random(1000)).toString();
+        return "AYAZ";
     }
 }

@@ -35,7 +35,7 @@ public class JobsService {
         search.setUser(user);
         searchRepository.save(search);
 
-        List<JobsEntity> jobs = jobsRepository.findByQueryandLocation(query,location);
+        List<JobsEntity> jobs = jobsRepository.findByQueryAndLocation(query,location);
         List<JobsDto> jobsDtos = new ArrayList<>();
         for(JobsEntity job : jobs){
             jobsDtos.add(modelMapper.map(job, JobsDto.class));
@@ -43,7 +43,7 @@ public class JobsService {
         return jobsDtos;
     }
     public List<JobsDto> findJobByQuery(String query, String location){
-        List<JobsEntity> jobs = jobsRepository.findByQueryandLocation(query,location);
+        List<JobsEntity> jobs = jobsRepository.findByQueryAndLocation(query,location);
         List<JobsDto> jobsDtos = new ArrayList<>();
         for(JobsEntity job : jobs){
             jobsDtos.add(modelMapper.map(job, JobsDto.class));
