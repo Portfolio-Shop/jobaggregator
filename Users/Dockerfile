@@ -8,6 +8,6 @@ RUN cd Common && ./mvnw clean install compile package
 
 COPY Users Users
 
-RUN cd Users && ./mvnw clean install 
+WORKDIR /app/Users
 
-CMD ["cd", "Users", "&&", "./mvnw", "spring-boot:run"]
+CMD ["./mvnw", "spring-boot:run"]

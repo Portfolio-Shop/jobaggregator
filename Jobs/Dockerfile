@@ -8,6 +8,6 @@ RUN cd Common && ./mvnw clean install compile package
 
 COPY Jobs Jobs
 
-RUN cd Jobs && ./mvnw clean install 
+WORKDIR /app/Jobs
 
-CMD ["cd", "Jobs", "&&", "./mvnw", "spring-boot:run"]
+CMD ["./mvnw", "spring-boot:run"]
