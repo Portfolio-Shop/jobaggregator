@@ -1,5 +1,8 @@
 package tech.portfolioshop.jobs.listeners;
 
+import org.jobaggregator.kafka.payload.UserCreated;
+import org.jobaggregator.kafka.payload.UserDeleted;
+import org.jobaggregator.kafka.payload.UserUpdated;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.EnableKafka;
@@ -7,9 +10,6 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 import tech.portfolioshop.jobs.data.UserEntity;
 import tech.portfolioshop.jobs.data.UserRepository;
-import tech.portfolioshop.jobs.models.kafka.UserCreated;
-import tech.portfolioshop.jobs.models.kafka.UserDeleted;
-import tech.portfolioshop.jobs.models.kafka.UserUpdated;
 
 @EnableKafka
 @Component
@@ -31,7 +31,7 @@ public class UsersListener {
         user.deserialize(message);
         String userId = user.getUserId();
         user.setUserId(null);
-        UserEntity userEntity = modelMapper.map(user,UserEntity.class);
+        UserEntity userEntity = modelMapper.map(user, UserEntity.class);
         userEntity.setUserId(userId);
         userRepository.save(userEntity);
     }

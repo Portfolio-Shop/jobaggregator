@@ -3,7 +3,6 @@ package tech.portfolioshop.jobs.services;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import tech.portfolioshop.jobs.data.*;
-import tech.portfolioshop.jobs.models.kafka.JobSearchTriggered;
 import tech.portfolioshop.jobs.shared.JobsDto;
 
 import java.util.ArrayList;

@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jobs-depl
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: jobs
+  template:
+    metadata:
+      labels:
+        app: jobs
+    spec:
+      containers:
+      - name: jobs
+        image: serviceregistryjobagggregator.azurecr.io/jobs
+        imagePullPolicy: IfNotPresent
+        resources:
+          limits:
+            memory: "1024Mi"
+            cpu: "0.2"
+          requests:
+            memory: "400Mi"
+            cpu: "0.1"
+        ports:
+        - containerPort: 8080
+        env:
+          - name: spring.datasource.url
+            value: jdbc:postgresql://jobs-pg-srv:5432/postgres
+          - name: spring.datasource.username
+            value: postgres
+          - name: spring.datasource.password
+            value: postgres
+          - name: jwt.secret
+            value: 123-456
+          - name: kafka.bootstrap-address
+            value: kafka-service:9092
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: jobs-srv
+spec:
+  selector:
+    app: jobs
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8081
+  type: ClusterIP
