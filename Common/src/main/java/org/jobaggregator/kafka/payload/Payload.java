@@ -10,8 +10,8 @@ public abstract class Payload {
         Topic = topic;
     }
 
-    public abstract String serialize();
-    public abstract void deserialize(String json);
+    public abstract String serialize() throws IllegalAccessException;
+    public abstract void deserialize(String json) throws IllegalAccessException;
     public final String getTopic() {
         return Topic;
     }
