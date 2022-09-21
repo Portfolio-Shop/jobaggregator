@@ -15,7 +15,6 @@ spec:
       containers:
       - name: users
         image: serviceregistryjobagggregator.azurecr.io/users
-        imagePullPolicy: IfNotPresent
         resources:
           limits:
             memory: "1024Mi"

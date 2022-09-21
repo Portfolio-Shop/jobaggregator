@@ -2,10 +2,9 @@ package org.jobaggregator.kafka.payload;
 
 import org.json.JSONObject;
 
-public class JobSearchTriggered extends Payload{
+public class JobSearchTriggered extends Payload {
     private String query;
     private String location;
-
 
     public JobSearchTriggered(String query, String location) {
         super("JOB_SEARCH_TRIGGERED");

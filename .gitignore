@@ -7,6 +7,7 @@
 .monokle
 
 # User-specific stuff
+.idea/*
 .idea/*.iml
 .idea/*.xml
 .idea/**/workspace.xml

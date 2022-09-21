@@ -15,7 +15,6 @@ spec:
       containers:
       - name: jobs
         image: serviceregistryjobagggregator.azurecr.io/jobs
-        imagePullPolicy: IfNotPresent
         resources:
           limits:
             memory: "1024Mi"

@@ -144,4 +144,20 @@ public class JobsEntity {
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
+
+    @Override
+    public String toString() {
+        return "JobsEntity{" +
+                "id=" + id +
+                ", jobId='" + jobId + '\'' +
+                ", query='" + query + '\'' +
+                ", location='" + location + '\'' +
+                ", title='" + title + '\'' +
+                ", employer='" + employer + '\'' +
+                ", salary='" + salary + '\'' +
+                ", descriptionHTML='" + descriptionHTML + '\'' +
+                ", skills='" + skills + '\'' +
+                ", createdAt=" + createdAt +
+                '}';
+    }
 }

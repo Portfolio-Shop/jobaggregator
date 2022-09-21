@@ -13,7 +13,7 @@
     <name>Jobs</name>
     <description>Jobs</description>
     <properties>
-        <java.version>18</java.version>
+        <java.version>17</java.version>
         <spring-cloud.version>2021.0.3</spring-cloud.version>
     </properties>
     <dependencies>
@@ -77,7 +77,7 @@
             <artifactId>common</artifactId>
             <version>1.0.2</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/../Common/target/common-1.0.2.jar</systemPath>
+            <systemPath>${basedir}/../Common/target/common-1.0.2.jar</systemPath>
         </dependency>
     </dependencies>
 
