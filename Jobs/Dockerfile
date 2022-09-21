@@ -11,3 +11,4 @@ COPY Jobs Jobs
 WORKDIR /app/Jobs
 
 CMD ["./mvnw", "spring-boot:run"]
+
