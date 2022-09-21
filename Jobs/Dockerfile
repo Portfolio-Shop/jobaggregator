@@ -4,7 +4,7 @@ WORKDIR /app
 
 COPY . .
 
-RUN cd Common && ./mvnw clean install package
-RUN cd Users && ./mvnw clean install package
+RUN cd Common && ./mvnw clean install compile package
+RUN cd Jobs && ./mvnw clean install 
 
-CMD ["java", "-jar", "Jobs/target/Jobs-0.0.1-SNAPSHOT.jar"]
+CMD ["cd", "Jobs", "&&", "./mvnw", "spring-boot:run"]
