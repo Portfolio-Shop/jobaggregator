@@ -13,7 +13,7 @@ public class ScrapperJobsResult extends Payload{
     private String descriptionHTML;
     private String skills;
 
-    protected ScrapperJobsResult() {
+    public ScrapperJobsResult() {
         super("SCRAPPER_JOBS_RESULT");
     }
 
