@@ -8,6 +8,8 @@ import org.springframework.stereotype.Component;
 import tech.portfolioshop.jobs.data.UserEntity;
 import tech.portfolioshop.jobs.data.UserRepository;
 import tech.portfolioshop.jobs.models.kafka.UserCreated;
+import tech.portfolioshop.jobs.models.kafka.UserDeleted;
+import tech.portfolioshop.jobs.models.kafka.UserUpdated;
 
 @EnableKafka
 @Component
@@ -24,7 +26,7 @@ public class UsersListener {
 
 
     @KafkaListener(topics = "USER_CREATED", groupId = "${spring.application.name}")
-    public void listenGroupFoo(String message) {
+    public void userCreated(String message) {
         UserCreated user = new UserCreated(null, null,null,null);
         user.deserialize(message);
         String userId = user.getUserId();
@@ -32,5 +34,23 @@ public class UsersListener {
         UserEntity userEntity = modelMapper.map(user,UserEntity.class);
         userEntity.setUserId(userId);
         userRepository.save(userEntity);
+    }
+    @KafkaListener(topics = "USER_UPDATED", groupId = "${spring.application.name}")
+    public void userUpdated(String message) {
+        UserUpdated user = new UserUpdated(null, null,null);
+        user.deserialize(message);
+        String userId = user.getUserId();
+        user.setUserId(null);
+        UserEntity userEntity = modelMapper.map(user,UserEntity.class);
+        userEntity.setUserId(userId);
+        userRepository.save(userEntity);
+    }
+
+    @KafkaListener(topics = "USER_DELETED", groupId = "${spring.application.name}")
+    public void userDeleted(String message) {
+        UserDeleted user = new UserDeleted(null);
+        user.deserialize(message);
+        String userId = user.getUserId();
+        userRepository.deleteByUserId(userId);
     }
 }

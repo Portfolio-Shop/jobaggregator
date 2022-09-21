@@ -4,4 +4,6 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface UserRepository extends CrudRepository<UserEntity, Long> {
     UserEntity getByUserId(String userId);
+
+    void deleteByUserId(String userId);
 }
