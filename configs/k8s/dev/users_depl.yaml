@@ -15,11 +15,13 @@ spec:
       containers:
       - name: users
         image: serviceregistryjobagggregator.azurecr.io/users
-        imagePullPolicy: IfNotPresent
         resources:
           limits:
             memory: "1024Mi"
-            cpu: "1"
+            cpu: "0.2"
+          requests:
+            memory: "400Mi"
+            cpu: "0.1"
         ports:
         - containerPort: 8080
         env:
