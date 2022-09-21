@@ -27,14 +27,13 @@ public class JobSearch {
     public void jobSearchTriggered(String message) throws IllegalAccessException {
         JobSearchTriggered jobSearchTriggered = new JobSearchTriggered(null, null);
         jobSearchTriggered.deserialize(message);
-        System.out.println(message);
-        kafkaTemplate.send((new ScrapperJobsResult()).getTopic(), mockScrapperResults());
+        kafkaTemplate.send((new ScrapperJobsResult()).getTopic(), mockScrapperResults(jobSearchTriggered.getQuery(), jobSearchTriggered.getLocation()));
     }
 
-    public String mockScrapperResults() throws IllegalAccessException {
+    public String mockScrapperResults(String query, String location) throws IllegalAccessException {
         List<String> list = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
-            ScrapperJobsResult scrapperJobsResult = new ScrapperJobsResult(getRandomString(), getRandomString(), getRandomString(), getRandomString(), getRandomString(), getRandomString(), getRandomString());
+            ScrapperJobsResult scrapperJobsResult = new ScrapperJobsResult(query, location, getRandomString(), getRandomString(), getRandomString(), getRandomString(), getRandomString());
             list.add(scrapperJobsResult.serialize());
         }
         return list.toString();

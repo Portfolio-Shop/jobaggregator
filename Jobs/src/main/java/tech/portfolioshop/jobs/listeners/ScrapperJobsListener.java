@@ -11,10 +11,7 @@ import org.springframework.stereotype.Component;
 import tech.portfolioshop.jobs.data.JobsEntity;
 import tech.portfolioshop.jobs.data.JobsRepository;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @EnableKafka
 @Component
@@ -32,15 +29,18 @@ public class ScrapperJobsListener {
     @KafkaListener(topics = "SCRAPPER_JOBS_RESULT", groupId = "${spring.application.name}")
     public void jobsScrapped(String jobs) throws IllegalAccessException {
         JSONArray jsonArray = new JSONArray(jobs);
-        List<ScrapperJobsResult> scrapperJobsResults = new ArrayList<>(jsonArray.length());
-        Collections.fill(scrapperJobsResults, new ScrapperJobsResult());
+        List<ScrapperJobsResult> scrapperJobsResults = new ArrayList<>();
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject jsonObject = jsonArray.getJSONObject(i);
-            scrapperJobsResults.get(i).deserialize(jsonObject.toString());
+            ScrapperJobsResult scrapperJobsResult = new ScrapperJobsResult();
+            scrapperJobsResult.deserialize(jsonObject.toString());
+            scrapperJobsResults.add(scrapperJobsResult);
         }
         List<JobsEntity> jobsEntities = new ArrayList<>();
         for (ScrapperJobsResult scrapperJobsResult : scrapperJobsResults) {
-            jobsEntities.add(modelMapper.map(scrapperJobsResult, JobsEntity.class));
+            JobsEntity jobsEntity = modelMapper.map(scrapperJobsResult, JobsEntity.class);
+            jobsEntities.add(jobsEntity);
+            jobsEntities.get(jobsEntities.size()-1).setJobId(UUID.randomUUID().toString());
         }
         jobsRepository.saveAll(jobsEntities);
     }
