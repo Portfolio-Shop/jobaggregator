@@ -1,8 +1,8 @@
-package org.jobaggregator.kafka.payload;
+package tech.portfolioshop.scraper.models;
 
-import org.json.JSONObject;
+import org.jobaggregator.kafka.payload.ScrapperJobsResult;
 
-public class ScrapperJobsResult extends Payload {
+public class Job extends ScrapperJobsResult {
 
     private String query;
     private String location;
@@ -12,12 +12,10 @@ public class ScrapperJobsResult extends Payload {
     private String descriptionHTML;
     private String skills;
 
-    public ScrapperJobsResult() {
-        super("SCRAPPER_JOBS_RESULT");
+    public Job() {
     }
 
-    public ScrapperJobsResult(String query, String location, String title, String employer, String salary, String descriptionHTML, String skills) {
-        super("SCRAPPER_JOBS_RESULT");
+    public Job(String query, String location, String title, String employer, String salary, String descriptionHTML, String skills) {
         this.query = query;
         this.location = location;
         this.title = title;
@@ -25,31 +23,6 @@ public class ScrapperJobsResult extends Payload {
         this.salary = salary;
         this.descriptionHTML = descriptionHTML;
         this.skills = skills;
-    }
-
-    @Override
-    public String serialize() {
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("query", query);
-        jsonObject.put("location", location);
-        jsonObject.put("title", title);
-        jsonObject.put("employer", employer);
-        jsonObject.put("salary", salary);
-        jsonObject.put("descriptionHTML", descriptionHTML);
-        jsonObject.put("skills", skills);
-        return jsonObject.toString();
-    }
-
-    @Override
-    public void deserialize(String json) {
-        JSONObject jsonObject = new JSONObject(json);
-        this.query = jsonObject.getString("query");
-        this.location = jsonObject.getString("location");
-        this.title = jsonObject.getString("title");
-        this.employer = jsonObject.getString("employer");
-        this.salary = jsonObject.getString("salary");
-        this.descriptionHTML = jsonObject.getString("descriptionHTML");
-        this.skills = jsonObject.getString("skills");
     }
 
     public String getQuery() {
@@ -106,5 +79,18 @@ public class ScrapperJobsResult extends Payload {
 
     public void setSkills(String skills) {
         this.skills = skills;
+    }
+
+    @Override
+    public String toString() {
+        return "Job{" +
+                "query='" + query + '\'' +
+                ", location='" + location + '\'' +
+                ", title='" + title + '\'' +
+                ", employer='" + employer + '\'' +
+                ", salary='" + salary + '\'' +
+                ", descriptionHTML='" + descriptionHTML + '\'' +
+                ", skills='" + skills + '\'' +
+                '}';
     }
 }
