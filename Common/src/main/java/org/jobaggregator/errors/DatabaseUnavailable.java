@@ -1,7 +1,7 @@
 package org.jobaggregator.errors;
 
-public class DatabaseUnavailable extends ServiceUnavailableError{
+public class DatabaseUnavailable extends ServiceUnavailableException {
     public DatabaseUnavailable() {
-        super("Database");
+        super("Database", "Database Unavailable Error");
     }
 }
