@@ -8,10 +8,8 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 @EnableKafka
 @Component
@@ -33,7 +31,7 @@ public class JobSearch {
     public String mockScrapperResults(String query, String location) throws IllegalAccessException {
         List<String> list = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
-            ScrapperJobsResult scrapperJobsResult = new ScrapperJobsResult(query, location, getRandomString(), getRandomString(), getRandomString(), getRandomString(), getRandomString());
+            ScrapperJobsResult scrapperJobsResult = new ScrapperJobsResult(query, location, getRandomString(), getRandomString(), getRandomString(), getRandomString(), getRandomString(), jobUrl);
             list.add(scrapperJobsResult.serialize());
         }
         return list.toString();

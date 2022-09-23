@@ -11,12 +11,13 @@ public class ScrapperJobsResult extends Payload {
     private String salary;
     private String descriptionHTML;
     private String skills;
+    private String jobUrl;
 
     public ScrapperJobsResult() {
         super("SCRAPPER_JOBS_RESULT");
     }
 
-    public ScrapperJobsResult(String query, String location, String title, String employer, String salary, String descriptionHTML, String skills) {
+    public ScrapperJobsResult(String query, String location, String title, String employer, String salary, String descriptionHTML, String skills, String jobUrl) {
         super("SCRAPPER_JOBS_RESULT");
         this.query = query;
         this.location = location;
@@ -25,6 +26,7 @@ public class ScrapperJobsResult extends Payload {
         this.salary = salary;
         this.descriptionHTML = descriptionHTML;
         this.skills = skills;
+        this.jobUrl = jobUrl;
     }
 
     @Override
@@ -106,5 +108,13 @@ public class ScrapperJobsResult extends Payload {
 
     public void setSkills(String skills) {
         this.skills = skills;
+    }
+
+    public String getJobUrl() {
+        return jobUrl;
+    }
+
+    public void setJobUrl(String jobUrl) {
+        this.jobUrl = jobUrl;
     }
 }

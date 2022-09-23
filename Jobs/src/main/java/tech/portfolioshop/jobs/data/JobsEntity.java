@@ -27,7 +27,7 @@ public class JobsEntity {
     @Column(nullable = false)
     private String employer;
 
-    @Column(nullable =true)
+    @Column(nullable = true)
     private String salary;
 
     @Column(nullable = true)
@@ -36,13 +36,16 @@ public class JobsEntity {
     @Column(nullable = false)
     private String skills;
 
+    @Column(nullable = false)
+    private String jobUrl;
+
     @CreationTimestamp
     private LocalDateTime createdAt;
 
     public JobsEntity() {
     }
 
-    public JobsEntity(Long id, String jobId, String query, String location, String title, String employer, String salary, String descriptionHTML, String skills, LocalDateTime createdAt) {
+    public JobsEntity(Long id, String jobId, String query, String location, String title, String employer, String salary, String descriptionHTML, String skills, LocalDateTime createdAt, String jobUrl) {
         this.id = id;
         this.jobId = jobId;
         this.query = query;
@@ -53,9 +56,10 @@ public class JobsEntity {
         this.descriptionHTML = descriptionHTML;
         this.skills = skills;
         this.createdAt = createdAt;
+        this.jobUrl = jobUrl;
     }
 
-    public JobsEntity(String query, String location, String title, String employer, String salary, String descriptionHTML, String skills) {
+    public JobsEntity(String query, String location, String title, String employer, String salary, String descriptionHTML, String skills, String jobUrl) {
         this.query = query;
         this.location = location;
         this.title = title;
@@ -63,6 +67,7 @@ public class JobsEntity {
         this.salary = salary;
         this.descriptionHTML = descriptionHTML;
         this.skills = skills;
+        this.jobUrl = jobUrl;
     }
 
     public Long getId() {
@@ -141,23 +146,20 @@ public class JobsEntity {
         return createdAt;
     }
 
+    public String getJobUrl() {
+        return jobUrl;
+    }
+
+    public void setJobUrl(String jobUrl) {
+        this.jobUrl = jobUrl;
+    }
+
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
     @Override
     public String toString() {
-        return "JobsEntity{" +
-                "id=" + id +
-                ", jobId='" + jobId + '\'' +
-                ", query='" + query + '\'' +
-                ", location='" + location + '\'' +
-                ", title='" + title + '\'' +
-                ", employer='" + employer + '\'' +
-                ", salary='" + salary + '\'' +
-                ", descriptionHTML='" + descriptionHTML + '\'' +
-                ", skills='" + skills + '\'' +
-                ", createdAt=" + createdAt +
-                '}';
+        return "JobsEntity{" + "id=" + id + ", jobId='" + jobId + '\'' + ", query='" + query + '\'' + ", location='" + location + '\'' + ", title='" + title + '\'' + ", employer='" + employer + '\'' + ", salary='" + salary + '\'' + ", descriptionHTML='" + descriptionHTML + '\'' + ", skills='" + skills + '\'' + ", createdAt=" + createdAt + '}';
     }
 }

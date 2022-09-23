@@ -35,6 +35,10 @@ public class JobsService {
         search.setUser(user);
         searchRepository.save(search);
 
+        return getJobsDtos(query, location);
+    }
+
+    private List<JobsDto> getJobsDtos(String query, String location) {
         List<JobsEntity> jobs = jobsRepository.findByQueryAndLocation(query,location);
         List<JobsDto> jobsDtos = new ArrayList<>();
         for(JobsEntity job : jobs){
@@ -42,12 +46,8 @@ public class JobsService {
         }
         return jobsDtos;
     }
+
     public List<JobsDto> findJobByQuery(String query, String location){
-        List<JobsEntity> jobs = jobsRepository.findByQueryAndLocation(query,location);
-        List<JobsDto> jobsDtos = new ArrayList<>();
-        for(JobsEntity job : jobs){
-            jobsDtos.add(modelMapper.map(job, JobsDto.class));
-        }
-        return jobsDtos;
+        return getJobsDtos(query, location);
     }
 }
