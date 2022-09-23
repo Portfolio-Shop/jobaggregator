@@ -31,7 +31,7 @@ public class JobSearch {
     public String mockScrapperResults(String query, String location) throws IllegalAccessException {
         List<String> list = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
-            ScrapperJobsResult scrapperJobsResult = new ScrapperJobsResult(query, location, getRandomString(), getRandomString(), getRandomString(), getRandomString(), getRandomString(), jobUrl);
+            ScrapperJobsResult scrapperJobsResult = new ScrapperJobsResult(query, location, getRandomString(), getRandomString(), getRandomString(), getRandomString(), getRandomString(), getRandomString());
             list.add(scrapperJobsResult.serialize());
         }
         return list.toString();
