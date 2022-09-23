@@ -1,7 +1,6 @@
 package org.jobaggregator.kafka.payload;
 
 import org.json.JSONObject;
-import java.lang.reflect.Field;
 
 public class ScrapperJobsResult extends Payload{
 

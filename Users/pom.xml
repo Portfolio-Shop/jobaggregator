@@ -97,6 +97,10 @@
             <scope>system</scope>
             <systemPath>${basedir}/../Common/target/common-1.0.2.jar</systemPath>
         </dependency>
+        <dependency>
+            <groupId>org.thymeleaf</groupId>
+            <artifactId>thymeleaf-spring5</artifactId>
+        </dependency>
     </dependencies>
 
     <dependencyManagement>
@@ -125,10 +129,6 @@
                 <configuration>
                     <testFailureIgnore>true</testFailureIgnore>
                 </configuration>
-            </plugin>
-            <plugin>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
         </plugins>
     </build>
