@@ -53,6 +53,7 @@ jobs:
       - name: deploy to AKS
         uses: azure/k8s-deploy@v1
         with:
+          action: deploy
           manifests: configs/k8s/dev/jobs_depl.yaml
           images: |
             ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}

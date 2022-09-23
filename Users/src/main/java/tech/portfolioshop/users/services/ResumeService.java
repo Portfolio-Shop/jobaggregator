@@ -28,6 +28,9 @@ public class ResumeService{
 
     public ResumeDto getResume(String userId) {
         UserEntity userEntity = userRepository.findByUserId(userId);
+        if(userEntity==null){
+            throw new RuntimeException("User Not Found");
+        }
         return modelMapper.map(userEntity, ResumeDto.class);
     }
 }
