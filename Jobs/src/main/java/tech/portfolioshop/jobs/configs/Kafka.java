@@ -7,7 +7,6 @@ import org.springframework.kafka.annotation.EnableKafka;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 
-@EnableKafka
 @Configuration
 public class Kafka extends KafkaConfig {
     @Bean
