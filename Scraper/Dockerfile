@@ -6,10 +6,11 @@ COPY Common Common
 
 RUN cd Common && ./mvnw clean install compile package
 
-COPY Users Users
+COPY Scraper Scraper
 
-WORKDIR /app/Users
+WORKDIR /app/Jobs
 
 RUN ./mvnw install
 
 CMD ["./mvnw", "spring-boot:run"]
+

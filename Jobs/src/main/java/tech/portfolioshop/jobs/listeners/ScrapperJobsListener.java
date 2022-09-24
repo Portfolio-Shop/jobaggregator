@@ -5,16 +5,12 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.kafka.annotation.EnableKafka;
 import org.springframework.kafka.annotation.KafkaListener;
-import org.springframework.stereotype.Component;
 import tech.portfolioshop.jobs.data.JobsEntity;
 import tech.portfolioshop.jobs.data.JobsRepository;
 
 import java.util.*;
 
-@EnableKafka
-@Component
 public class ScrapperJobsListener {
 
     private final ModelMapper modelMapper;

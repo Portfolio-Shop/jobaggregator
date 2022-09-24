@@ -6,10 +6,11 @@ COPY Common Common
 
 RUN cd Common && ./mvnw clean install compile package
 
-COPY Users Users
+COPY Mailer Mailer
 
-WORKDIR /app/Users
+WORKDIR /app/Mailer
 
 RUN ./mvnw install
 
 CMD ["./mvnw", "spring-boot:run"]
+

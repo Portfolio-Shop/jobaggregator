@@ -1,0 +1,35 @@
+apiVersion: skaffold/v2beta28
+kind: Config
+
+deploy:
+  kubectl:
+    manifests:
+      - configs/k8s/dev/*.yaml
+build:
+  artifacts:
+    - image: serviceregistryjobagggregator.azurecr.io/api-gateway
+      context: .
+      docker:
+        dockerfile: APIGateway/Dockerfile
+      sync:
+        manual:
+          - dest: APIGateway
+            src: 'src/**/*.java'
+
+    - image: serviceregistryjobagggregator.azurecr.io/jobs
+      context: .
+      docker:
+        dockerfile: Jobs/Dockerfile
+      sync:
+        manual:
+          - dest: Jobs
+            src: 'src/**/*.java'
+
+    - image: serviceregistryjobagggregator.azurecr.io/users
+      context: .
+      docker:
+        dockerfile: Users/Dockerfile
+      sync:
+        manual:
+          - dest: Users
+            src: 'src/**/*.java'

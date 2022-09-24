@@ -1,8 +1,6 @@
 package tech.portfolioshop.users;
 
 import org.jobaggregator.errors.RestException;
-import org.jobaggregator.errors.SerializedException;
-import org.json.JSONObject;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
