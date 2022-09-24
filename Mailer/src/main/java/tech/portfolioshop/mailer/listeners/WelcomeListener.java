@@ -5,9 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.EnableKafka;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
-import org.thymeleaf.context.Context;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 import tech.portfolioshop.mailer.services.SendEmailService;
+import tech.portfolioshop.mailer.services.WelcomeEmailSenderService;
 
 import javax.mail.MessagingException;
 
@@ -15,22 +15,17 @@ import javax.mail.MessagingException;
 @Component
 public class WelcomeListener {
 
-    private final SpringTemplateEngine templateEngine;
-    private final SendEmailService sendEmailService;
+    private final WelcomeEmailSenderService welcomeEmailSenderService;
 
     @Autowired
-    public WelcomeListener(SpringTemplateEngine templateEngine, SendEmailService sendEmailService) {
-        this.templateEngine = templateEngine;
-        this.sendEmailService = sendEmailService;
+    public WelcomeListener(WelcomeEmailSenderService welcomeEmailSenderService) {
+        this.welcomeEmailSenderService = welcomeEmailSenderService;
     }
 
     @KafkaListener(topics = "USER_CREATED", groupId = "${spring.application.name}")
     public void userCreated(String message) throws MessagingException {
-        UserCreated user = new UserCreated(null, null,null,null);
-        user.deserialize(message);
-        Context context = new Context();
-        context.setVariable("username", user.getName());
-        String body = templateEngine.process("WelcomeEmail", context);
-        sendEmailService.sendEmail(user.getEmail(), "Welcome to the team", body);
+        UserCreated userCreated = new UserCreated(null, null, null, null);
+        userCreated.deserialize(message);
+        welcomeEmailSenderService.sendWelcomeEmail(userCreated.getEmail(), userCreated.getName());
     }
 }
