@@ -1,5 +1,7 @@
 package tech.portfolioshop.users.services;
 
+import org.jobaggregator.errors.NotFoundException;
+import org.jobaggregator.errors.UnauthorizedException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -33,13 +35,13 @@ public class AuthService {
         return modelMapper.map(userEntity, UserDto.class);
     }
 
-    public UserDto signin(UserDto userDetails) {
+    public UserDto signin(UserDto userDetails) throws NotFoundException, UnauthorizedException {
         UserEntity userEntity = userRepository.findByEmail(userDetails.getEmail());
         if (userEntity == null) {
-            throw new RuntimeException("User not found");
+            throw new NotFoundException("User not found");
         }
         if (!bCryptPasswordEncoder.matches(userDetails.getPassword(), userEntity.getEncryptedPassword())) {
-            throw new RuntimeException("Wrong password");
+            throw new UnauthorizedException("Wrong password");
         }
         return modelMapper.map(userEntity, UserDto.class);
     }

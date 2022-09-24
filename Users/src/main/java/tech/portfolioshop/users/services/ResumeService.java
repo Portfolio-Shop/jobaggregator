@@ -1,5 +1,6 @@
 package tech.portfolioshop.users.services;
 
+import org.jobaggregator.errors.NotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,19 +18,19 @@ public class ResumeService{
         this.userRepository = userRepository;
     }
 
-    public void uploadResume(ResumeDto resumeDto) {
+    public void uploadResume(ResumeDto resumeDto) throws NotFoundException {
         UserEntity userEntity = userRepository.findByUserId(resumeDto.getUserId());
         if (userEntity == null) {
-            throw new RuntimeException("User not found");
+            throw new NotFoundException("User not found");
         }
         userEntity.setResume(resumeDto.getResume());
         userRepository.save(userEntity);
     }
 
-    public ResumeDto getResume(String userId) {
+    public ResumeDto getResume(String userId) throws NotFoundException {
         UserEntity userEntity = userRepository.findByUserId(userId);
         if(userEntity==null){
-            throw new RuntimeException("User Not Found");
+            throw new NotFoundException("User not found");
         }
         return modelMapper.map(userEntity, ResumeDto.class);
     }
