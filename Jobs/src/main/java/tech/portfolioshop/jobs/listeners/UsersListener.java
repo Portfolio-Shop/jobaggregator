@@ -1,5 +1,6 @@
 package tech.portfolioshop.jobs.listeners;
 
+import org.jobaggregator.kafka.config.KafkaTopics;
 import org.jobaggregator.kafka.payload.UserCreated;
 import org.jobaggregator.kafka.payload.UserDeleted;
 import org.jobaggregator.kafka.payload.UserUpdated;
@@ -25,20 +26,18 @@ public class UsersListener {
     }
 
 
-    @KafkaListener(topics = "USER_CREATED", groupId = "${spring.application.name}")
+    @KafkaListener(topics = KafkaTopics.USER_CREATED, groupId = "${spring.application.name}")
     public void userCreated(String message) {
-        UserCreated user = new UserCreated(null, null,null,null);
-        user.deserialize(message);
+        UserCreated user = new UserCreated().deserialize(message);
         String userId = user.getUserId();
         user.setUserId(null);
         UserEntity userEntity = modelMapper.map(user, UserEntity.class);
         userEntity.setUserId(userId);
         userRepository.save(userEntity);
     }
-    @KafkaListener(topics = "USER_UPDATED", groupId = "${spring.application.name}")
+    @KafkaListener(topics = KafkaTopics.USER_UPDATED, groupId = "${spring.application.name}")
     public void userUpdated(String message) {
-        UserUpdated user = new UserUpdated(null, null,null);
-        user.deserialize(message);
+        UserUpdated user = new UserUpdated().deserialize(message);
         String userId = user.getUserId();
         user.setUserId(null);
         UserEntity userEntity = modelMapper.map(user,UserEntity.class);
@@ -46,10 +45,9 @@ public class UsersListener {
         userRepository.save(userEntity);
     }
 
-    @KafkaListener(topics = "USER_DELETED", groupId = "${spring.application.name}")
+    @KafkaListener(topics = KafkaTopics.USER_DELETED, groupId = "${spring.application.name}")
     public void userDeleted(String message) {
-        UserDeleted user = new UserDeleted(null);
-        user.deserialize(message);
+        UserDeleted user = new UserDeleted().deserialize(message);
         String userId = user.getUserId();
         userRepository.deleteByUserId(userId);
     }

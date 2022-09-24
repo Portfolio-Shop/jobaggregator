@@ -2,14 +2,21 @@ package org.jobaggregator.kafka.payload;
 
 import org.json.JSONObject;
 
+import static org.jobaggregator.kafka.config.KafkaTopics.USER_CREATED;
+
 public class UserCreated extends Payload{
     private String name;
     private String email;
     private String userId;
     private String phone;
 
+
+    public UserCreated() {
+        super(USER_CREATED);
+    }
+
     public UserCreated(String name, String email, String userId, String phone) {
-        super("USER_CREATED");
+        super(USER_CREATED);
         this.name = name;
         this.email = email;
         this.userId = userId;
@@ -24,7 +31,7 @@ public class UserCreated extends Payload{
         obj.put("phone", phone);
         return obj.toString();
     }
-    public void deserialize(String json){
+    public UserCreated deserialize(String json){
         JSONObject obj = new JSONObject(json);
         name = obj.getString("name");
         email = obj.getString("name");
@@ -32,6 +39,7 @@ public class UserCreated extends Payload{
         if(obj.has("phone")){
             phone = obj.getString("phone");
         }
+        return this;
     }
 
 

@@ -1,7 +1,8 @@
 package org.jobaggregator.kafka.payload;
 
 import org.json.JSONObject;
-import java.lang.reflect.Field;
+
+import static org.jobaggregator.kafka.config.KafkaTopics.SCRAPPER_JOBS_RESULT;
 
 public class ScrapperJobsResult extends Payload{
 
@@ -14,11 +15,11 @@ public class ScrapperJobsResult extends Payload{
     private String skills;
 
     public ScrapperJobsResult() {
-        super("SCRAPPER_JOBS_RESULT");
+        super(SCRAPPER_JOBS_RESULT);
     }
 
     public ScrapperJobsResult(String query, String location, String title, String employer, String salary, String descriptionHTML, String skills) {
-        super("SCRAPPER_JOBS_RESULT");
+        super(SCRAPPER_JOBS_RESULT);
         this.query = query;
         this.location = location;
         this.title = title;
@@ -42,7 +43,7 @@ public class ScrapperJobsResult extends Payload{
     }
 
     @Override
-    public void deserialize(String json) {
+    public ScrapperJobsResult deserialize(String json) {
         JSONObject jsonObject = new JSONObject(json);
         this.query = jsonObject.getString("query");
         this.location = jsonObject.getString("location");
@@ -51,6 +52,7 @@ public class ScrapperJobsResult extends Payload{
         this.salary = jsonObject.getString("salary");
         this.descriptionHTML = jsonObject.getString("descriptionHTML");
         this.skills = jsonObject.getString("skills");
+        return this;
     }
 
     public String getQuery() {
