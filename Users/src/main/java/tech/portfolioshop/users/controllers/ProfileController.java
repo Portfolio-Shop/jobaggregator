@@ -1,6 +1,7 @@
 package tech.portfolioshop.users.controllers;
 
 import io.jsonwebtoken.Jwts;
+import org.jobaggregator.errors.NotFoundException;
 import org.jobaggregator.kafka.payload.UserDeleted;
 import org.jobaggregator.kafka.payload.UserUpdated;
 import org.modelmapper.ModelMapper;
@@ -35,7 +36,7 @@ public class ProfileController {
     }
 
     @GetMapping
-    public ResponseEntity<UserResponse> getProfile(@NotNull @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
+    public ResponseEntity<UserResponse> getProfile(@NotNull @RequestHeader(HttpHeaders.AUTHORIZATION) String token) throws NotFoundException {
         String userId;
         try{
             userId = Jwts.parser().setSigningKey(environment.getProperty("jwt.secret")).parseClaimsJws(token.replace("Bearer ", "")).getBody().getSubject();
@@ -47,7 +48,7 @@ public class ProfileController {
         return ResponseEntity.status(HttpStatus.OK).body(userResponse);
     }
     @PutMapping
-    public ResponseEntity<UserResponse> updateProfile(@NotNull @RequestHeader(HttpHeaders.AUTHORIZATION) String token, @NotNull @RequestBody UserUpdateRequest userDetails) {
+    public ResponseEntity<UserResponse> updateProfile(@NotNull @RequestHeader(HttpHeaders.AUTHORIZATION) String token, @NotNull @RequestBody UserUpdateRequest userDetails) throws NotFoundException {
         String userId;
         try{
             userId = Jwts.parser().setSigningKey(environment.getProperty("jwt.secret")).parseClaimsJws(token.replace("Bearer ", "")).getBody().getSubject();
@@ -64,7 +65,7 @@ public class ProfileController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
     @DeleteMapping
-    public ResponseEntity<String> deleteProfile(@NotNull @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
+    public ResponseEntity<String> deleteProfile(@NotNull @RequestHeader(HttpHeaders.AUTHORIZATION) String token) throws NotFoundException {
         String userId;
         try{
             userId = Jwts.parser().setSigningKey(environment.getProperty("jwt.secret")).parseClaimsJws(token.replace("Bearer ", "")).getBody().getSubject();
