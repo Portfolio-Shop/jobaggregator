@@ -1,6 +1,6 @@
 package tech.portfolioshop.users.services;
 
-import org.apache.catalina.User;
+import org.jobaggregator.errors.NotFoundException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -59,7 +59,7 @@ class ResumeServiceTest {
 
     @Test
     @DisplayName("Upload resume successful test")
-    void uploadResumeSuccessful() {
+    void uploadResumeSuccessful() throws NotFoundException {
         ResumeDto resumeDto = getMockResumeDto();
         UserEntity userEntity = getMockUserEntity();
         Mockito.when(userRepository.findByUserId(resumeDto.getUserId())).thenReturn(userEntity);
@@ -74,7 +74,7 @@ class ResumeServiceTest {
         ResumeDto resumeDto = getMockResumeDto();
         UserEntity userEntity = getMockUserEntity();
         Mockito.when(userRepository.findByUserId(resumeDto.getUserId())).thenReturn(null);
-        assertThrows(RuntimeException.class, () ->{
+        assertThrows(NotFoundException.class, () ->{
             resumeService.uploadResume(resumeDto);
         });
         Mockito.verify(userRepository, Mockito.never()).save(userEntity);
@@ -82,7 +82,7 @@ class ResumeServiceTest {
 
     @Test
     @DisplayName("Get resume successful test")
-    void getResumeSuccessful(){
+    void getResumeSuccessful() throws NotFoundException {
         UserEntity userEntity = getMockUserEntity();
         Mockito.when(userRepository.findByUserId(userEntity.getUserId())).thenReturn(userEntity);
         resumeService.getResume(userEntity.getUserId());
@@ -94,9 +94,8 @@ class ResumeServiceTest {
     void getResumeException(){
         UserEntity userEntity = getMockUserEntity();
         Mockito.when(userRepository.findByUserId(userEntity.getUserId())).thenReturn(null);
-        assertThrows(RuntimeException.class, () -> {
+        assertThrows(NotFoundException.class, () -> {
             resumeService.getResume(userEntity.getUserId());
         });
     }
-
 }

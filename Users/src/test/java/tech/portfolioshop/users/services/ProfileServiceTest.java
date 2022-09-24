@@ -1,5 +1,6 @@
 package tech.portfolioshop.users.services;
 
+import org.jobaggregator.errors.NotFoundException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -54,10 +55,10 @@ public class ProfileServiceTest {
         userEntity.setEncryptedPassword(new BCryptPasswordEncoder().encode(getMockUserDto().getPassword()));
         return userEntity;
     }
-    
+
     @Test
     @DisplayName("Get User by id successful service call")
-    public void getUserByIdSuccessfully(){
+    public void getUserByIdSuccessfully() throws NotFoundException {
         String userId = getRandomString();
         Mockito.when(userRepository.findByUserId(userId)).thenReturn(getMockUserEntity());
         profileService.getUserByUserId(userId);
@@ -68,7 +69,7 @@ public class ProfileServiceTest {
     @DisplayName("Get User by id failed service call")
     public void getUserByIdFail(){
         Mockito.when(userRepository.findByUserId(Mockito.anyString())).thenReturn(null);
-        assertThrows(RuntimeException.class, () ->{
+        assertThrows(NotFoundException.class, () ->{
             profileService.getUserByUserId(Mockito.anyString());
         });
         Mockito.verify(userRepository, Mockito.times(1)).findByUserId(Mockito.anyString());
@@ -76,7 +77,7 @@ public class ProfileServiceTest {
 
     @Test
     @DisplayName("Update User service call success with valid flow")
-    public void updateUserSuccessful(){
+    public void updateUserSuccessful() throws NotFoundException {
         UserDto userDto = getMockUserDto();
         UserEntity userEntity = getMockUserEntity();
         Mockito.when(userRepository.findByUserId(userDto.getUserId())).thenReturn(userEntity);
@@ -91,15 +92,15 @@ public class ProfileServiceTest {
     public void updateUserFail(){
         UserDto userDto = getMockUserDto();
         Mockito.when(userRepository.findByUserId(Mockito.anyString())).thenReturn(null);
-        assertThrows(RuntimeException.class, () -> {
+        assertThrows(NotFoundException.class, () -> {
             profileService.updateUser(userDto);
         });
         Mockito.verify(userRepository, Mockito.never()).save(Mockito.any(UserEntity.class));
     }
-    
+
     @Test
     @DisplayName("Delete User successful service call with valid flow")
-    public void deleteSuccessful(){
+    public void deleteSuccessful() throws NotFoundException {
         String userId = getRandomString();
         UserEntity userEntity = getMockUserEntity();
         Mockito.when(userRepository.findByUserId(userId)).thenReturn(userEntity);
@@ -113,10 +114,9 @@ public class ProfileServiceTest {
     @DisplayName("Delete User failed service call with invalid flow")
     public void deleteFail(){
         Mockito.when(userRepository.findByUserId(Mockito.anyString())).thenReturn(null);
-        assertThrows(RuntimeException.class, () -> {
+        assertThrows(NotFoundException.class, () -> {
             profileService.deleteUser(Mockito.anyString());
         });
         Mockito.verify(userRepository, Mockito.never()).save(Mockito.any(UserEntity.class));
     }
-    
 }
