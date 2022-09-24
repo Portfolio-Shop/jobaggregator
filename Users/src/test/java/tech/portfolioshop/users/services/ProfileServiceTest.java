@@ -40,10 +40,6 @@ public class ProfileServiceTest {
         return userDto;
     }
 
-    private String getValidEmail(){
-        return "abc@xyz.com";
-    }
-
     private String getRandomString() {
         Random random = new Random();
         return String.valueOf(random.nextInt());

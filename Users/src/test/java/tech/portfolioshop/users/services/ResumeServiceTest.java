@@ -8,7 +8,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.modelmapper.ModelMapper;
 import org.springframework.test.context.TestPropertySource;
 import tech.portfolioshop.users.data.UserEntity;
 import tech.portfolioshop.users.data.UserRepository;
@@ -54,8 +53,6 @@ class ResumeServiceTest {
                 new byte[10]
         );
     }
-
-    private final ModelMapper modelMapper = new ModelMapper();
 
     @Test
     @DisplayName("Upload resume successful test")
