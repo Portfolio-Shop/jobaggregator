@@ -2,12 +2,19 @@ package org.jobaggregator.kafka.payload;
 
 import org.json.JSONObject;
 
+import static org.jobaggregator.kafka.config.KafkaTopics.JOB_SEARCH_TRIGGERED;
+
 public class JobSearchTriggered extends Payload {
     private String query;
     private String location;
 
+
+    public JobSearchTriggered() {
+        super(JOB_SEARCH_TRIGGERED);
+    }
+
     public JobSearchTriggered(String query, String location) {
-        super("JOB_SEARCH_TRIGGERED");
+        super(JOB_SEARCH_TRIGGERED);
         this.query = query;
         this.location = location;
     }
@@ -21,10 +28,11 @@ public class JobSearchTriggered extends Payload {
     }
 
     @Override
-    public void deserialize(String json) {
+    public JobSearchTriggered deserialize(String json) {
         JSONObject obj = new JSONObject(json);
         this.query = obj.getString("query");
         this.location = obj.getString("location");
+        return this;
     }
 
     public String getQuery() {

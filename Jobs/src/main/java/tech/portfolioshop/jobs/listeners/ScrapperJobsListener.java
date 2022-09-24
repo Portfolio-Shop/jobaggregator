@@ -32,8 +32,7 @@ public class ScrapperJobsListener {
         List<ScrapperJobsResult> scrapperJobsResults = new ArrayList<>();
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject jsonObject = jsonArray.getJSONObject(i);
-            ScrapperJobsResult scrapperJobsResult = new ScrapperJobsResult();
-            scrapperJobsResult.deserialize(jsonObject.toString());
+            ScrapperJobsResult scrapperJobsResult = new ScrapperJobsResult().deserialize(jsonObject.toString());
             scrapperJobsResults.add(scrapperJobsResult);
         }
         List<JobsEntity> jobsEntities = new ArrayList<>();
