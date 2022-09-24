@@ -13,7 +13,7 @@ COPY Jobs/.mvn Jobs/.mvn
 
 WORKDIR /app/Jobs
 
-RUN ./mvnw install
+RUN ./mvnw install -Dmaven.main.skip -Dmaven.test.skip
 COPY Jobs .
 
 CMD ["./mvnw", "spring-boot:run"]

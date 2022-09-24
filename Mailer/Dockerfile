@@ -13,7 +13,7 @@ COPY Mailer/.mvn Mailer/.mvn
 
 WORKDIR /app/Mailer
 
-RUN ./mvnw install
+RUN ./mvnw install -Dmaven.main.skip -Dmaven.test.skip
 COPY Mailer .
 
 CMD ["./mvnw", "spring-boot:run"]

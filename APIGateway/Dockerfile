@@ -9,7 +9,7 @@ COPY APIGateway/.mvn APIGateway/.mvn
 
 WORKDIR /app/APIGateway
 
-RUN ./mvnw install
+RUN ./mvnw install -Dmaven.main.skip -Dmaven.test.skip
 COPY APIGateway .
 
 CMD ["./mvnw", "spring-boot:run"]

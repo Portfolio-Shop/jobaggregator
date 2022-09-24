@@ -13,7 +13,7 @@ COPY Users/.mvn Users/.mvn
 
 WORKDIR /app/Users
 
-RUN ./mvnw install
+RUN ./mvnw install -Dmaven.main.skip -Dmaven.test.skip
 COPY Users .
 
 CMD ["./mvnw", "spring-boot:run"]

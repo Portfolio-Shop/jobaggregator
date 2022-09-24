@@ -13,7 +13,7 @@ COPY Scraper/.mvn Scraper/.mvn
 
 WORKDIR /app/Scraper
 
-RUN ./mvnw install
+RUN ./mvnw install -Dmaven.main.skip -Dmaven.test.skip
 COPY Scraper .
 
 CMD ["./mvnw", "spring-boot:run"]
