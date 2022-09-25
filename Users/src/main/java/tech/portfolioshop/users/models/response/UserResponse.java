@@ -9,11 +9,9 @@ public class UserResponse {
     private String email;
     private String phone;
 
-    @SuppressWarnings("unused")
     public UserResponse() {
     }
 
-    @SuppressWarnings("unused")
     public UserResponse(String userId, String name, String email, String phone) {
         this.userId = userId;
         this.name = name;

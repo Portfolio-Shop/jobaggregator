@@ -5,8 +5,8 @@ COPY Common .
 
 RUN ./mvnw clean package
 
-WORKDIR /app/Jobs
-COPY Jobs .
+WORKDIR /app/Scraper
+COPY Scraper .
 
 RUN ./mvnw clean package
 

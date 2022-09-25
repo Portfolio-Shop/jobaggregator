@@ -7,6 +7,7 @@ import org.thymeleaf.context.Context;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 
 import javax.mail.MessagingException;
+import java.io.UnsupportedEncodingException;
 
 @Service
 public class WelcomeEmailSenderService extends SendEmailService{
@@ -19,7 +20,7 @@ public class WelcomeEmailSenderService extends SendEmailService{
         this.templateEngine = templateEngine;
     }
 
-    public void sendWelcomeEmail(String toEmail, String name) throws MessagingException {
+    public void sendWelcomeEmail(String toEmail, String name) throws MessagingException, UnsupportedEncodingException {
         Context context = new Context();
         context.setVariable("username", name);
         String body = templateEngine.process("WelcomeEmail", context);

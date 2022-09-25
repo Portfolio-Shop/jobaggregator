@@ -1,9 +1,8 @@
 FROM openjdk:18-oracle
 
-WORKDIR /app
+WORKDIR /app/APIGateway
+COPY APIGateway .
 
-COPY . .
+RUN ./mvnw clean package
 
-RUN ./mvnw clean install package
-
-CMD ["java", "-jar", "target/APIGateway-0.0.1-SNAPSHOT.jar"]
+CMD ["./mvnw", "spring-boot:run"]
