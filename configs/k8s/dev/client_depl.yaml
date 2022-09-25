@@ -17,26 +17,23 @@ spec:
         image: serviceregistryjobagggregator.azurecr.io/client
         resources:
           limits:
-            memory: "1024Mi"
-            cpu: "0.2"
+            memory: "2048Mi"
+            cpu: "1"
           requests:
-            memory: "400Mi"
-            cpu: "0.1"
+            memory: "1024Mi"
+            cpu: "1"
         ports:
-        - containerPort: 8080
-        env:
-          - name: spring.datasource.url
-            value: jdbc:postgresql://client-pg-srv:5432/postgres
+        - containerPort: 3000
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: client-srv
+  name: clients-srv
 spec:
   selector:
     app: client
   ports:
   - protocol: TCP
     port: 80
-    targetPort: 8080
+    targetPort: 3000
   type: ClusterIP
