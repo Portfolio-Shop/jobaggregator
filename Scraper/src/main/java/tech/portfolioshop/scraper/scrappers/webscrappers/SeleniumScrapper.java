@@ -1,7 +1,13 @@
 package tech.portfolioshop.scraper.scrappers.webscrappers;
 
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.interactions.Actions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import tech.portfolioshop.scraper.models.Job;
 import tech.portfolioshop.scraper.scrappers.jobscrappers.Websites;
 
@@ -12,21 +18,38 @@ import java.util.List;
 public abstract class SeleniumScrapper {
 
     @NotNull
-    private Websites website;
-    private String query;
-    private String location;
-    private List<String> jobsDetailsUrl = new ArrayList<>();
+    protected Websites website;
+    protected String query;
+    protected String location;
+    protected List<String> jobsDetailsUrls = new ArrayList<>();
     @NotNull
-    private final WebDriver webDriver = new FirefoxDriver();
+    protected WebDriver webDriver;
+    private static String geckoDriverPath = "C:/Users/ayush/geckodriver.exe";
+    protected Actions action;
 
     public SeleniumScrapper(@NotNull Websites website) {
+        System.setProperty("webdriver.gecko.driver", geckoDriverPath);;
+        webDriver = new FirefoxDriver();
         this.website = website;
+        webDriver.manage().window().maximize();
+        action = new Actions(webDriver);
     }
 
     public SeleniumScrapper(@NotNull Websites website, String query, String location) {
+        System.out.println(geckoDriverPath);
+        System.setProperty("webdriver.gecko.driver", geckoDriverPath);
+        webDriver = new FirefoxDriver();
+        webDriver.manage().window().maximize();
         this.website = website;
         this.query = query;
         this.location = location;
+        action = new Actions(webDriver);
+    }
+
+    protected void ctrlClickElement(WebElement webElement){
+        action.keyDown(Keys.CONTROL).build().perform();
+        webElement.click();
+        action.keyUp(Keys.CONTROL).build().perform();
     }
 
     public abstract String generateUrl();
@@ -66,11 +89,11 @@ public abstract class SeleniumScrapper {
                 '}';
     }
 
-    public List<String> getJobsDetailsUrl() {
-        return jobsDetailsUrl;
+    public List<String> getJobsDetailsUrls() {
+        return jobsDetailsUrls;
     }
 
-    public void setJobsDetailsUrl(List<String> jobsDetailsUrl) {
-        this.jobsDetailsUrl = jobsDetailsUrl;
+    public void setJobsDetailsUrls(List<String> jobsDetailsUrls) {
+        this.jobsDetailsUrls = jobsDetailsUrls;
     }
 }
