@@ -51,3 +51,12 @@ build:
         manual:
           - dest: Mailer
             src: 'src/**/*.java'
+
+    - image: serviceregistryjobagggregator.azurecr.io/client
+      context: client
+      docker:
+        dockerfile: dev.Dockerfile
+      sync:
+        manual:
+          - dest: .
+            src: 'src/**/*.ts'
