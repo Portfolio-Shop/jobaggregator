@@ -9,6 +9,7 @@ import tech.portfolioshop.mailer.services.WelcomeEmailSenderService;
 import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
+import java.io.UnsupportedEncodingException;
 
 @EnableKafka
 @Service
@@ -21,7 +22,7 @@ public class WelcomeListener {
         this.welcomeEmailSenderService = welcomeEmailSenderService;
     }
     @KafkaListener(topics = KafkaTopics.USER_CREATED, groupId = "${spring.application.name}")
-    public void userCreated(String message) throws MessagingException {
+    public void userCreated(String message) throws MessagingException, UnsupportedEncodingException {
         UserCreated userCreated = new UserCreated().deserialize(message);
         welcomeEmailSenderService.sendWelcomeEmail(userCreated.getEmail(), userCreated.getName());
     }
