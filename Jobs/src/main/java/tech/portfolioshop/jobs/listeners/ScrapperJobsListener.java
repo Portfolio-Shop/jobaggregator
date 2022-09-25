@@ -8,9 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import tech.portfolioshop.jobs.data.JobsEntity;
 import tech.portfolioshop.jobs.data.JobsRepository;
-
+import org.springframework.kafka.annotation.EnableKafka;
+import org.springframework.stereotype.Service;
 import java.util.*;
 
+@EnableKafka
+@Service
 public class ScrapperJobsListener {
 
     private final ModelMapper modelMapper;

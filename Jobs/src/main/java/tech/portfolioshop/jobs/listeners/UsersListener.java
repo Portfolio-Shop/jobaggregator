@@ -6,8 +6,8 @@ import org.jobaggregator.kafka.payload.UserDeleted;
 import org.jobaggregator.kafka.payload.UserUpdated;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.kafka.annotation.EnableKafka;
 import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.kafka.annotation.EnableKafka;
 import org.springframework.stereotype.Service;
 
 import tech.portfolioshop.jobs.data.UserEntity;

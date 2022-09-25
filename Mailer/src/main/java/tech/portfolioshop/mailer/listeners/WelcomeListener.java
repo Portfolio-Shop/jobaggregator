@@ -5,15 +5,13 @@ import org.jobaggregator.kafka.payload.UserCreated;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.EnableKafka;
 import org.springframework.kafka.annotation.KafkaListener;
-import org.springframework.stereotype.Component;
-import org.thymeleaf.spring5.SpringTemplateEngine;
-import tech.portfolioshop.mailer.services.SendEmailService;
 import tech.portfolioshop.mailer.services.WelcomeEmailSenderService;
+import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
 
 @EnableKafka
-@Component
+@Service
 public class WelcomeListener {
 
     private final WelcomeEmailSenderService welcomeEmailSenderService;
