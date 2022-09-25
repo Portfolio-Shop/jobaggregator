@@ -1,6 +1,5 @@
 .idea/
 *.iml
 *.iws
-src/
 .sonar/
 .sonarlint/
