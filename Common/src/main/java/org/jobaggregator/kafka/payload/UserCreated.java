@@ -34,7 +34,7 @@ public class UserCreated extends Payload{
     public UserCreated deserialize(String json){
         JSONObject obj = new JSONObject(json);
         name = obj.getString("name");
-        email = obj.getString("name");
+        email = obj.getString("email");
         userId = obj.getString("userId");
         if(obj.has("phone")){
             phone = obj.getString("phone");
