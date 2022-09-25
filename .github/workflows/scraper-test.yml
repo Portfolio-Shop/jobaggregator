@@ -56,6 +56,5 @@ jobs:
 
       - name: Deploy to minikube
         run: |
-          kubectl apply -f configs/k8s/dev/scraper_pg_depl.yaml
           kubectl apply -f configs/k8s/dev/scraper_depl.yaml
 
