@@ -6,15 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.EnableKafka;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 @EnableKafka
-@Component
+@Service
 public class JobSearch {
     private final KafkaTemplate<String, String> kafkaTemplate;
 

@@ -5,8 +5,8 @@ COPY Common .
 
 RUN ./mvnw clean package
 
-WORKDIR /app/Jobs
-COPY Jobs .
+WORKDIR /app/Mailer
+COPY Mailer .
 
 RUN ./mvnw clean package
 
