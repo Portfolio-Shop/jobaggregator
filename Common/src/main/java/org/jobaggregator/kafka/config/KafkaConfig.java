@@ -10,6 +10,7 @@ import org.springframework.kafka.core.ProducerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.context.annotation.Bean;
+import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -50,6 +51,15 @@ public abstract class KafkaConfig {
           ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, 
           StringDeserializer.class);
         return new DefaultKafkaConsumerFactory<>(props);
+    }
+    @Bean
+    public ConcurrentKafkaListenerContainerFactory<String, String> 
+      kafkaListenerContainerFactory() {
+   
+        ConcurrentKafkaListenerContainerFactory<String, String> factory =
+          new ConcurrentKafkaListenerContainerFactory<>();
+        factory.setConsumerFactory(consumerFactory());
+        return factory;
     }
 
 }

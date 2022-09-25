@@ -1,20 +1,13 @@
 FROM openjdk:18-oracle
 
-WORKDIR /app
+WORKDIR /app/Common
+COPY Common .
 
-COPY Common Common
-
-RUN cd Common && ./mvnw clean install compile package
-
-COPY Scraper/pom.xml Scraper/pom.xml
-COPY Scraper/mvnw Scraper/mvnw
-COPY Scraper/mvnw.cmd Scraper/mvnw.cmd
-COPY Scraper/.mvn Scraper/.mvn
+RUN ./mvnw clean package
 
 WORKDIR /app/Scraper
-
-RUN ./mvnw install -Dmaven.main.skip -Dmaven.test.skip
 COPY Scraper .
 
-CMD ["./mvnw", "spring-boot:run"]
+RUN ./mvnw clean package
 
+CMD ["./mvnw", "spring-boot:run"]

@@ -8,7 +8,7 @@ deploy:
 build:
   artifacts:
     - image: serviceregistryjobagggregator.azurecr.io/api-gateway
-      context: .
+      context:  .
       docker:
         dockerfile: APIGateway/Dockerfile
       sync:
@@ -32,4 +32,22 @@ build:
       sync:
         manual:
           - dest: Users
+            src: 'src/**/*.java'
+
+    - image: serviceregistryjobagggregator.azurecr.io/scraper
+      context: .
+      docker:
+        dockerfile: Scraper/Dockerfile
+      sync:
+        manual:
+          - dest: Scraper
+            src: 'src/**/*.java'
+    
+    - image: serviceregistryjobagggregator.azurecr.io/mailer
+      context: .
+      docker:
+        dockerfile: Mailer/Dockerfile
+      sync:
+        manual:
+          - dest: Mailer
             src: 'src/**/*.java'

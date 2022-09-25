@@ -37,6 +37,11 @@
             <artifactId>spring-kafka</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20220320</version>
+          </dependency>
+        <dependency>
             <groupId>org.jobaggregator</groupId>
             <artifactId>common</artifactId>
             <version>1.0.2</version>

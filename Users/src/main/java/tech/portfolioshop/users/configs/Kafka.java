@@ -14,13 +14,4 @@ public class Kafka extends KafkaConfig {
     public KafkaTemplate<String, String> kafkaTemplate() {
         return new KafkaTemplate<>(producerFactory());
     }
-    @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, String> 
-      kafkaListenerContainerFactory() {
-   
-        ConcurrentKafkaListenerContainerFactory<String, String> factory =
-          new ConcurrentKafkaListenerContainerFactory<>();
-        factory.setConsumerFactory(consumerFactory());
-        return factory;
-    }
 }

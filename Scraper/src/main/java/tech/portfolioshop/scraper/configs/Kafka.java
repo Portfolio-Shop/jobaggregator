@@ -1,4 +1,4 @@
-package tech.portfolioshop.jobs.configs;
+package tech.portfolioshop.scraper.configs;
 
 import org.jobaggregator.kafka.config.KafkaConfig;
 import org.springframework.context.annotation.Bean;
