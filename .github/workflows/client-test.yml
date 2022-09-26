@@ -1,0 +1,47 @@
+name: test-client
+
+on:
+  pull_request:
+    branches:
+      - main
+      - dev
+    paths:
+      - 'client/**'
+      - 'config/**'
+  push:
+    branches:
+      - dev
+    paths:
+      - 'client/**'
+      - 'config/**'
+env:
+  REGISTRY_NAME: serviceregistryjobagggregator
+  APP_NAME: client
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          submodules: true
+
+      - name: Start minikube
+        uses: medyagh/setup-minikube@master
+
+      - name: Build docker image
+        run: |
+          export SHELL=/bin/bash
+          eval $(minikube -p minikube docker-env)
+          docker build . -t ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }} -f Dockerfile
+        working-directory: client
+
+      - name: Deploy to minikube
+        run: |
+          kubectl apply -f configs/k8s/dev/client_depl.yaml
+

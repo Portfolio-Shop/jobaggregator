@@ -1,6 +1,7 @@
 package tech.portfolioshop.users.controllers;
 
 import io.jsonwebtoken.Jwts;
+import org.jobaggregator.errors.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpHeaders;
@@ -28,7 +29,7 @@ public class ResumeController {
         this.environment = environment;
     }
     @GetMapping
-    public ResponseEntity<byte[]> getResume(@NotNull @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
+    public ResponseEntity<byte[]> getResume(@NotNull @RequestHeader(HttpHeaders.AUTHORIZATION) String token) throws NotFoundException {
         String userId;
         try{
             userId = Jwts.parser().setSigningKey(environment.getProperty("jwt.secret")).parseClaimsJws(token.replace("Bearer ", "")).getBody().getSubject();
@@ -42,7 +43,7 @@ public class ResumeController {
     @PostMapping(
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE
     )
-    public ResponseEntity<String> uploadResume(@NotNull @RequestHeader(HttpHeaders.AUTHORIZATION) String token, @RequestParam("resume") MultipartFile file) {
+    public ResponseEntity<String> uploadResume(@NotNull @RequestHeader(HttpHeaders.AUTHORIZATION) String token, @RequestParam("resume") MultipartFile file) throws NotFoundException {
         String userId;
         try{
             userId = Jwts.parser().setSigningKey(environment.getProperty("jwt.secret")).parseClaimsJws(token.replace("Bearer ", "")).getBody().getSubject();

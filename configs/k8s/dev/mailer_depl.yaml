@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mailer-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mailer
+  template:
+    metadata:
+      labels:
+        app: mailer
+    spec:
+      containers:
+      - name: mailer
+        image: serviceregistryjobagggregator.azurecr.io/mailer
+        resources:
+          limits:
+            memory: "1024Mi"
+            cpu: "0.2"
+          requests:
+            memory: "400Mi"
+            cpu: "0.1"
+        ports:
+        - containerPort: 8080
+        env:
+          - name: kafka.bootstrap-address
+            value: kafka-service:9092
+          - name: spring.mail.password
+            value: dxhdjswecnfinwat
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mailer-srv
+spec:
+  selector:
+    app: mailer
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8080
+  type: ClusterIP

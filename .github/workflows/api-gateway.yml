@@ -31,7 +31,6 @@ jobs:
         run: |
           docker build . -t ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}
           docker push ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}
-        working-directory: ./APIGateway
       - name: Azure Kubernetes Set Context
         uses: azure/aks-set-context@v1
         with:
@@ -50,6 +49,7 @@ jobs:
       - name: deploy to AKS
         uses: azure/k8s-deploy@v1
         with:
+          action: deploy
           manifests: |
             ${{ github.workspace }}/config/k8s/dev/api-gateway.yaml
           images: |

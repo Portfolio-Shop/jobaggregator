@@ -2,6 +2,8 @@ package tech.portfolioshop.users.controllers;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.jobaggregator.errors.NotFoundException;
+import org.jobaggregator.errors.UnauthorizedException;
 import org.jobaggregator.kafka.payload.UserCreated;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,7 +53,7 @@ public class AuthController {
         return ResponseEntity.status(HttpStatus.CREATED).header(HttpHeaders.AUTHORIZATION, token).body(userResponse);
     }
     @PostMapping("/signin")
-    public ResponseEntity<UserResponse> signin(@Valid @RequestBody SignInRequest userDetails) {
+    public ResponseEntity<UserResponse> signin(@Valid @RequestBody SignInRequest userDetails) throws UnauthorizedException, NotFoundException {
         UserDto userDto = modelMapper.map(userDetails, UserDto.class);
         UserDto user = authService.signin(userDto);
         UserResponse userResponse = modelMapper.map(user, UserResponse.class);

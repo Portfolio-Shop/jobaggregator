@@ -11,7 +11,7 @@ public abstract class Payload {
     }
 
     public abstract String serialize() throws IllegalAccessException;
-    public abstract void deserialize(String json) throws IllegalAccessException;
+    public abstract Payload deserialize(String json) throws IllegalAccessException;
     public final String getTopic() {
         return Topic;
     }
