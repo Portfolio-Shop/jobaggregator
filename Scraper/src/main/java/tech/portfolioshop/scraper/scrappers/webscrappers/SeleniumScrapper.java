@@ -11,6 +11,7 @@ import org.springframework.core.env.Environment;
 import tech.portfolioshop.scraper.models.Job;
 import tech.portfolioshop.scraper.scrappers.jobscrappers.Websites;
 
+import javax.naming.CannotProceedException;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,17 +19,17 @@ import java.util.List;
 public abstract class SeleniumScrapper {
 
     @NotNull
-    protected Websites website;
+    protected final Websites website;
     protected String query;
     protected String location;
     protected List<String> jobsDetailsUrls = new ArrayList<>();
     @NotNull
-    protected WebDriver webDriver;
-    private static String geckoDriverPath = "C:/Users/ayush/geckodriver.exe";
+    protected final WebDriver webDriver;
+    private static final String geckoDriverPath = "C:/Users/ayush/geckodriver.exe";
     protected Actions action;
 
     public SeleniumScrapper(@NotNull Websites website) {
-        System.setProperty("webdriver.gecko.driver", geckoDriverPath);;
+        System.setProperty("webdriver.gecko.driver", geckoDriverPath);
         webDriver = new FirefoxDriver();
         this.website = website;
         webDriver.manage().window().maximize();
@@ -54,7 +55,7 @@ public abstract class SeleniumScrapper {
 
     public abstract String generateUrl();
 
-    public abstract List<Job> scrape();
+    public abstract List<Job> scrape() throws CannotProceedException;
 
     public Websites getWebsite() {
         return website;

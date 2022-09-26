@@ -1,6 +1,7 @@
-package tech.portfolioshop.scraper.scrappers.jobscrappers;
+package tech.portfolioshop.scraper.scrappers.jobscrappers.GlassdoorScrapper;
 
 import tech.portfolioshop.scraper.models.Job;
+import tech.portfolioshop.scraper.scrappers.jobscrappers.Websites;
 import tech.portfolioshop.scraper.scrappers.webscrappers.SeleniumScrapper;
 
 import java.util.List;

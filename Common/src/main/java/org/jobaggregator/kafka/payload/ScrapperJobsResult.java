@@ -117,4 +117,18 @@ public class ScrapperJobsResult extends Payload {
     public void setJobUrl(String jobUrl) {
         this.jobUrl = jobUrl;
     }
+
+    @Override
+    public String toString() {
+        return "ScrapperJobsResult{" +
+                "query='" + query + '\'' +
+                ", location='" + location + '\'' +
+                ", title='" + title + '\'' +
+                ", employer='" + employer + '\'' +
+                ", salary='" + salary + '\'' +
+                ", descriptionHTML='" + descriptionHTML + '\'' +
+                ", skills='" + skills + '\'' +
+                ", jobUrl='" + jobUrl + '\'' +
+                '}';
+    }
 }
