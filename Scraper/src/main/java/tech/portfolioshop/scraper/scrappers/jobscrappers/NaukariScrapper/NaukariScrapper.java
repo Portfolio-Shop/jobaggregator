@@ -2,7 +2,7 @@ package tech.portfolioshop.scraper.scrappers.jobscrappers.NaukariScrapper;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import tech.portfolioshop.scraper.models.Job;
+import tech.portfolioshop.scraper.models.JobModel;
 import tech.portfolioshop.scraper.scrappers.jobscrappers.Websites;
 import tech.portfolioshop.scraper.scrappers.webscrappers.SeleniumScrapper;
 
@@ -25,8 +25,8 @@ public class NaukariScrapper extends SeleniumScrapper {
     }
 
     @Override
-    public List<Job> scrape() throws CannotProceedException {
-        List<Job> jobs;
+    public List<JobModel> scrape() throws CannotProceedException {
+        List<JobModel> jobModels;
         try {
             webDriver.get(generateUrl());
             Thread.sleep(7000);
@@ -34,16 +34,17 @@ public class NaukariScrapper extends SeleniumScrapper {
             WebElement jobList = getJobListSelector();
             openAndMapJobTabs(jobList);
             Thread.sleep(7000);
-            jobs = listAllJobs();
-            if(jobs.size() == 0) {
+            jobModels = listAllJobs();
+            if(jobModels.size() == 0) {
                 throw new RuntimeException();
             }
+            webDriver.quit();
         } catch (Exception e) {
             logger.severe("Could Not Scrap the website: " + e.getMessage());
+            webDriver.quit();
             throw new CannotProceedException("Could Not Scrap the website: " + e.getMessage());
         }
-        webDriver.quit();
-        return jobs;
+        return jobModels;
     }
 
     private void openAndMapJobTabs(WebElement jobList) {
@@ -68,19 +69,19 @@ public class NaukariScrapper extends SeleniumScrapper {
         }
     }
 
-    private List<Job> listAllJobs() {
-        List<Job> jobs = new ArrayList<>();
+    private List<JobModel> listAllJobs() {
+        List<JobModel> jobModels = new ArrayList<>();
         for (String jobTabHandel : jobTabsHandles) {
             try {
-                jobs.add(scrapeJobSelector(jobTabHandel));
+                jobModels.add(scrapeJobSelector(jobTabHandel));
             } catch (Exception e) {
                 logger.info("Could not scrape a job: " + e.getMessage());
             }
         }
-        return jobs;
+        return jobModels;
     }
 
-    private Job scrapeJobSelector(String jobTabHandel) {
+    private JobModel scrapeJobSelector(String jobTabHandel) {
         try {
             webDriver.switchTo().window(jobTabHandel);
             Thread.sleep(2000);
@@ -135,7 +136,7 @@ public class NaukariScrapper extends SeleniumScrapper {
             }
             descriptionHTML = jobDescription + aboutCompany;
             webDriver.switchTo().window(websiteTabHandle);
-            return new Job(query, jobLocation, title, employer, salary, descriptionHTML, skills + experience, jobUrl);
+            return new JobModel(query, jobLocation, title, employer, salary, descriptionHTML, skills + experience, jobUrl);
         } catch (Exception e) {
             logger.info("Could Not Scrape Job: " + e.getMessage());
             throw new RuntimeException("Could Not Scrape Job: " + e.getMessage());

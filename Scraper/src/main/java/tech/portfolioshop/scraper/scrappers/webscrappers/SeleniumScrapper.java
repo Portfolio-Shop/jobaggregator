@@ -6,10 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.interactions.Actions;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.env.Environment;
-import tech.portfolioshop.scraper.models.Job;
+import tech.portfolioshop.scraper.models.JobModel;
 import tech.portfolioshop.scraper.scrappers.jobscrappers.Websites;
 
 import javax.naming.CannotProceedException;
@@ -32,7 +29,7 @@ public abstract class SeleniumScrapper {
     public SeleniumScrapper(@NotNull Websites website) {
         System.setProperty("webdriver.gecko.driver", geckoDriverPath);
         FirefoxOptions options = new FirefoxOptions();
-        options.setHeadless(true);
+        //options.setHeadless(true);
         webDriver = new FirefoxDriver(options);
         this.website = website;
         webDriver.manage().window().maximize();
@@ -43,7 +40,7 @@ public abstract class SeleniumScrapper {
         System.out.println(geckoDriverPath);
         System.setProperty("webdriver.gecko.driver", geckoDriverPath);
         FirefoxOptions options = new FirefoxOptions();
-        options.setHeadless(true);
+        //options.setHeadless(true);
         webDriver = new FirefoxDriver(options);
         webDriver.manage().window().maximize();
         this.website = website;
@@ -60,7 +57,7 @@ public abstract class SeleniumScrapper {
 
     public abstract String generateUrl();
 
-    public abstract List<Job> scrape() throws CannotProceedException;
+    public abstract List<JobModel> scrape() throws CannotProceedException;
 
     public Websites getWebsite() {
         return website;
