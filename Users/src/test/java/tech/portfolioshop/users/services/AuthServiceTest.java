@@ -1,5 +1,8 @@
 package tech.portfolioshop.users.services;
 
+import org.jobaggregator.errors.BadRequestException;
+import org.jobaggregator.errors.NotFoundException;
+import org.jobaggregator.errors.UnauthorizedException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -66,7 +69,7 @@ public class AuthServiceTest {
     public void signupFailedWithNullPassword() {
         UserDto userDto = getMockUser();
         userDto.setPassword(null);
-        assertThrows(Exception.class, () -> {
+        assertThrows(BadRequestException.class, () -> {
             authService.signup(userDto);
         });
         Mockito.verify(userRepository, Mockito.never()).save(Mockito.any(UserEntity.class));
@@ -74,7 +77,7 @@ public class AuthServiceTest {
 
     @Test
     @DisplayName("Sign In method Successfully")
-    public void signInSuccessfully() {
+    public void signInSuccessfully() throws UnauthorizedException, NotFoundException {
         Mockito.when(userRepository.findByEmail(Mockito.anyString())).thenReturn(getMockUserEntity());
         UserDto userDto = getMockUser();
         authService.signin(userDto);
@@ -87,7 +90,7 @@ public class AuthServiceTest {
         Mockito.when(userRepository.findByEmail(Mockito.anyString())).thenReturn(getMockUserEntity());
         UserDto userDto = getMockUser();
         userDto.setPassword(getRandomString());
-        assertThrows(Exception.class, () -> {
+        assertThrows(UnauthorizedException.class, () -> {
             authService.signin(userDto);
         });
         Mockito.verify(userRepository, Mockito.times(1)).findByEmail(Mockito.anyString());
@@ -99,7 +102,7 @@ public class AuthServiceTest {
         Mockito.when(userRepository.findByEmail(Mockito.anyString())).thenReturn(getMockUserEntity());
         UserDto userDto = getMockUser();
         userDto.setPassword(null);
-        assertThrows(Exception.class, () -> {
+        assertThrows(UnauthorizedException.class, () -> {
             authService.signin(userDto);
         });
         Mockito.verify(userRepository, Mockito.times(1)).findByEmail(Mockito.anyString());

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <style>
+        .title {
+            text-align: center;
+            background-color: #277dc9;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: aliceblue;
+            padding-top: 5px;
+            padding-bottom: 10px;
+        }
+
+        .title h2 {
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+
+        .title p {
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+        .letter{
+            text-align: justify;
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <section>
+        <div class="title">
+            <h2>Welcome to JobAggregator</h2>
+            <p>All your jobs at one place</p>
+        </div>
+    </section>
+    <section>
+        <div class="letter">
+            <p>Hey <span th:text="${username}"/>,</p>
+            <p>A warm welcome to the platform. You know what? You're on the right way to find a perfect job for yourself
+            </p>
+            <div>
+                <b>
+                    <span>Best Regards,</span>
+                    <br />
+                    <span>The Job Aggregator Project</span>
+                </b>
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>

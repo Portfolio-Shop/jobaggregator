@@ -1,0 +1,60 @@
+name: test-scraper
+
+on:
+  pull_request:
+    branches:
+      - main
+      - dev
+    paths:
+      - 'Scraper/**'
+      - 'config/**'
+  push:
+    branches:
+      - dev
+    paths:
+      - 'Scraper/**'
+      - 'config/**'
+env:
+  REGISTRY_NAME: serviceregistryjobagggregator
+  APP_NAME: scraper
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          submodules: true
+
+      - name: Setup Java
+        uses: actions/setup-java@v1
+        with:
+          distribution: 'temurin'
+          java-version: 18
+          cache: maven
+      - name: Build with Maven
+        run: mvn clean install package
+        working-directory: Common
+        
+      - name: Run tests
+        run: mvn clean install compile test
+        working-directory: ./Scraper
+
+      - name: Start minikube
+        uses: medyagh/setup-minikube@master
+
+      - name: Build docker image
+        run: |
+          export SHELL=/bin/bash
+          eval $(minikube -p minikube docker-env)
+          docker build . -t ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }} -f Scraper/Dockerfile
+
+      - name: Deploy to minikube
+        run: |
+          kubectl apply -f configs/k8s/dev/scraper_depl.yaml
+

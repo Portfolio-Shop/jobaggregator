@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: scraper-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: scraper
+  template:
+    metadata:
+      labels:
+        app: scraper
+    spec:
+      containers:
+      - name: scraper
+        image: serviceregistryjobagggregator.azurecr.io/scraper
+        resources:
+          limits:
+            memory: "1024Mi"
+            cpu: "0.2"
+          requests:
+            memory: "400Mi"
+            cpu: "0.1"
+        ports:
+        - containerPort: 8080
+        env:
+          - name: kafka.bootstrap-address
+            value: kafka-service:9092
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: scraper-srv
+spec:
+  selector:
+    app: scraper
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8080
+  type: ClusterIP

@@ -1,3 +1,4 @@
+
 //package tech.portfolioshop.scraper.listeners;
 //
 //import org.jobaggregator.kafka.payload.JobSearchTriggered;

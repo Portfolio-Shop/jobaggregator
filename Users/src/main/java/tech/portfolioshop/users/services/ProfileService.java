@@ -1,5 +1,6 @@
 package tech.portfolioshop.users.services;
 
+import org.jobaggregator.errors.NotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,26 +18,26 @@ public class ProfileService{
         this.userRepository = userRepository;
     }
 
-    public UserDto getUserDetailsByEmail(String email) {
+    public UserDto getUserDetailsByEmail(String email) throws NotFoundException {
         UserEntity user = userRepository.findByEmail(email);
         if (user == null) {
-            throw new RuntimeException("User not found");
+            throw new NotFoundException("User not found");
         }
         return modelMapper.map(user, UserDto.class);
     }
 
-    public UserDto getUserByUserId(String userId) {
+    public UserDto getUserByUserId(String userId) throws NotFoundException {
         UserEntity user = userRepository.findByUserId(userId);
         if (user == null) {
-            throw new RuntimeException("User not found");
+            throw new NotFoundException("User not found");
         }
         return modelMapper.map(user, UserDto.class);
     }
 
-    public void updateUser(UserDto userDetails) {
+    public void updateUser(UserDto userDetails) throws NotFoundException {
         UserEntity user = userRepository.findByUserId(userDetails.getUserId());
         if (user == null) {
-            throw new RuntimeException("User not found");
+            throw new NotFoundException("User not found");
         }
         if(userDetails.getName() != null) {
             user.setName(userDetails.getName());
@@ -50,10 +51,10 @@ public class ProfileService{
         userRepository.save(user);
     }
 
-    public void deleteUser(String userId) {
+    public void deleteUser(String userId) throws NotFoundException {
         UserEntity user = userRepository.findByUserId(userId);
         if (user == null) {
-            throw new RuntimeException("User not found");
+            throw new NotFoundException("User not found");
         }
         user.setStatus(false);
         userRepository.save(user);
