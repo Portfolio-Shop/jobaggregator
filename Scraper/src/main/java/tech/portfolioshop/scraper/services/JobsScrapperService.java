@@ -33,8 +33,7 @@ public class JobsScrapperService {
     @Async
     public CompletableFuture<List<Job>> scrapeIndeed() throws CannotProceedException {
         NaukariScrapper naukariScrapper = new NaukariScrapper("java developer", "bangalore");
-        naukariScrapper.scrape();
-        return null;
+        return CompletableFuture.completedFuture(naukariScrapper.scrape());
     }
 
     @Async

@@ -4,6 +4,7 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.interactions.Actions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,7 +31,9 @@ public abstract class SeleniumScrapper {
 
     public SeleniumScrapper(@NotNull Websites website) {
         System.setProperty("webdriver.gecko.driver", geckoDriverPath);
-        webDriver = new FirefoxDriver();
+        FirefoxOptions options = new FirefoxOptions();
+        options.setHeadless(true);
+        webDriver = new FirefoxDriver(options);
         this.website = website;
         webDriver.manage().window().maximize();
         action = new Actions(webDriver);
@@ -39,7 +42,9 @@ public abstract class SeleniumScrapper {
     public SeleniumScrapper(@NotNull Websites website, String query, String location) {
         System.out.println(geckoDriverPath);
         System.setProperty("webdriver.gecko.driver", geckoDriverPath);
-        webDriver = new FirefoxDriver();
+        FirefoxOptions options = new FirefoxOptions();
+        options.setHeadless(true);
+        webDriver = new FirefoxDriver(options);
         webDriver.manage().window().maximize();
         this.website = website;
         this.query = query;
