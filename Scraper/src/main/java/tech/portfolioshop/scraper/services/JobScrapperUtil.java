@@ -12,17 +12,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
 @Service
-public class JobsScrapperService {
-
-    public List<JobModel> scrape(String query, String location) throws CannotProceedException, ExecutionException, InterruptedException {
-        CompletableFuture<List<JobModel>> naukariJobs = scrapeNaukari(query, location);
-        CompletableFuture<List<JobModel>> indeedJobs = scrapeIndeed();
-        CompletableFuture.allOf(naukariJobs, indeedJobs).join();
-        List<JobModel> jobModels = new ArrayList<>();
-        jobModels.addAll(naukariJobs.get());
-        jobModels.addAll(indeedJobs.get());
-        return jobModels;
-    }
+public class JobScrapperUtil {
 
     @Async
     public CompletableFuture<List<JobModel>> scrapeNaukari(String query, String location) throws CannotProceedException {

@@ -23,7 +23,7 @@ public abstract class SeleniumScrapper {
     protected List<String> jobsDetailsUrls = new ArrayList<>();
     @NotNull
     protected final WebDriver webDriver;
-    private static final String geckoDriverPath = "C:/Users/ayush/geckodriver.exe";
+    private static final String geckoDriverPath = "/drivers/geckodriver.exe";
     protected Actions action;
 
     public SeleniumScrapper(@NotNull Websites website) {
