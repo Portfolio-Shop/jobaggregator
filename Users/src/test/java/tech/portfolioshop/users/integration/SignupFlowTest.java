@@ -1,4 +1,4 @@
-package tech.portfolioshop.users.integration.auth;
+package tech.portfolioshop.users.integration;
 
 import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
@@ -13,6 +13,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.test.EmbeddedKafkaBroker;
@@ -31,6 +32,7 @@ import tech.portfolioshop.users.shared.UserDto;
 import java.util.Map;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest(
@@ -54,6 +56,7 @@ public class SignupFlowTest {
     private final MockMvc mockMvc;
     private Consumer<String, String> consumer;
     private final EmbeddedKafkaBroker embeddedKafkaBroker;
+
     @Autowired
     public SignupFlowTest(
             UserRepository userRepository,
@@ -63,6 +66,7 @@ public class SignupFlowTest {
         this.mockMvc = mockMvc;
         this.embeddedKafkaBroker = embeddedKafkaBroker;
     }
+
     @BeforeEach
     public void setup() throws Exception {
         userRepository.deleteAll();
@@ -72,6 +76,7 @@ public class SignupFlowTest {
         consumer = cf.createConsumer();
         embeddedKafkaBroker.consumeFromAllEmbeddedTopics(consumer);
     }
+
     @AfterEach
     public void tearDown() {
         consumer.close();
@@ -94,9 +99,10 @@ public class SignupFlowTest {
         UserDto userDto = getMockUser();
         SignUpRequest signUpRequest = new ModelMapper().map(userDto, SignUpRequest.class);
         mockMvc.perform(post("/api/v1/user/auth/signup")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(new ObjectMapper().writeValueAsString(signUpRequest))
-        ).andExpect(status().isCreated());
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(new ObjectMapper().writeValueAsString(signUpRequest)))
+                .andExpect(status().isCreated())
+                .andExpect(header().exists(HttpHeaders.AUTHORIZATION));
         UserEntity user = userRepository.findByEmail(signUpRequest.getEmail());
         assert user != null;
         // Test the user in database
@@ -114,6 +120,7 @@ public class SignupFlowTest {
         //test the UserID in kafka and repository
         assert userCreated.getUserId().equals(user.getUserId());
     }
+
     @Test
     @DisplayName("Can't create same user twice")
     public void signupTwice() throws Exception {
