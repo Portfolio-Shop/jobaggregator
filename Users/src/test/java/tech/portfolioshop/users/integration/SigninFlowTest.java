@@ -47,7 +47,7 @@ public class SigninFlowTest {
     }
 
     @BeforeEach
-    public void setup() throws Exception {
+    public void setup(){
         userRepository.deleteAll();
     }
 

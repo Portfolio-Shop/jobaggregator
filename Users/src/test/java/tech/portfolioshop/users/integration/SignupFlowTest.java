@@ -56,7 +56,6 @@ public class SignupFlowTest {
     private final MockMvc mockMvc;
     private Consumer<String, String> consumer;
     private final EmbeddedKafkaBroker embeddedKafkaBroker;
-
     @Autowired
     public SignupFlowTest(
             UserRepository userRepository,
@@ -68,7 +67,7 @@ public class SignupFlowTest {
     }
 
     @BeforeEach
-    public void setup() throws Exception {
+    public void setup(){
         userRepository.deleteAll();
         Map<String, Object> consumerProps = KafkaTestUtils.consumerProps("Test", "true", embeddedKafkaBroker);
         consumerProps.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
