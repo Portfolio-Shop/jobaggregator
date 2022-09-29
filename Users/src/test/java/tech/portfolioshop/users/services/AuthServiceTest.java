@@ -1,6 +1,5 @@
 package tech.portfolioshop.users.services;
 
-import org.jobaggregator.errors.BadRequestException;
 import org.jobaggregator.errors.NotFoundException;
 import org.jobaggregator.errors.UnauthorizedException;
 import org.junit.jupiter.api.DisplayName;
@@ -69,7 +68,7 @@ public class AuthServiceTest {
     public void signupFailedWithNullPassword() {
         UserDto userDto = getMockUser();
         userDto.setPassword(null);
-        assertThrows(BadRequestException.class, () -> {
+        assertThrows(IllegalArgumentException.class, () -> {
             authService.signup(userDto);
         });
         Mockito.verify(userRepository, Mockito.never()).save(Mockito.any(UserEntity.class));
@@ -102,7 +101,7 @@ public class AuthServiceTest {
         Mockito.when(userRepository.findByEmail(Mockito.anyString())).thenReturn(getMockUserEntity());
         UserDto userDto = getMockUser();
         userDto.setPassword(null);
-        assertThrows(UnauthorizedException.class, () -> {
+        assertThrows(IllegalArgumentException.class, () -> {
             authService.signin(userDto);
         });
         Mockito.verify(userRepository, Mockito.times(1)).findByEmail(Mockito.anyString());

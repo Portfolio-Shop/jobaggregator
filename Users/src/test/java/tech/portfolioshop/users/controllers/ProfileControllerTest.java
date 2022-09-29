@@ -15,7 +15,6 @@ import org.springframework.core.env.Environment;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import tech.portfolioshop.users.models.request.UserUpdateRequest;
 import tech.portfolioshop.users.services.ProfileService;
@@ -26,8 +25,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(controllers = ProfileController.class)
 @AutoConfigureMockMvc
-@TestPropertySource(
-        locations = "classpath:application.test.properties")
 public class ProfileControllerTest {
     @MockBean
     private ProfileService profileService;
