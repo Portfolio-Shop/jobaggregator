@@ -1,11 +1,13 @@
-package tech.portfolioshop.users.integration;
+package tech.portfolioshop.users.integration.auth;
 
 import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.jobaggregator.kafka.config.KafkaTopics;
 import org.jobaggregator.kafka.payload.UserCreated;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,7 @@ import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.test.EmbeddedKafkaBroker;
 import org.springframework.kafka.test.context.EmbeddedKafka;
 import org.springframework.kafka.test.utils.KafkaTestUtils;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
@@ -42,10 +45,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         zookeeperPort = 2181,
         topics = {KafkaTopics.USER_CREATED}
 )
+@DirtiesContext(
+        classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD
+)
 public class SignupFlowTest {
 
     private final UserRepository userRepository;
     private final MockMvc mockMvc;
+    private Consumer<String, String> consumer;
     private final EmbeddedKafkaBroker embeddedKafkaBroker;
     @Autowired
     public SignupFlowTest(
@@ -57,17 +64,19 @@ public class SignupFlowTest {
         this.embeddedKafkaBroker = embeddedKafkaBroker;
     }
     @BeforeEach
-    public void setup() {
+    public void setup() throws Exception {
         userRepository.deleteAll();
-    }
-
-    private Consumer<String, String > getConsumer() {
-        Map<String, Object> consumerProps = KafkaTestUtils.consumerProps("test", "false", embeddedKafkaBroker);
+        Map<String, Object> consumerProps = KafkaTestUtils.consumerProps("Test", "true", embeddedKafkaBroker);
         consumerProps.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
         ConsumerFactory<String, String> cf = new org.springframework.kafka.core.DefaultKafkaConsumerFactory<>(consumerProps);
-        Consumer<String, String> consumer = cf.createConsumer();
+        consumer = cf.createConsumer();
         embeddedKafkaBroker.consumeFromAllEmbeddedTopics(consumer);
-        return consumer;
+    }
+    @AfterEach
+    public void tearDown() {
+        consumer.close();
+        // Kafka events after each test is cleared using dirties context
+
     }
 
     private UserDto getMockUser() {
@@ -80,6 +89,7 @@ public class SignupFlowTest {
     }
 
     @Test
+    @DisplayName("Should create user and send user created event")
     public void signupSuccessfully() throws Exception {
         UserDto userDto = getMockUser();
         SignUpRequest signUpRequest = new ModelMapper().map(userDto, SignUpRequest.class);
@@ -93,7 +103,7 @@ public class SignupFlowTest {
         assert user.getName().equals(userDto.getName());
         assert user.getEmail().equals(userDto.getEmail());
         assert user.getPhone().equals(userDto.getPhone());
-        ConsumerRecord<String, String> record = KafkaTestUtils.getSingleRecord(getConsumer(), KafkaTopics.USER_CREATED);
+        ConsumerRecord<String, String> record = KafkaTestUtils.getSingleRecord(consumer, KafkaTopics.USER_CREATED);
         assert record != null;
         // Test the user in kafka
         UserCreated userCreated = new UserCreated().deserialize(record.value());
@@ -103,6 +113,22 @@ public class SignupFlowTest {
 
         //test the UserID in kafka and repository
         assert userCreated.getUserId().equals(user.getUserId());
-
+    }
+    @Test
+    @DisplayName("Can't create same user twice")
+    public void signupTwice() throws Exception {
+        UserDto userDto = getMockUser();
+        SignUpRequest signUpRequest = new ModelMapper().map(userDto, SignUpRequest.class);
+        mockMvc.perform(post("/api/v1/user/auth/signup")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(signUpRequest))
+        ).andExpect(status().isCreated());
+        UserEntity user = userRepository.findByEmail(signUpRequest.getEmail());
+        assert user != null;
+        mockMvc.perform(post("/api/v1/user/auth/signup")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(signUpRequest))
+        ).andExpect(status().isInternalServerError());
+        assert KafkaTestUtils.getRecords(consumer, 1000).count() == 1;
     }
 }
