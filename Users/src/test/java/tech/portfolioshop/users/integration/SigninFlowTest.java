@@ -1,5 +1,6 @@
 package tech.portfolioshop.users.integration;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,7 +13,6 @@ import org.springframework.http.MediaType;
 import org.springframework.kafka.test.context.EmbeddedKafka;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
-import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
 import tech.portfolioshop.users.UsersApplication;
 import tech.portfolioshop.users.data.UserEntity;
 import tech.portfolioshop.users.data.UserRepository;
