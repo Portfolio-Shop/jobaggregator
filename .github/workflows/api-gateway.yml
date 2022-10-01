@@ -51,7 +51,7 @@ jobs:
         with:
           action: deploy
           manifests: |
-            ${{ github.workspace }}/config/k8s/dev/api-gateway.yaml
+            ${{ github.workspace }}/configs/k8s/dev/api-gateway.yaml
           images: |
             ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}
           imagepullsecrets: |
