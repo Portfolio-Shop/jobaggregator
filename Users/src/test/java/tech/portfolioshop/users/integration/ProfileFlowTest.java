@@ -122,7 +122,7 @@ public class ProfileFlowTest {
     @DisplayName("Fail to fetch the profile without token")
     public void getProfileWithoutToken() throws Exception {
         mockMvc.perform(get("/api/v1/user/profile"))
-                .andExpect(status().isUnauthorized());
+                .andExpect(status().isBadRequest());
     }
 
     @Test
@@ -145,7 +145,7 @@ public class ProfileFlowTest {
                         .header(HttpHeaders.AUTHORIZATION, token)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(mockUserJson))
-                .andExpect(status().isOk())
+                .andExpect(status().isNoContent())
                 .andExpect(jsonPath("$.name").value(mockUser.getName()))
                 .andExpect(jsonPath("$.email").value(mockUser.getEmail()))
                 .andExpect(jsonPath("$.phone").value(mockUser.getPhone()));
@@ -175,7 +175,7 @@ public class ProfileFlowTest {
         mockMvc.perform(put("/api/v1/user/profile")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(mockUserJson))
-                .andExpect(status().isUnauthorized());
+                .andExpect(status().isBadRequest());
         UserDto pastUser = getMockUser();
         UserEntity userEntity = userRepository.findByEmail(pastUser.getEmail());
         assert userEntity != null;
