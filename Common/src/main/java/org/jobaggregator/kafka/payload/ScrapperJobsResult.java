@@ -4,7 +4,7 @@ import org.json.JSONObject;
 
 import static org.jobaggregator.kafka.config.KafkaTopics.SCRAPPER_JOBS_RESULT;
 
-public class ScrapperJobsResult extends Payload{
+public class ScrapperJobsResult extends Payload {
 
     private String query;
     private String location;
@@ -13,6 +13,7 @@ public class ScrapperJobsResult extends Payload{
     private String salary;
     private String descriptionHTML;
     private String skills;
+    private String jobUrl;
 
     public ScrapperJobsResult() {
         super(SCRAPPER_JOBS_RESULT);
@@ -27,6 +28,7 @@ public class ScrapperJobsResult extends Payload{
         this.salary = salary;
         this.descriptionHTML = descriptionHTML;
         this.skills = skills;
+        this.jobUrl = jobUrl;
     }
 
     @Override
@@ -109,5 +111,27 @@ public class ScrapperJobsResult extends Payload{
 
     public void setSkills(String skills) {
         this.skills = skills;
+    }
+
+    public String getJobUrl() {
+        return jobUrl;
+    }
+
+    public void setJobUrl(String jobUrl) {
+        this.jobUrl = jobUrl;
+    }
+
+    @Override
+    public String toString() {
+        return "ScrapperJobsResult{" +
+                "query='" + query + '\'' +
+                ", location='" + location + '\'' +
+                ", title='" + title + '\'' +
+                ", employer='" + employer + '\'' +
+                ", salary='" + salary + '\'' +
+                ", descriptionHTML='" + descriptionHTML + '\'' +
+                ", skills='" + skills + '\'' +
+                ", jobUrl='" + jobUrl + '\'' +
+                '}';
     }
 }
