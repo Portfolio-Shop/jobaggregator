@@ -7,6 +7,7 @@ import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.jobaggregator.kafka.config.KafkaTopics;
+import org.jobaggregator.kafka.payload.UserDeleted;
 import org.jobaggregator.kafka.payload.UserUpdated;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,6 +23,7 @@ import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.test.EmbeddedKafkaBroker;
 import org.springframework.kafka.test.context.EmbeddedKafka;
 import org.springframework.kafka.test.utils.KafkaTestUtils;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import tech.portfolioshop.users.UsersApplication;
@@ -47,6 +49,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         ports = 9092,
         zookeeperPort = 2181,
         topics = {KafkaTopics.USER_UPDATED, KafkaTopics.USER_DELETED, KafkaTopics.USER_CREATED}
+)
+@DirtiesContext(
+        classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD
 )
 public class ProfileFlowTest {
 
@@ -145,11 +150,7 @@ public class ProfileFlowTest {
                         .header(HttpHeaders.AUTHORIZATION, token)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(mockUserJson))
-                .andExpect(status().isNoContent())
-                .andExpect(jsonPath("$.name").value(mockUser.getName()))
-                .andExpect(jsonPath("$.email").value(mockUser.getEmail()))
-                .andExpect(jsonPath("$.phone").value(mockUser.getPhone()));
-
+                .andExpect(status().isNoContent());
         ConsumerRecord<String, String> record = KafkaTestUtils.getSingleRecord(consumer, KafkaTopics.USER_UPDATED);
         assert record != null;
         UserUpdated userUpdated = new UserUpdated().deserialize(record.value());
@@ -209,4 +210,19 @@ public class ProfileFlowTest {
         assert records.count() == 0;
     }
 
+    @Test
+    @DisplayName("Delete the profile with token")
+    public void deleteProfile() throws Exception {
+        String token = saveMockUser();
+        String userId = userRepository.findByEmail(getMockUser().getEmail()).getUserId();
+        mockMvc.perform(delete("/api/v1/user/profile")
+                        .header(HttpHeaders.AUTHORIZATION, token))
+                .andExpect(status().isNoContent());
+        UserEntity userEntity = userRepository.findByEmail(getMockUser().getEmail());
+        assert userEntity == null;
+        ConsumerRecord<String, String> record = KafkaTestUtils.getSingleRecord(consumer, KafkaTopics.USER_DELETED);
+        assert record != null;
+        UserDeleted userDeleted = new UserDeleted().deserialize(record.value());
+        assert userDeleted.getUserId().equals(userId);
+    }
 }
