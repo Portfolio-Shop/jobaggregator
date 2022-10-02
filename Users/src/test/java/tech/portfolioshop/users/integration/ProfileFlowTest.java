@@ -80,8 +80,7 @@ public class ProfileFlowTest {
         consumerProps.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
         ConsumerFactory<String, String> cf = new org.springframework.kafka.core.DefaultKafkaConsumerFactory<>(consumerProps);
         consumer = cf.createConsumer();
-        embeddedKafkaBroker.consumeFromAnEmbeddedTopic(consumer, KafkaTopics.USER_UPDATED);
-        embeddedKafkaBroker.consumeFromAnEmbeddedTopic(consumer, KafkaTopics.USER_DELETED);
+        embeddedKafkaBroker.consumeFromAllEmbeddedTopics(consumer);
     }
 
     @AfterEach
@@ -184,7 +183,7 @@ public class ProfileFlowTest {
         assert userEntity.getPhone().equals(pastUser.getPhone());
 
         ConsumerRecords<String, String> records = KafkaTestUtils.getRecords(consumer);
-        assert records.count() == 0;
+        assert records.count() == 1; // Only user created event
     }
 
     @Test
@@ -207,7 +206,7 @@ public class ProfileFlowTest {
         assert userEntity.getPhone().equals(pastUser.getPhone());
 
         ConsumerRecords<String, String> records = KafkaTestUtils.getRecords(consumer);
-        assert records.count() == 0;
+        assert records.count() == 1; // only user created event
     }
 
     @Test
@@ -224,5 +223,17 @@ public class ProfileFlowTest {
         assert record != null;
         UserDeleted userDeleted = new UserDeleted().deserialize(record.value());
         assert userDeleted.getUserId().equals(userId);
+    }
+
+    @Test
+    @DisplayName("Can't delete the profile without token")
+    public void deleteProfileWithoutToken() throws Exception {
+        saveMockUser();
+        mockMvc.perform(delete("/api/v1/user/profile"))
+                .andExpect(status().isBadRequest());
+        UserEntity userEntity = userRepository.findByEmail(getMockUser().getEmail());
+        assert userEntity != null;
+        ConsumerRecords<String, String> records = KafkaTestUtils.getRecords(consumer);
+        assert records.count() == 1; // only user created event
     }
 }
