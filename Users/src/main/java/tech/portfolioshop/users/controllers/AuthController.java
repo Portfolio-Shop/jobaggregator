@@ -12,12 +12,16 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import tech.portfolioshop.users.models.request.SignInRequest;
 import tech.portfolioshop.users.models.request.SignUpRequest;
 import tech.portfolioshop.users.models.response.UserResponse;
 import tech.portfolioshop.users.services.AuthService;
 import tech.portfolioshop.users.shared.UserDto;
+
 import javax.validation.Valid;
 
 @RestController
