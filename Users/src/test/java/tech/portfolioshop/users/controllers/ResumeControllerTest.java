@@ -13,7 +13,6 @@ import org.springframework.core.env.Environment;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import tech.portfolioshop.users.services.ResumeService;
 import tech.portfolioshop.users.shared.ResumeDto;
@@ -28,8 +27,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(controllers = ResumeController.class)
 @AutoConfigureMockMvc
-@TestPropertySource(
-        locations = "classpath:application.test.properties")
 class ResumeControllerTest {
 
     @MockBean
