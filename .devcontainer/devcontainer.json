@@ -6,7 +6,7 @@
 	"service": "app",
 	"workspaceFolder": "/workspace",
 
-	// Configure tool-specific properties.
+	// Configure tool-specific propertiin es.
 	"customizations": {
 		// Configure properties specific to VS Code.
 		"vscode": {
@@ -28,7 +28,7 @@
 	"forwardPorts": [5432,5672,15672, 9411,2222,9092,2181],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "minikube start && eval $(minikube -p minikube docker-env)",
+	// "postCreateCommand": "minikube start && eval $(minikube -p minikube docker-env)",
 
 	// Comment out to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
 	"remoteUser": "vscode",
