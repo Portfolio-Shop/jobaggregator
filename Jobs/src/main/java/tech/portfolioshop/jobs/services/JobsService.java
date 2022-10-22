@@ -50,4 +50,12 @@ public class JobsService {
     public List<JobsDto> findJobByQuery(String query, String location){
         return getJobsDtos(query, location);
     }
+    public List<JobsDto> findJobByRecommendation(String userId){
+        List<JobsEntity> jobs = jobsRepository.findByRecommendation(userId);
+        List<JobsDto> jobsDtos = new ArrayList<>();
+        for(JobsEntity job : jobs){
+            jobsDtos.add(modelMapper.map(job, JobsDto.class));
+        }
+        return jobsDtos;
+    }
 }
