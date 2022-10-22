@@ -4,6 +4,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 @Table(name = "jobs")
@@ -34,10 +35,16 @@ public class JobsEntity {
     private String descriptionHTML;
 
     @Column(nullable = false)
-    private String skills;
-
-    @Column(nullable = false)
     private String jobUrl;
+
+    @ManyToMany
+    @JoinTable(
+            name = "jobs_skills",
+            joinColumns = @JoinColumn(name = "job_id"),
+            inverseJoinColumns = @JoinColumn(name = "skill_id")
+    )
+    private Set<SkillsEntity> skills;
+
 
     @CreationTimestamp
     private LocalDateTime createdAt;
@@ -45,7 +52,17 @@ public class JobsEntity {
     public JobsEntity() {
     }
 
-    public JobsEntity(Long id, String jobId, String query, String location, String title, String employer, String salary, String descriptionHTML, String skills, LocalDateTime createdAt, String jobUrl) {
+    public JobsEntity(Long id,
+                      String jobId,
+                      String query,
+                      String location,
+                      String title,
+                      String employer,
+                      String salary,
+                      String descriptionHTML,
+                      Set<SkillsEntity> skills,
+                      LocalDateTime createdAt,
+                      String jobUrl) {
         this.id = id;
         this.jobId = jobId;
         this.query = query;
@@ -59,7 +76,15 @@ public class JobsEntity {
         this.jobUrl = jobUrl;
     }
 
-    public JobsEntity(String query, String location, String title, String employer, String salary, String descriptionHTML, String skills, String jobUrl) {
+    public JobsEntity(
+            String query,
+            String location,
+            String title,
+            String employer,
+            String salary,
+            String descriptionHTML,
+            Set<SkillsEntity> skills,
+            String jobUrl) {
         this.query = query;
         this.location = location;
         this.title = title;
@@ -134,11 +159,11 @@ public class JobsEntity {
         this.descriptionHTML = descriptionHTML;
     }
 
-    public String getSkills() {
+    public Set<SkillsEntity> getSkills() {
         return skills;
     }
 
-    public void setSkills(String skills) {
+    public void setSkills(Set<SkillsEntity> skills) {
         this.skills = skills;
     }
 
