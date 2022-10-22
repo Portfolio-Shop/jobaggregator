@@ -6,7 +6,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -31,7 +31,7 @@ public class UserEntity {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "skill_id")
     )
-    private Set<SkillsEntity> skills;
+    private List<SkillsEntity> skills;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
@@ -49,7 +49,7 @@ public class UserEntity {
         this.parsedResume = parsedResume;
     }
 
-    public UserEntity(Long id, String uniqueId, String userId, String email, String phone, String parsedResume, Set<SkillsEntity> skills, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public UserEntity(Long id, String uniqueId, String userId, String email, String phone, String parsedResume, List<SkillsEntity> skills, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.userId = userId;
         this.email = email;
@@ -122,5 +122,13 @@ public class UserEntity {
 
     public void setSearches(List<SearchEntity> searches) {
         this.searches = searches;
+    }
+
+    public List<SkillsEntity> getSkills() {
+        return skills;
+    }
+
+    public void setSkills(List<SkillsEntity> skills) {
+        this.skills = skills;
     }
 }
