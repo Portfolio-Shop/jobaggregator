@@ -104,40 +104,40 @@ class JobControllersTest {
     @DisplayName("GET jobs failed with no token")
     public void getJobRecommendationFailedWithNoToken() throws Exception {
         mockMvc.perform(get("/api/v1/jobs"))
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isNotFound());
     }
+
     @Test
     @DisplayName("Read jobs with query successful with no token")
     public void getJobWithQueryFailedWithNoToken() throws Exception {
-        String body = "{\"query\": \"test-query\", \"location\": \"test-location\"}";
-        mockMvc.perform(get("/api/v1/jobs")
-                        .content(body))
-                .andExpect(status().isBadRequest());
+        Mockito.when(jobsService.findJobByQuery("test-query", "test-location")).thenReturn(getMockJobs());
+        mockMvc.perform(get("/api/v1/jobs?query=test-query&location=test-location"))
+                .andExpect(status().isOk())
+                .andExpect(result -> {
+                    String content = result.getResponse().getContentAsString();
+                    assert content.contains("test-id-1");
+                    assert content.contains("test-id-2");
+//                    check response is a list
+                    assert content.startsWith("[");
+                    assert content.endsWith("]");
+                });
     }
-
     @Test
-    @DisplayName("Read jobs with query success with partial body(Only query)")
-    public void getJobWithPartialBody() throws Exception {
+    @DisplayName("Read jobs with query successful withtoken")
+    public void getJobWithQueryFailedWithToken() throws Exception {
         String token = getMockAuth().get(1);
-        String body = "{\"query\": \"test-query\"}";
-        Mockito.when(jobsService.findJobByQuery(Mockito.eq("test-query"), Mockito.any())).thenReturn(getMockJobs());
-        mockMvc.perform(get("/api/v1/jobs")
-                        .header(HttpHeaders.AUTHORIZATION, token)
-                        .content(body))
-                .andExpect(status().isOk());
+        String userId = getMockAuth().get(0);
+        Mockito.when(jobsService.findJobByQuery("test-query", "test-location", userId)).thenReturn(getMockJobs());
+        mockMvc.perform(get("/api/v1/jobs?query=test-query&location=test-location")
+                        .header(HttpHeaders.AUTHORIZATION, token))
+                .andExpect(status().isOk())
+                .andExpect(result -> {
+                    String content = result.getResponse().getContentAsString();
+                    assert content.contains("test-id-1");
+                    assert content.contains("test-id-2");
+//                    check response is a list
+                    assert content.startsWith("[");
+                    assert content.endsWith("]");
+                });
     }
-
-
-    @Test
-    @DisplayName("Read jobs with query success with partial body(Only location)")
-    public void getJobWithPartialBody2() throws Exception {
-        String token = getMockAuth().get(1);
-        String body = "{\"location\": \"test-location\"}";
-        Mockito.when(jobsService.findJobByQuery(Mockito.any(), Mockito.eq("test-location"))).thenReturn(getMockJobs());
-        mockMvc.perform(get("/api/v1/jobs")
-                        .header(HttpHeaders.AUTHORIZATION, token)
-                        .content(body))
-                .andExpect(status().isOk());
-    }
-
 }

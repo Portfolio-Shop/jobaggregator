@@ -26,7 +26,7 @@ public class JobsService {
         this.searchRepository = searchRepository;
     }
 
-    public List<JobsDto> findJobByQueryAndAuth(String query, String location, String userId){
+    public List<JobsDto> findJobByQuery(String query, String location, String userId){
         UserEntity user = userRepository.getByUserId(userId);
 
         SearchEntity search = new SearchEntity();
