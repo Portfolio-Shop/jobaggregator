@@ -16,6 +16,7 @@ import tech.portfolioshop.jobs.models.response.JobResponse;
 import tech.portfolioshop.jobs.services.JobsService;
 import tech.portfolioshop.jobs.shared.JobsDto;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 

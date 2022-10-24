@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(JobControllers.class)
@@ -104,6 +105,39 @@ class JobControllersTest {
     public void getJobRecommendationFailedWithNoToken() throws Exception {
         mockMvc.perform(get("/api/v1/jobs"))
                 .andExpect(status().isBadRequest());
+    }
+    @Test
+    @DisplayName("Read jobs with query successful with no token")
+    public void getJobWithQueryFailedWithNoToken() throws Exception {
+        String body = "{\"query\": \"test-query\", \"location\": \"test-location\"}";
+        mockMvc.perform(get("/api/v1/jobs")
+                        .content(body))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @DisplayName("Read jobs with query success with partial body(Only query)")
+    public void getJobWithPartialBody() throws Exception {
+        String token = getMockAuth().get(1);
+        String body = "{\"query\": \"test-query\"}";
+        Mockito.when(jobsService.findJobByQuery(Mockito.eq("test-query"), Mockito.any())).thenReturn(getMockJobs());
+        mockMvc.perform(get("/api/v1/jobs")
+                        .header(HttpHeaders.AUTHORIZATION, token)
+                        .content(body))
+                .andExpect(status().isOk());
+    }
+
+
+    @Test
+    @DisplayName("Read jobs with query success with partial body(Only location)")
+    public void getJobWithPartialBody2() throws Exception {
+        String token = getMockAuth().get(1);
+        String body = "{\"location\": \"test-location\"}";
+        Mockito.when(jobsService.findJobByQuery(Mockito.any(), Mockito.eq("test-location"))).thenReturn(getMockJobs());
+        mockMvc.perform(get("/api/v1/jobs")
+                        .header(HttpHeaders.AUTHORIZATION, token)
+                        .content(body))
+                .andExpect(status().isOk());
     }
 
 }
