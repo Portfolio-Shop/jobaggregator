@@ -10,17 +10,14 @@ import java.util.List;
 
 @Service
 public class JobsService {
-    private final ModelMapper modelMapper;
     private final UserRepository userRepository;
     private final JobsRepository jobsRepository;
     private final SearchRepository searchRepository;
 
 
-    public JobsService(ModelMapper modelMapper,
-                       UserRepository userRepository,
+    public JobsService(UserRepository userRepository,
                        JobsRepository jobsRepository,
                        SearchRepository searchRepository) {
-        this.modelMapper = modelMapper;
         this.userRepository = userRepository;
         this.jobsRepository = jobsRepository;
         this.searchRepository = searchRepository;
@@ -41,6 +38,7 @@ public class JobsService {
     private List<JobsDto> getJobsDtos(String query, String location) {
         List<JobsEntity> jobs = jobsRepository.findByQueryAndLocation(query,location);
         List<JobsDto> jobsDtos = new ArrayList<>();
+        ModelMapper modelMapper = new ModelMapper();
         for(JobsEntity job : jobs){
             jobsDtos.add(modelMapper.map(job, JobsDto.class));
         }
@@ -53,6 +51,7 @@ public class JobsService {
     public List<JobsDto> findJobByRecommendation(String userId){
         List<JobsEntity> jobs = jobsRepository.findByRecommendation(userId);
         List<JobsDto> jobsDtos = new ArrayList<>();
+        ModelMapper modelMapper = new ModelMapper();
         for(JobsEntity job : jobs){
             jobsDtos.add(modelMapper.map(job, JobsDto.class));
         }

@@ -42,7 +42,7 @@ public class UserEntity {
     public UserEntity() {
     }
 
-    public UserEntity(String uniqueId, String userId, String email, String phone, String parsedResume) {
+    public UserEntity(String userId, String email, String phone, String parsedResume) {
         this.userId = userId;
         this.email = email;
         this.phone = phone;
