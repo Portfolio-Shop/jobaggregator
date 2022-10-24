@@ -1,6 +1,8 @@
 package tech.portfolioshop.users.integration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -60,12 +62,13 @@ public class SigninFlowTest {
         return userDto;
     }
 
-    private void saveMockUser() throws Exception {
+    private void saveMockUser(){
         UserDto userDto = getMockUser();
-        SignUpRequest signUpRequest = new ModelMapper().map(userDto, SignUpRequest.class);
-        mockMvc.perform(post("/api/v1/user/auth/signup")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(new ObjectMapper().writeValueAsString(signUpRequest)));
+        UserEntity userEntity = new ModelMapper().map(userDto, UserEntity.class);
+        userEntity.setEncryptedPassword("test1234567890");
+        userEntity.setUserId("testUserId");
+        userEntity.setStatus(true);
+        userRepository.save(userEntity);
     }
 
     private void deleteMockUser() {

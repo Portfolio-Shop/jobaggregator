@@ -8,6 +8,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
+import org.springframework.test.context.TestPropertySource;
 import tech.portfolioshop.jobs.data.*;
 import tech.portfolioshop.jobs.shared.JobsDto;
 
@@ -17,6 +18,9 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
+@TestPropertySource(
+        locations = "classpath:application.test.properties"
+)
 class JobsServiceTest {
     @Mock
     private JobsRepository jobsRepository;

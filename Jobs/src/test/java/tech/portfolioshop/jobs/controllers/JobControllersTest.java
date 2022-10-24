@@ -12,6 +12,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.core.env.Environment;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import tech.portfolioshop.jobs.services.JobsService;
 import org.springframework.http.HttpHeaders;
@@ -26,6 +27,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(JobControllers.class)
 @AutoConfigureMockMvc
+@TestPropertySource(
+        locations = "classpath:application.test.properties"
+)
 class JobControllersTest {
     @MockBean
     private JobsService jobsService;

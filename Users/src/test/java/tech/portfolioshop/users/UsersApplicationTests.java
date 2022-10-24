@@ -11,7 +11,8 @@ import org.springframework.test.context.TestPropertySource;
         classes = UsersApplication.class)
 @AutoConfigureMockMvc
 @TestPropertySource(
-        locations = "classpath:application.test.properties")
+        locations = "classpath:application.test.properties"
+)
 public class UsersApplicationTests {
     @Test
     public void contextLoads() {
