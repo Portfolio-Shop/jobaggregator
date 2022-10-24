@@ -29,7 +29,7 @@ public abstract class SeleniumScrapper {
     public SeleniumScrapper(@NotNull Websites website) {
         System.setProperty("webdriver.gecko.driver", geckoDriverPath);
         FirefoxOptions options = new FirefoxOptions();
-        //options.setHeadless(true);
+//        options.setHeadless(true);
         webDriver = new FirefoxDriver(options);
         this.website = website;
         webDriver.manage().window().maximize();
