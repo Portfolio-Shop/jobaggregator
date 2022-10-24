@@ -8,6 +8,4 @@ RUN ./mvnw clean package
 WORKDIR /app/Users
 COPY Users .
 
-RUN ./mvnw clean package
-
 CMD ["./mvnw", "spring-boot:run"]
