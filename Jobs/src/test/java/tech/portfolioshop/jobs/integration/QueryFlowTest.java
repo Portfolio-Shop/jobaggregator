@@ -23,10 +23,12 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.testcontainers.shaded.com.google.common.net.HttpHeaders;
 import tech.portfolioshop.jobs.JobsApplication;
+import tech.portfolioshop.jobs.data.SearchEntity;
 import tech.portfolioshop.jobs.data.SearchRepository;
 import tech.portfolioshop.jobs.data.UserEntity;
 import tech.portfolioshop.jobs.data.UserRepository;
 
+import java.util.List;
 import java.util.Map;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -109,6 +111,9 @@ public class QueryFlowTest {
         assert singleRecord != null;
         assert singleRecord.value().contains("java");
         assert singleRecord.value().contains("seoul");
+
+        List<SearchEntity> searchEntities = (List<SearchEntity>) searchRepository.findAll();
+        assert searchEntities.size() == 0;
     }
 
     @Test
@@ -125,5 +130,8 @@ public class QueryFlowTest {
         assert singleRecord != null;
         assert singleRecord.value().contains("java");
         assert singleRecord.value().contains("seoul");
+
+        List<SearchEntity> searchEntities = (List<SearchEntity>) searchRepository.findAll();
+        assert searchEntities.size() == 1;
     }
 }
