@@ -1,0 +1,35 @@
+package tech.portfolioshop.jobs.listeners;
+
+import org.jobaggregator.kafka.config.KafkaTopics;
+import org.jobaggregator.kafka.payload.UserUpdated;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.annotation.EnableKafka;
+import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.stereotype.Service;
+import tech.portfolioshop.jobs.data.UserEntity;
+import tech.portfolioshop.jobs.data.UserRepository;
+
+@EnableKafka
+@Service
+public class UsersUpdatedListener {
+
+    private final ModelMapper modelMapper;
+    private final UserRepository userRepository;
+
+    @Autowired
+    public UsersUpdatedListener(ModelMapper modelMapper, UserRepository userRepository) {
+        this.modelMapper = modelMapper;
+        this.userRepository = userRepository;
+    }
+
+    @KafkaListener(topics = KafkaTopics.USER_UPDATED, groupId = "${spring.application.name}")
+    public void userUpdated(String message) {
+        UserUpdated user = new UserUpdated().deserialize(message);
+        String userId = user.getUserId();
+        user.setUserId(null);
+        UserEntity userEntity = modelMapper.map(user,UserEntity.class);
+        userEntity.setUserId(userId);
+        userRepository.save(userEntity);
+    }
+}
