@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import tech.portfolioshop.jobs.data.*;
 import tech.portfolioshop.jobs.shared.JobsDto;
 
+import javax.transaction.Transaction;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,11 +27,13 @@ public class JobsService {
     public List<JobsDto> findJobByQuery(String query, String location, String userId){
         UserEntity user = userRepository.getByUserId(userId);
 
-        SearchEntity search = new SearchEntity();
-        search.setQuery(query);
-        search.setLocation(location);
-        search.setUser(user);
-        searchRepository.save(search);
+        SearchEntity searchEntity = new SearchEntity();
+        searchEntity.setQuery(query);
+        searchEntity.setLocation(location);
+        searchEntity.setUser(user);
+        System.out.println(user.getId());
+
+        searchRepository.save(searchEntity);
 
         return getJobsDtos(query, location);
     }

@@ -2,6 +2,7 @@ package tech.portfolioshop.jobs.controllers;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.jobaggregator.kafka.config.KafkaTopics;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -121,9 +122,11 @@ class JobControllersTest {
                     assert content.startsWith("[");
                     assert content.endsWith("]");
                 });
+
+        Mockito.verify(kafkaTemplate, Mockito.times(1)).send(Mockito.eq(KafkaTopics.JOB_SEARCH_TRIGGERED), Mockito.anyString());
     }
     @Test
-    @DisplayName("Read jobs with query successful withtoken")
+    @DisplayName("Read jobs with query successful with token")
     public void getJobWithQueryFailedWithToken() throws Exception {
         String token = getMockAuth().get(1);
         String userId = getMockAuth().get(0);
@@ -139,5 +142,6 @@ class JobControllersTest {
                     assert content.startsWith("[");
                     assert content.endsWith("]");
                 });
+        Mockito.verify(kafkaTemplate, Mockito.times(1)).send(Mockito.eq(KafkaTopics.JOB_SEARCH_TRIGGERED), Mockito.anyString());
     }
 }
