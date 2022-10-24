@@ -5,22 +5,20 @@ import org.springframework.stereotype.Service;
 import tech.portfolioshop.jobs.data.*;
 import tech.portfolioshop.jobs.shared.JobsDto;
 
+import javax.transaction.Transaction;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class JobsService {
-    private final ModelMapper modelMapper;
     private final UserRepository userRepository;
     private final JobsRepository jobsRepository;
     private final SearchRepository searchRepository;
 
 
-    public JobsService(ModelMapper modelMapper,
-                       UserRepository userRepository,
+    public JobsService(UserRepository userRepository,
                        JobsRepository jobsRepository,
                        SearchRepository searchRepository) {
-        this.modelMapper = modelMapper;
         this.userRepository = userRepository;
         this.jobsRepository = jobsRepository;
         this.searchRepository = searchRepository;
@@ -29,11 +27,13 @@ public class JobsService {
     public List<JobsDto> findJobByQuery(String query, String location, String userId){
         UserEntity user = userRepository.getByUserId(userId);
 
-        SearchEntity search = new SearchEntity();
-        search.setQuery(query);
-        search.setLocation(location);
-        search.setUser(user);
-        searchRepository.save(search);
+        SearchEntity searchEntity = new SearchEntity();
+        searchEntity.setQuery(query);
+        searchEntity.setLocation(location);
+        searchEntity.setUser(user);
+        System.out.println(user.getId());
+
+        searchRepository.save(searchEntity);
 
         return getJobsDtos(query, location);
     }
@@ -41,6 +41,7 @@ public class JobsService {
     private List<JobsDto> getJobsDtos(String query, String location) {
         List<JobsEntity> jobs = jobsRepository.findByQueryAndLocation(query,location);
         List<JobsDto> jobsDtos = new ArrayList<>();
+        ModelMapper modelMapper = new ModelMapper();
         for(JobsEntity job : jobs){
             jobsDtos.add(modelMapper.map(job, JobsDto.class));
         }
@@ -53,6 +54,7 @@ public class JobsService {
     public List<JobsDto> findJobByRecommendation(String userId){
         List<JobsEntity> jobs = jobsRepository.findByRecommendation(userId);
         List<JobsDto> jobsDtos = new ArrayList<>();
+        ModelMapper modelMapper = new ModelMapper();
         for(JobsEntity job : jobs){
             jobsDtos.add(modelMapper.map(job, JobsDto.class));
         }
