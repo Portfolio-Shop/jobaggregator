@@ -8,12 +8,14 @@ on:
     paths:
       - 'Jobs/**'
       - 'config/**'
+      - 'Common/**'
   push:
     branches:
       - dev
     paths:
       - 'Jobs/**'
       - 'config/**'
+      - 'Common/**'
 env:
   REGISTRY_NAME: serviceregistryjobagggregator
   APP_NAME: users
