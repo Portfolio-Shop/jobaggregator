@@ -7,8 +7,8 @@
 
 
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/Portfolio-Shop/jobaggregator/graphs/commit-activity)
-[![GitHub commits](https://badgen.net/github/commits/Portfolio-Shop/jobaggregator)](https://GitHub.com/Portfolio-Shop/jobaggregator/commit/)
-[![GitHub latest commit](https://badgen.net/github/last-commit/Portfolio-Shop/jobaggregator)](https://GitHub.com/Portfolio-Shop/jobaggregator/commit/)
+<!-- [![GitHub commits](https://badgen.net/github/commits/Portfolio-Shop/jobaggregator)](https://GitHub.com/Portfolio-Shop/jobaggregator/commit/)
+[![GitHub latest commit](https://badgen.net/github/last-commit/Portfolio-Shop/jobaggregator)](https://GitHub.com/Portfolio-Shop/jobaggregator/commit/) -->
 [![GitHub issues](https://img.shields.io/github/issues/Portfolio-Shop/jobaggregator.svg)](https://GitHub.com/Portfolio-Shop/jobaggregator/issues/)
 [![GitHub pull-requests](https://img.shields.io/github/issues-pr/Portfolio-Shop/jobaggregator.svg)](https://GitHub.com/Portfolio-Shop/jobaggregator/pull/)
 
@@ -16,7 +16,7 @@
 [![GitHub](https://badgen.net/badge/icon/github?icon=github&label)](https://github.com)
 [![Visual Studio Code](https://img.shields.io/badge/--007ACC?logo=visual%20studio%20code&logoColor=ffffff)](https://code.visualstudio.com/)
 [![JavaScript](https://img.shields.io/badge/--F7DF1E?logo=javascript&logoColor=000)](https://www.javascript.com/)
-[![Azure](https://badgen.net/badge/icon/azure?icon=azure&label)](https://azure.microsoft.com)
+[![Maven](https://badgen.net/badge/icon/maven?icon=maven&label)](https://maven.apache.org/)
 [![Npm](https://badgen.net/badge/icon/npm?icon=npm&label)](https://https://npmjs.com/)
 [![Windows](https://badgen.net/badge/icon/windows?icon=windows&label)](https://microsoft.com/windows/)
 
