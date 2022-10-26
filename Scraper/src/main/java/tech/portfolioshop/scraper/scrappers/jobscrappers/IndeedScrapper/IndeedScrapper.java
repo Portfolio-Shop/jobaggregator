@@ -35,15 +35,6 @@ public class IndeedScrapper extends SeleniumScrapper {
         //TODO: Create Scrapper for Indeed
 
         List<JobModel> jobModels;
-        try {
-            webDriver.get(generateUrl());
-            Thread.sleep(7000);
-            websiteTabHandle = webDriver.getWindowHandle();
-
-        }
-        catch (){
-
-        }
         return null;
     }
 }
