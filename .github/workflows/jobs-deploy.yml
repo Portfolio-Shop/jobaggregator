@@ -6,6 +6,8 @@ on:
       - main
     paths:
       - 'Jobs/**'
+      - 'config/**'
+      - 'Common/**'
 env:
   REGISTRY_NAME: serviceregistryjobagggregator
   CLUSTER_NAME:  jobaggregator

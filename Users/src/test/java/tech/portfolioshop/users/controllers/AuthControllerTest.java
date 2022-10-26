@@ -12,6 +12,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import tech.portfolioshop.users.models.request.SignInRequest;
 import tech.portfolioshop.users.models.request.SignUpRequest;
@@ -24,6 +25,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(controllers = AuthController.class)
 @AutoConfigureMockMvc
+@TestPropertySource(
+        locations = "classpath:application.test.properties"
+)
 public class AuthControllerTest {
 
     @MockBean

@@ -1,17 +1,19 @@
-name: deploy-mailer
+name: deploy-scraper
 
 on:
   push:
     branches:
       - main
     paths:
-      - 'Mailer/**'
+      - 'Scraper/**'
+      - 'Common/**'
+      - 'config/**'
 env:
   REGISTRY_NAME: serviceregistryjobagggregator
   CLUSTER_NAME:  jobaggregator
   CLUSTER_RESOURCE_GROUP:  jobaggregator
   NAMESPACE: default
-  APP_NAME: mailer
+  APP_NAME: scraper
   SECRET: secret
 jobs:
   deploy:
@@ -30,7 +32,7 @@ jobs:
 
       - name: Build and push image
         run: |
-          docker build . -t ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }} -f Mailer/Dockerfile
+          docker build . -t ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }} -f Scraper/Dockerfile
           docker push ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}
 
       - name: Azure Kubernetes Set Context
@@ -54,7 +56,7 @@ jobs:
         uses: azure/k8s-deploy@v1
         with:
           action: deploy
-          manifests: configs/k8s/dev/mailer_depl.yaml
+          manifests: configs/k8s/dev/scraper_depl.yaml
           images: |
             ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}
           imagepullsecrets: |

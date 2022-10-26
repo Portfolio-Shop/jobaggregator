@@ -8,12 +8,14 @@ on:
     paths:
       - 'Mailer/**'
       - 'config/**'
+      - 'Common/**'
   push:
     branches:
       - dev
     paths:
       - 'Mailer/**'
       - 'config/**'
+      - 'Common/**'
 env:
   REGISTRY_NAME: serviceregistryjobagggregator
   APP_NAME: mailer

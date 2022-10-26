@@ -21,7 +21,6 @@ public abstract class KafkaConfig {
     @Value(value="${spring.application.name}")
     private String groupId;
     
-    @Bean
     public ProducerFactory<String, String> producerFactory() {
         Map<String, Object> configProps = new HashMap<>();
         configProps.put(
@@ -35,7 +34,6 @@ public abstract class KafkaConfig {
                 StringSerializer.class);
         return new DefaultKafkaProducerFactory<>(configProps);
     }
-    @Bean
     public ConsumerFactory<String, String> consumerFactory() {
         Map<String, Object> props = new HashMap<>();
         props.put(
