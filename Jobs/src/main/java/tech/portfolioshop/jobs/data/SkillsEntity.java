@@ -23,6 +23,10 @@ public class SkillsEntity {
     public SkillsEntity() {
     }
 
+    public SkillsEntity(String name) {
+        this.name = name;
+    }
+
     public SkillsEntity(Long id, String name, Set<UserEntity> users, Set<JobsEntity> jobs) {
         this.id = id;
         this.name = name;

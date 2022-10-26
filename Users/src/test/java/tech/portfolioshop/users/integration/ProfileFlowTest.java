@@ -83,13 +83,6 @@ public class ProfileFlowTest {
         embeddedKafkaBroker.consumeFromAllEmbeddedTopics(consumer);
     }
 
-    @AfterEach
-    public void tearDown() {
-        consumer.close();
-        // Kafka events after each test is cleared using dirties context
-
-    }
-
     private UserDto getMockUser() {
         UserDto userDto = new UserDto();
         userDto.setName("test");

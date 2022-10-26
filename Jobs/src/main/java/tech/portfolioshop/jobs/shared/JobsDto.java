@@ -1,6 +1,7 @@
 package tech.portfolioshop.jobs.shared;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class JobsDto implements Serializable {
     private String jobId;
@@ -10,12 +11,12 @@ public class JobsDto implements Serializable {
     private String employer;
     private String salary;
     private String descriptionHTML;
-    private String skills;
+    private List<String> skills;
 
     public JobsDto() {
     }
 
-    public JobsDto(String jobId, String query, String location, String title, String employer, String salary, String descriptionHTML, String skills) {
+    public JobsDto(String jobId, String query, String location, String title, String employer, String salary, String descriptionHTML, List<String> skills) {
         this.jobId = jobId;
         this.query = query;
         this.location = location;
@@ -82,11 +83,11 @@ public class JobsDto implements Serializable {
         this.descriptionHTML = descriptionHTML;
     }
 
-    public String getSkills() {
+    public List<String> getSkills() {
         return skills;
     }
 
-    public void setSkills(String skills) {
+    public void setSkills(List<String> skills) {
         this.skills = skills;
     }
 }
