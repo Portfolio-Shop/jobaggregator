@@ -11,7 +11,6 @@ RUN ./mvnw clean package
 
 WORKDIR /app/Scraper
 COPY Scraper .
-
 RUN ./mvnw clean package
 
 CMD ["./mvnw", "spring-boot:run"]

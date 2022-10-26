@@ -1,16 +1,16 @@
 package tech.portfolioshop.jobs.controllers;
 
+import io.jsonwebtoken.Jwts;
+import org.jobaggregator.errors.UnauthorizedException;
 import org.jobaggregator.kafka.payload.JobSearchTriggered;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import tech.portfolioshop.jobs.models.request.JobSearchRequest;
 import tech.portfolioshop.jobs.models.response.JobResponse;
 import tech.portfolioshop.jobs.services.JobsService;
@@ -47,6 +47,29 @@ public class JobControllers {
             JobSearchTriggered jobSearchTriggered = new JobSearchTriggered(query, location);
             kafkaTemplate.send(jobSearchTriggered.getTopic(), jobSearchTriggered.serialize());
         }
+        for(JobsDto job : jobs){
+            jobResponses.add(modelMapper.map(job, JobResponse.class));
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(jobResponses);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<JobResponse>> findJobsByRecommendation(@RequestHeader(HttpHeaders.AUTHORIZATION) String token) throws UnauthorizedException {
+        String userId;
+        try{
+            userId = Jwts.parser()
+                    .setSigningKey(environment.getProperty("jwt.secret"))
+                    .parseClaimsJws(token.replace("Bearer ", ""))
+                    .getBody()
+                    .getSubject();
+        }catch (Exception e){
+            throw new UnauthorizedException("Invalid token or session expired");
+        }
+        if (userId == null) {
+            throw new UnauthorizedException("No user id found");
+        }
+        List<JobsDto> jobs = jobsService.findJobByRecommendation(userId);
+        List<JobResponse> jobResponses = new ArrayList<>();
         for(JobsDto job : jobs){
             jobResponses.add(modelMapper.map(job, JobResponse.class));
         }

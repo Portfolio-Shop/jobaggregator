@@ -10,4 +10,13 @@ import java.util.List;
 public interface JobsRepository extends CrudRepository<JobsEntity, Long> {
     @Query("SELECT j FROM JobsEntity j WHERE j.query=?1 AND j.location=?2")
     List<JobsEntity> findByQueryAndLocation(String query, String location);
+
+    @Query("SELECT j FROM JobsEntity j WHERE j.query=?1")
+    List<JobsEntity> findByQuery(String query);
+
+    @Query("SELECT j FROM JobsEntity j WHERE j.location=?1")
+    List<JobsEntity> findByLocation(String location);
+
+    @Query("SELECT s.jobs from SkillsEntity s JOIN s.users u WHERE u.userId=?1")
+    List<JobsEntity> findByRecommendation(String userId);
 }
